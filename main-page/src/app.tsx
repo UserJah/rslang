@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from './header'
+import Navigation from './components/navigation'
 
 const App = () => {
-  return <Header />
+  return <Navigation />
 }
 
 export default App
