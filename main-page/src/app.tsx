@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import TemporalyDrawer from './components/drawer'
-import Navigation from './components/navigation'
+import React from 'react'
+import Footer from './components/footer/footer'
+import Navigation from './components/navigation/navigation'
 
 const App = () => {
-  const [state, setState] = useState(false)
+  
 
   return (
     <>
       <Navigation />
-      <TemporalyDrawer props={(state, setState)} />
+      <Footer />
     </>
   )
 }

@@ -1,8 +1,9 @@
-import { Menu } from '@mui/icons-material'
+import {  } from '@mui/icons-material'
 import { Button, Modal, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import img from '../assets/img/logo.svg'
+import img from '../../assets/img/logo.svg'
+import TemporalyDrawer from './drawer'
 import './navigation.css'
 
 const style = {
@@ -17,10 +18,10 @@ const style = {
   p: 4,
 }
 
-const Navigation = (props: { updateData: (arg0: boolean) => void }) => {
+const Navigation = () => {
   return (
     <div className="navbar">
-      <Menu onClick={() => props.updateData(true)} />
+      <TemporalyDrawer />
       <img src={img} alt="rs-logo" className="rs-logo" />
       <div className="button-group-user">
         <LoginModal />

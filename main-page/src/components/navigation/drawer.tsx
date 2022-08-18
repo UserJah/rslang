@@ -1,7 +1,6 @@
-import { Circle } from '@mui/icons-material'
+import { Circle, Menu } from '@mui/icons-material'
 import {
   Box,
-  Button,
   Drawer,
   List,
   ListItem,
@@ -9,9 +8,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 
-function TemporalyDrawer(state: boolean | undefined) {
+function TemporalyDrawer() {
+  const [state, setState] = useState(false)
+
   const toggleDrawer =
     (open: boolean | ((prevState: boolean) => boolean)) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -50,7 +51,7 @@ function TemporalyDrawer(state: boolean | undefined) {
   )
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>ASDADAS</Button>
+      <Menu  onClick={toggleDrawer(true)} cursor="pointer"></Menu>
       <Drawer open={state} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
