@@ -17,10 +17,10 @@ const style = {
   p: 4,
 }
 
-const Navigation = () => {
+const Navigation = (props: { updateData: (arg0: boolean) => void }) => {
   return (
     <div className="navbar">
-      <Menu />
+      <Menu onClick={() => props.updateData(true)} />
       <img src={img} alt="rs-logo" className="rs-logo" />
       <div className="button-group-user">
         <LoginModal />
