@@ -18,3 +18,11 @@ export enum Path {
   base='https://qwerzxvxzvzxvxzv.herokuapp.com/',
   word='words'
 }
+export type WordSignature={
+  word:string,
+  audio:string,
+  phrase:string,
+  correct:boolean,
+ translate:string
+ guessedCorrect?:boolean
+}
