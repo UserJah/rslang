@@ -1,4 +1,12 @@
-import { Circle, Menu } from '@mui/icons-material'
+import {
+  Circle,
+  Menu,
+  Home,
+  ImportContacts,
+  HeadsetMic,
+  DirectionsRun,
+  BarChart,
+} from '@mui/icons-material'
 import {
   Box,
   Drawer,
@@ -7,6 +15,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
 
@@ -26,21 +35,28 @@ function TemporalyDrawer() {
       setState(open)
     }
 
+  const Icons = [
+    <Home />,
+    <ImportContacts />,
+    <HeadsetMic />,
+    <DirectionsRun />,
+    <BarChart />,
+  ]
+
   const list = () => (
     <Box
-      sx={{ widnth: 250 }}
+      sx={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
+      <Typography variant="h4">Главное меню</Typography>
       <List>
         {['Главная', 'Учебник', 'Аудиовызов', 'Спринт', 'Статистика'].map(
-          (text) => (
+          (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
-                <ListItemIcon>
-                  <Circle />
-                </ListItemIcon>
+                <ListItemIcon>{Icons[index]}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
@@ -51,7 +67,7 @@ function TemporalyDrawer() {
   )
   return (
     <div>
-      <Menu  onClick={toggleDrawer(true)} cursor="pointer"></Menu>
+      <Menu onClick={toggleDrawer(true)} cursor="pointer"></Menu>
       <Drawer open={state} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>

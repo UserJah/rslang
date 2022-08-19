@@ -1,0 +1,9 @@
+.main {
+  display: flex;
+}
+
+.team {
+  display: flex;
+  gap: 50px;
+  margin: 0 auto;
+}
