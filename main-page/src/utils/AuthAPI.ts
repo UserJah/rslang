@@ -5,10 +5,11 @@ import AuthPathConstants from "../constants /AuthPath.constants"
 class AuthAPI {
   private paths = {
     base: AuthPathConstants.BASE,
-    signin: AuthPathConstants.SIGIN
+    signin: AuthPathConstants.SIGIN,
+    users: AuthPathConstants.USERS,
   }
 
-  public loginUser = async (user: ISignin) => {
+  public loginUser = async (user: ISignin): Promise<void> => {
     try {
       const response = await fetch(
         `${this.paths.base}${this.paths.signin}`,
@@ -49,6 +50,17 @@ class AuthAPI {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  public createUser = async (user: ISignin): Promise<void> => {
+    await fetch(`${this.paths.base}${this.paths.users}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
   }
 }
 

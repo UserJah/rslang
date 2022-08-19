@@ -1,4 +1,4 @@
-import { Key, Menu } from '@mui/icons-material'
+import { Menu } from '@mui/icons-material'
 import { Button, Modal, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
@@ -36,6 +36,17 @@ const Navigation = () => {
   )
 }
 
+const handlerSetState = (
+  evt: React.FormEvent,
+  cbState: React.Dispatch<React.SetStateAction<string>>,
+  cbError: React.Dispatch<React.SetStateAction<string>>
+): void => {
+  const target = evt.target as HTMLInputElement
+
+  cbError('')
+  cbState(target.value.trim())
+}
+
 const LoginModal = () => {
   const [open, setOpen] = React.useState(false)
   const [login, setLogin] = React.useState('')
@@ -54,16 +65,6 @@ const LoginModal = () => {
     return undefined
   }
 
-  const handlerSetState = (
-    evt: React.FormEvent,
-    cb: React.Dispatch<React.SetStateAction<string>>
-  ): void => {
-    const target = evt.target as HTMLInputElement
-
-    setErr('')
-    cb(target.value.trim())
-  }
-
   const handlerSubmit = (evt: React.FormEvent) => {
     evt.preventDefault()
 
@@ -78,6 +79,8 @@ const LoginModal = () => {
     setTimeout(() => {
       if (!checkerAuth()) {
         setErr(ERROR_AUTH)
+      } else {
+        handleClose()
       }
     }, AuthConstants.SIGN_DELAY)
   }
@@ -102,7 +105,7 @@ const LoginModal = () => {
               variant="outlined"
               value={login}
               required
-              onChange={(evt) => handlerSetState(evt, setLogin)}
+              onChange={(evt) => handlerSetState(evt, setLogin, setErr)}
             />
             <TextField
               id="outlined-basic"
@@ -111,7 +114,7 @@ const LoginModal = () => {
               variant="outlined"
               value={pass}
               required
-              onChange={(evt) => handlerSetState(evt, setPass)}
+              onChange={(evt) => handlerSetState(evt, setPass, setErr)}
             />
             {err === ERROR_PASS && <ErrorMessage text={ERROR_PASS} />}
             {err === ERROR_AUTH && <ErrorMessage text={ERROR_AUTH} />}
@@ -127,8 +130,36 @@ const LoginModal = () => {
 
 const RegisterModal = () => {
   const [open, setOpen] = React.useState(false)
+  const [email, setEmail] = React.useState('')
+  const [login, setLogin] = React.useState('')
+  const [pass, setPass] = React.useState('')
+  const [err, setErr] = React.useState('')
+
   const handleOpen = () => setOpen(true)
+
   const handleClose = () => setOpen(false)
+
+  const clearFields = () => {
+    setEmail('')
+    setLogin('')
+    setPass('')
+  }
+
+  const handlerSubmit = (evt: React.FormEvent) => {
+    evt.preventDefault()
+
+    if (pass.length < 8) {
+      setErr(ERROR_PASS)
+
+      return
+    }
+
+    api.createUser({ email: email, password: pass })
+
+    clearFields()
+
+    handleClose()
+  }
 
   return (
     <div>
@@ -137,28 +168,35 @@ const RegisterModal = () => {
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style} className="modal">
-          <form action="" className="modal">
+          <form className="modal" onSubmit={handlerSubmit}>
             <TextField
               id="outlined-basic"
               label="email"
               type="email"
               variant="outlined"
+              value={email}
               required
+              onChange={(evt) => handlerSetState(evt, setEmail, setErr)}
             />
             <TextField
               id="outlined-basic"
               label="login"
               type="text"
               variant="outlined"
+              value={login}
               required
+              onChange={(evt) => handlerSetState(evt, setLogin, setErr)}
             />
             <TextField
               id="outlined-basic"
               label="password"
               type="password"
               variant="outlined"
+              value={pass}
               required
+              onChange={(evt) => handlerSetState(evt, setPass, setErr)}
             />
+            {err === ERROR_PASS && <ErrorMessage text={ERROR_PASS} />}
             <Button type="submit" variant="contained">
               Регистрация
             </Button>
