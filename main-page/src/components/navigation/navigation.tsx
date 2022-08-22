@@ -100,8 +100,8 @@ const LoginModal = () => {
           <form className="modal" onSubmit={handlerSubmit}>
             <TextField
               id="outlined-basic"
-              label="login"
-              type="text"
+              label="email"
+              type="email"
               variant="outlined"
               value={login}
               required

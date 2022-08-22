@@ -1,19 +1,19 @@
-.gameBoard{
-  width:500px;
-  margin:0 auto;
+.gameBoard {
+  width: 500px;
+  margin: 0 auto;
   background-color: aqua;
 }
-.starscontainer{
-  display:flex;
+.starscontainer {
+  display: flex;
   justify-content: center;
 }
-.Score{
-  float:right;
+.Score {
+  float: right;
   font-size: 30px;
 }
-.info{
-  margin:10px 20px;
-  display:flex;
+.info {
+  margin: 10px 20px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }

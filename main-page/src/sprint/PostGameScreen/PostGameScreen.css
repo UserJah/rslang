@@ -1,17 +1,16 @@
-.postGameScreen{
-  width:50vw;
-  margin:0 auto;
-  list-style:none;
+.postGameScreen {
+  width: 50vw;
+  margin: 0 auto;
+  list-style: none;
 }
-.postGameElement{
-  width:100%;
-  display:flex;
+.postGameElement {
+  width: 100%;
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-
 }
 
-.postGameWord{
-  width:100px;
+.postGameWord {
+  width: 100px;
 }

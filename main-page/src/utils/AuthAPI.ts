@@ -1,6 +1,6 @@
-import AuthConstants from "../constants/Auth.constants"
-import { ISignin } from "../constants/Auth.interfaces"
-import AuthPathConstants from "../constants/AuthPath.constants"
+import AuthConstants from '../constants/Auth.constants'
+import { ISignin } from '../constants/Auth.interfaces'
+import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
   private paths = {
@@ -11,17 +11,14 @@ class AuthAPI {
 
   public loginUser = async (user: ISignin): Promise<void> => {
     try {
-      const response = await fetch(
-        `${this.paths.base}${this.paths.signin}`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(user),
-        }
-      )
+      const response = await fetch(`${this.paths.base}${this.paths.signin}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      })
 
       if (response.status === 200) {
         const { token, refreshToken, userId, name } = await response.json()
@@ -34,10 +31,7 @@ class AuthAPI {
         )
       }
 
-      if (
-        response.status === 403 ||
-        response.status === 404
-      ) {
+      if (response.status === 403 || response.status === 404) {
         localStorage.clear()
 
         localStorage.setItem(

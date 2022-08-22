@@ -1,36 +1,35 @@
-.chose_level{
-  width:300px;
-  height:50px;
+.chose_level {
+  width: 300px;
+  height: 50px;
   border-radius: 20px;
-  font-size:30px;
-  margin:10px auto;
-  transition:0.3s;
+  font-size: 30px;
+  margin: 10px auto;
+  transition: 0.3s;
 }
-.chose_level:hover{
-  cursor:pointer;
-  transform: scale(1.10);
-
+.chose_level:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
-.level_wrapper{
-  width:350px;
-  margin:100px auto;
-  text-align:center
+.level_wrapper {
+  width: 350px;
+  margin: 100px auto;
+  text-align: center;
 }
-.green{
-  background-color:lightgreen
+.green {
+  background-color: lightgreen;
 }
-.blue{
- background-color: lightskyblue
+.blue {
+  background-color: lightskyblue;
 }
-.yellow{
-  background-color:yellow
+.yellow {
+  background-color: yellow;
 }
-.orange{
+.orange {
   background-color: orange;
 }
-.brightorange{
+.brightorange {
   background-color: orangered;
 }
-.red{
+.red {
   background-color: red;
 }

@@ -1,7 +1,7 @@
-const enum AuthPathConstants{
-  BASE = 'https://my-base-rs.herokuapp.com',
-  USERS='/users',
-  SIGIN= '/signin',
+const enum AuthPathConstants {
+  BASE = 'https://qwerzxvxzvzxvxzv.herokuapp.com',
+  USERS = '/users',
+  SIGIN = '/signin',
 }
 
 export default AuthPathConstants

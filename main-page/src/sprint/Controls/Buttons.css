@@ -1,31 +1,31 @@
-.control_container{
-  margin-top:20px;
-  display:flex;
+.control_container {
+  margin-top: 20px;
+  display: flex;
   justify-content: space-evenly;
 }
-.word{
-  display:block;
-  width:30px;
-  height:30px;
+.word {
+  display: block;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin:5px auto;
-  border:none;
-  background-color:inherit;
+  margin: 5px auto;
+  border: none;
+  background-color: inherit;
 }
-.wordtext{
-  font-size:30px;
-  font-weight:700;
+.wordtext {
+  font-size: 30px;
+  font-weight: 700;
 }
-.word:hover{
+.word:hover {
   transform: scale(1.25);
   transition-duration: 0.4s;
 }
-.audioButton{
-  width:20px;
-  height:20px;
+.audioButton {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background-color:red;
+  background-color: red;
 }
-.Buttoncontainer{
+.Buttoncontainer {
   text-align: center;
 }
