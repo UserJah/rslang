@@ -1,8 +1,16 @@
 import React from 'react'
-import Navigation from './components/navigation'
+import Footer from './components/footer/footer'
+import Main from './components/main/main'
+import Navigation from './components/navigation/navigation'
 
 const App = () => {
-  return <Navigation />
+  return (
+    <>
+      <Navigation />
+      <Main />
+      <Footer />
+    </>
+  )
 }
 
 export default App

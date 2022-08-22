@@ -1,14 +1,14 @@
-import { Menu } from '@mui/icons-material'
 import { Button, Modal, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import img from '../assets/img/logo.svg'
+import img from './../../assets/img/logo.svg'
 import AuthConstants, {
   ERROR_AUTH,
   ERROR_PASS,
-} from '../constants /Auth.constants'
-import api from './../utils/AuthAPI'
-import ErrorMessage from './Error/ErrorMessage'
+} from './../../constants/Auth.constants'
+import api from './../../utils/AuthAPI'
+import ErrorMessage from './../../components/Error/ErrorMessage'
+import TemporalyDrawer from './drawer'
 import './navigation.css'
 
 const style = {
@@ -26,7 +26,7 @@ const style = {
 const Navigation = () => {
   return (
     <div className="navbar">
-      <Menu />
+      <TemporalyDrawer />
       <img src={img} alt="rs-logo" className="rs-logo" />
       <div className="button-group-user">
         <LoginModal />
@@ -92,7 +92,7 @@ const LoginModal = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button variant="contained" onClick={handleOpen}>
         Войти
       </Button>
       <Modal open={open} onClose={handleClose}>
@@ -163,7 +163,7 @@ const RegisterModal = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button variant="contained" onClick={handleOpen}>
         Регистрация
       </Button>
       <Modal open={open} onClose={handleClose}>

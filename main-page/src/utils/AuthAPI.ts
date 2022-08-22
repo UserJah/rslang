@@ -1,6 +1,6 @@
-import AuthConstants from "../constants /Auth.constants"
-import { ISignin } from "../constants /Auth.interfaces"
-import AuthPathConstants from "../constants /AuthPath.constants"
+import AuthConstants from "../constants/Auth.constants"
+import { ISignin } from "../constants/Auth.interfaces"
+import AuthPathConstants from "../constants/AuthPath.constants"
 
 class AuthAPI {
   private paths = {
