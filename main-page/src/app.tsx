@@ -1,8 +1,16 @@
 import React from 'react'
-import Header from './header'
+import Footer from './components/footer/footer'
+import Main from './components/main/main'
+import Navigation from './components/navigation/navigation'
 
 const App = () => {
-  return <Header />
+  return (
+    <>
+      <Navigation />
+      <Main />
+      <Footer />
+    </>
+  )
 }
 
 export default App

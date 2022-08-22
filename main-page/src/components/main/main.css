@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  background-color: #ffdba4;
+}
+
+.team {
+  display: flex;
+  gap: 50px;
+  margin: 0 auto;
+  background-color: #94b49f;
+}
+
+.accordion {
+  margin-bottom: 10px;
+}
