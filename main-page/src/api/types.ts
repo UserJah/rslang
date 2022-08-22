@@ -13,6 +13,10 @@ export type Word = {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  streak?:number
+  isKnown?:boolean
+  difficulty?:string
+  isNew?:boolean
 };
 export enum Path {
   base='https://qwerzxvxzvzxvxzv.herokuapp.com/',
@@ -25,4 +29,26 @@ export type WordSignature={
   correct:boolean,
  translate:string
  guessedCorrect?:boolean
+ correctTranslate:string
+ isNew?:boolean
+ isKnown?:boolean;
+ currentStreak?:number
+ difficulty?:string
+}
+export type Statistics={
+  learnedwords:number,
+  optional?:{
+    biggestStreak?:number
+    answers?:number,
+    percentage?:number
+  }
+}
+export type UserWords={
+  difficulty:'string',
+  optional:{
+    known:boolean,
+    streak:number
+  },
+  id:string,
+  wordId:string
 }

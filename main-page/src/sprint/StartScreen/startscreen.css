@@ -1,0 +1,36 @@
+.chose_level{
+  width:300px;
+  height:50px;
+  border-radius: 20px;
+  font-size:30px;
+  margin:10px auto;
+  transition:0.3s;
+}
+.chose_level:hover{
+  cursor:pointer;
+  transform: scale(1.10);
+
+}
+.level_wrapper{
+  width:350px;
+  margin:100px auto;
+  text-align:center
+}
+.green{
+  background-color:lightgreen
+}
+.blue{
+ background-color: lightskyblue
+}
+.yellow{
+  background-color:yellow
+}
+.orange{
+  background-color: orange;
+}
+.brightorange{
+  background-color: orangered;
+}
+.red{
+  background-color: red;
+}
