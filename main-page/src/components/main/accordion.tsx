@@ -12,6 +12,7 @@ import { Button } from '@mui/material'
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
+  background: '#FFFDE3',
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 0,
@@ -29,7 +30,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 ))(({ theme }) => ({
   backgroundColor:
     theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
+      ? 'rgba(255, 255, 255, .01)'
       : 'rgba(0, 0, 0, .03)',
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
@@ -54,7 +55,7 @@ export default function CustomizedAccordions() {
     }
 
   return (
-    <div>
+    <div className="accordion">
       <Accordion
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}

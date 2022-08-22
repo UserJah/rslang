@@ -1,16 +1,17 @@
-#root{
-  height:100vh; 
-  margin:0;
-  display:flex; 
-  flex-direction:column; 
+#root {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #94b49f;
 }
 
 .footer {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top:auto; 
-  border-top: 1px solid gray
+  margin-top: auto;
+  background-color: #94b49f;
 }
 
 .githubs {
@@ -27,7 +28,7 @@
   gap: 10px;
 }
 
-.github a{
+.github a {
   text-decoration: none;
   color: black;
 }

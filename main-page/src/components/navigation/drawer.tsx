@@ -1,5 +1,4 @@
 import {
-  Circle,
   Menu,
   Home,
   ImportContacts,
@@ -36,16 +35,16 @@ function TemporalyDrawer() {
     }
 
   const Icons = [
-    <Home />,
-    <ImportContacts />,
-    <HeadsetMic />,
-    <DirectionsRun />,
-    <BarChart />,
+    <Home key={1} />,
+    <ImportContacts key={2} />,
+    <HeadsetMic key={3} />,
+    <DirectionsRun key={4} />,
+    <BarChart key={5} />,
   ]
 
   const list = () => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, mt: 12 }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}

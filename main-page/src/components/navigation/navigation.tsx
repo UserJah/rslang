@@ -37,7 +37,7 @@ const LoginModal = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button variant="contained" onClick={handleOpen}>
         Войти
       </Button>
       <Modal open={open} onClose={handleClose}>
@@ -74,7 +74,7 @@ const RegisterModal = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button variant="contained" onClick={handleOpen}>
         Регистрация
       </Button>
       <Modal open={open} onClose={handleClose}>
