@@ -1,5 +1,5 @@
+import { IUserInfo, ISignin } from './../constants/Auth.interfaces';
 import AuthConstants from '../constants/Auth.constants'
-import { ISignin } from '../constants/Auth.interfaces'
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -41,9 +41,31 @@ class AuthAPI {
 
         throw new Error(AuthConstants.ERROR_SIGIN)
       }
+
+      if (response.status === 401) {
+        const userInfo = localStorage.getItem('userInfo')
+
+        if (userInfo !== null) {
+          const parsedUserInfo: IUserInfo = JSON.parse(userInfo)
+
+          this.setNewToken(parsedUserInfo.userId)
+        }
+      }
     } catch (error) {
       console.log(error)
     }
+  }
+
+  public setNewToken = async (id: string) => {
+    const newToken = await fetch(`${this.paths.base}${id}${AuthPathConstants.TOKENS}`)
+
+    const { token, refreshToken, userId, name } = await newToken.json()
+
+    localStorage.clear()
+    localStorage.setItem(
+      AuthConstants.USER_KEY_STORAGE,
+      JSON.stringify({ userId, name, token, refreshToken, isAuth: true })
+    )
   }
 
   public createUser = async (user: ISignin): Promise<void> => {
