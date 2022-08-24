@@ -6,9 +6,12 @@ import './wordCard.css'
 
 const WordCard = (props: Word) => {
   const htmlString = props.textExample
-  const audio = new Audio(Path.base + props.audio)
+  const audioWord = new Audio(Path.base + props.audio),
+    audioMeaning = new Audio(Path.base + props.audioMeaning),
+    audioExample = new Audio(Path.base + props.audioExample)
   const playAudio = () => {
-    audio.play()
+    const arr = [audioWord, audioMeaning, audioExample]
+    audioWord.play()
   }
 
   return (

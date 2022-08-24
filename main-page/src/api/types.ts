@@ -52,3 +52,5 @@ export type UserWords = {
   id: string
   wordId: string
 }
+
+

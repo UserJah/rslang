@@ -3,13 +3,13 @@ import { Path, Word } from '../../api/types'
 import WordCard from './wordCard'
 import { Container } from '@mui/material'
 
-const CardList = (page: number) => {
+const CardList = ({ page, group }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
 
-  useEffect((group = 0) => {
-    fetch(Path.base + Path.word + '?' + `group=${group}&page=${page}`)
+  useEffect(() => {
+    fetch(Path.base + Path.word + '?' + `group=${group - 1}&page=${page - 1}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -21,7 +21,7 @@ const CardList = (page: number) => {
           setError(error)
         }
       )
-  }, [])
+  }, [page, group])
 
   if (error) {
     return <div>Ошибка: {error}</div>

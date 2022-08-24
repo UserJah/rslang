@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import CardList from './cardList'
-import { Container, Pagination, Typography } from '@mui/material'
-import { Path } from '../../api/types'
+import { Pagination, Typography } from '@mui/material'
+import { Container } from '@mui/system'
 
 export const TextBook = () => {
   const [page, setPage] = useState(1)
+  const [group, setGroup] = useState(1)
+
+  const levels = [1, 2, 3, 4, 5, 6]
 
   return (
     <>
@@ -14,7 +17,30 @@ export const TextBook = () => {
       <Typography color="gray" variant="overline" textAlign="center">
         *Для прослушивания аудио кликните на изображение
       </Typography>
-      <CardList {...useState(page)} />
+      <Typography variant="h5" textAlign="center">
+        Уровень {group}
+      </Typography>
+      <div className="levels">
+        {levels.map((level) => {
+          return (
+            <Container
+              onClick={() => {
+                setGroup(level)
+              }}
+              onKeyDown={() => setGroup(level)}
+              key={String(level) + 'key'}
+              id={String(level) + 'level'}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row'
+              }}
+            >
+              {level}
+            </Container>
+          )
+        })}
+      </div>
+      <CardList page={page} group={group} />
       <Pagination
         count={30}
         showFirstButton
@@ -24,6 +50,7 @@ export const TextBook = () => {
             setPage(page)
           }
         }}
+        sx={{ alignSelf: 'center' }}
       />
     </>
   )
