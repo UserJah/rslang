@@ -4,6 +4,7 @@ import img from '../../assets/img/english-img.png'
 import './main.css'
 import Team from './team'
 import CustomizedAccordions from './accordion'
+import { Link } from 'react-router-dom'
 
 const Main = () => {
   return (
@@ -45,7 +46,9 @@ const Main = () => {
             size="large"
             sx={{ m: 8 }}
           >
-            <Typography variant="h5">Начать учиться!</Typography>
+            <Typography variant="h5">
+              <Link to="1">Начать учиться!</Link>
+            </Typography>
           </Button>
         </Container>
       </div>
