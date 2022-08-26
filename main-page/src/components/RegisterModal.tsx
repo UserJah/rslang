@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Button, Modal, TextField } from '@mui/material'
 import { Box } from '@mui/system'
-import { ERROR_PASS } from '../constants/Auth.constants'
 import ErrorMessage from './Error/ErrorMessage'
 import api from './../utils/AuthAPI'
 import handlerSetState from '../utils/handlerSetState'
 import { style } from '../utils/styleVars'
+import AuthConstants from '../constants/Auth.constants'
 
 const RegisterModal = () => {
   const [open, setOpen] = useState(false)
@@ -28,7 +28,7 @@ const RegisterModal = () => {
     evt.preventDefault()
 
     if (pass.length < 8) {
-      setErr(ERROR_PASS)
+      setErr(AuthConstants.ERROR_PASS)
 
       return
     }
@@ -75,7 +75,9 @@ const RegisterModal = () => {
               required
               onChange={(evt) => handlerSetState(evt, setPass, setErr)}
             />
-            {err === ERROR_PASS && <ErrorMessage text={ERROR_PASS} />}
+            {err === AuthConstants.ERROR_PASS && (
+              <ErrorMessage text={AuthConstants.ERROR_PASS as string} />
+            )}
             <Button type="submit" variant="contained">
               Регистрация
             </Button>

@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Modal, TextField } from '@mui/material'
-import AuthConstants, {
-  ERROR_AUTH,
-  ERROR_PASS,
-} from '../constants/Auth.constants'
+import AuthConstants from '../constants/Auth.constants'
 import handlerSetState from '../utils/handlerSetState'
 import ErrorMessage from './Error/ErrorMessage'
 import api from './../utils/AuthAPI'
@@ -31,7 +28,7 @@ const LoginModal = () => {
     evt.preventDefault()
 
     if (pass.length < 8) {
-      setErr(ERROR_PASS)
+      setErr(AuthConstants.ERROR_PASS)
 
       return
     }
@@ -40,7 +37,7 @@ const LoginModal = () => {
 
     setTimeout(() => {
       if (!checkerAuth()) {
-        setErr(ERROR_AUTH)
+        setErr(AuthConstants.ERROR_AUTH)
       } else {
         handleClose()
       }
@@ -78,8 +75,12 @@ const LoginModal = () => {
               required
               onChange={(evt) => handlerSetState(evt, setPass, setErr)}
             />
-            {err === ERROR_PASS && <ErrorMessage text={ERROR_PASS} />}
-            {err === ERROR_AUTH && <ErrorMessage text={ERROR_AUTH} />}
+            {err === AuthConstants.ERROR_PASS && (
+              <ErrorMessage text={AuthConstants.ERROR_PASS as string} />
+            )}
+            {err === AuthConstants.ERROR_AUTH && (
+              <ErrorMessage text={AuthConstants.ERROR_AUTH as string} />
+            )}
             <Button type="submit" variant="contained">
               Войти
             </Button>
