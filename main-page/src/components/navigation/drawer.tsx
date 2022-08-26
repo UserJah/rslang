@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 function TemporalyDrawer() {
   const [state, setState] = useState(false)
@@ -55,12 +55,15 @@ function TemporalyDrawer() {
         {['Главная', 'Учебник', 'Аудиовызов', 'Спринт', 'Статистика'].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
-              <Link className="link" to={index ? String(index) : '/'}>
+              <NavLink
+                className={({ isActive }) => (isActive ? 'link_active' : 'link')}
+                to={index ? String(index) : '/'}
+              >
                 <ListItemButton>
                   <ListItemIcon>{Icons[index]}</ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
-              </Link>
+              </NavLink>
             </ListItem>
           )
         )}
