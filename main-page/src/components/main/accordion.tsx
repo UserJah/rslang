@@ -72,7 +72,9 @@ export default function CustomizedAccordions() {
             так же пример использования
           </Typography>
           <Button variant="contained" size="small">
-            <Link to="1">Начать</Link>
+            <Link className="link" to="1">
+              Начать
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -93,7 +95,10 @@ export default function CustomizedAccordions() {
             перевода.
           </Typography>
           <Button variant="contained" size="small">
-            <Link to="2"> Попробовать</Link>
+            <Link className="link" to="2">
+              {' '}
+              Попробовать
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -112,7 +117,9 @@ export default function CustomizedAccordions() {
             обучения.
           </Typography>
           <Button variant="contained" size="small">
-            <Link to="5">Перейти</Link>
+            <Link className="link" to="5">
+              Перейти
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>

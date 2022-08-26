@@ -55,7 +55,7 @@ function TemporalyDrawer() {
         {['Главная', 'Учебник', 'Аудиовызов', 'Спринт', 'Статистика'].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
-              <Link to={index ? String(index) : '/'}>
+              <Link className="link" to={index ? String(index) : '/'}>
                 <ListItemButton>
                   <ListItemIcon>{Icons[index]}</ListItemIcon>
                   <ListItemText primary={text} />
