@@ -3,7 +3,6 @@ import LoginModal from '../LoginModal'
 import RegisterModal from '../RegisterModal'
 import img from './../../assets/img/logo.svg'
 import TemporalyDrawer from './drawer'
-
 import './navigation.css'
 
 const Navigation = () => {
