@@ -18,6 +18,7 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import setActiveLink from '../../utils/setActiveLink'
 
 function TemporalyDrawer() {
   const [state, setState] = useState(false)
@@ -56,7 +57,7 @@ function TemporalyDrawer() {
           (text, index) => (
             <ListItem key={text} disablePadding>
               <NavLink
-                className={({ isActive }) => (isActive ? 'link_active' : 'link')}
+                className={setActiveLink}
                 to={index ? String(index) : '/'}
               >
                 <ListItemButton>
