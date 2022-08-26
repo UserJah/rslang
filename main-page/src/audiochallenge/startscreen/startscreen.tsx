@@ -1,11 +1,23 @@
-import React, { useState } from 'react'
-import { Game } from '../mergeComp'
-import './startscreen.css'
+import React, { useState,useEffect } from 'react'
+import {prepareAudioChallenge} from '../../common/functions'
 export function Startscreen(props?: { page?: number; group?: number }) {
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false)
-  if (!start && !props?.group) {
-    return (
+  useEffect(() => {
+    const resp = async () => {
+      const response = console.log((await prepareAudioChallenge()))
+    }
+
+    resp()
+  },[])
+
+console.log()
+  return (
+    <div>
+      1234567npm st
+    </div>  )}
+    /*return (
+
       <div className="level_wrapper">
         <h2>Спринт</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
@@ -66,12 +78,4 @@ export function Startscreen(props?: { page?: number; group?: number }) {
         </button>
       </div>
     )
-  } else {
-    return (
-      <Game
-        group={group as number}
-        page={props?.page === undefined ? 29 : props.page}
-      />
-    )
-  }
-}
+  }*/

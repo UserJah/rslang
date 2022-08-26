@@ -213,3 +213,92 @@ ${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
   const resp = await rawResp.json()
   return resp.paginatedResults
 }
+
+export async function prepareAudioChallenge(page=29,group=0,fromPage=false){
+  const arr= await test(page,group)
+  const isUser=(localStorage.getItem('userinfo')!==null)
+let preResult
+if(isUser && fromPage){
+  arr.forEach(element=>shuffle(element))
+  const known = await getKnownWords(page, group)
+  const familiar = await getUserWords()
+  const filtered = arr
+    .flat()
+    .filter((elem) => !known.some((element) => element.id === elem.id))
+    filtered.forEach((element) => {
+      const elem = familiar.find((q) => q.wordId === element.id)
+      if (elem) {
+        element.properties=elem
+        element.isNew = false
+      }
+    })
+    const preResult=arr.flat().slice(0,20)
+    const falseWords=shuffle(await createFalseWords(preResult))
+    preResult.forEach((element,index)=>{
+      for (let i=0;i<4;i+=1){
+        !element.variant?element.vairaint=[falseWords[index*4+i].wordTranslate]:element.vairaint.push(falseWords[index*4+i].wordTranslate)
+      }
+    })
+  }
+
+ else if(isUser){
+      const familiar = await getUserWords()
+      const preResult=shuffle(arr.flat()).slice(0,20)
+      preResult.forEach((element) => {
+        const elem = familiar.find((q) => q.wordId === element.id)
+        if (elem) {
+          element.properties=elem
+          element.isNew = false
+        }
+      })
+      const falseWords=shuffle(await createFalseWords(preResult))
+      preResult.forEach((element,index)=>{
+        for (let i=0;i<4;i+=1){
+          !element.variant?element.vairaint=[falseWords[index*4+i].wordTranslate]:element.vairaint.push(falseWords[index*4+i].wordTranslate)
+        }
+      })
+     }
+
+    else if (fromPage){
+      arr.forEach(element=>shuffle(element))
+      const preResult=arr.flat().slice(0,20)
+      const falseWords=shuffle(await createFalseWords(preResult))
+      preResult.forEach((element,index)=>{
+        for (let i=0;i<4;i+=1){
+          !element.variant?element.vairaint=[falseWords[index*4+i].wordTranslate]:element.vairaint.push(falseWords[index*4+i].wordTranslate)
+        }
+      })
+    }
+    else{
+      const preResult=shuffle(arr.flat()).slice(0,20)
+      const falseWords=shuffle(await createFalseWords(preResult))
+
+      preResult.forEach((element,index)=>{
+        for (let i=0;i<4;i+=1){
+          !element.variant?element.vairaint=[falseWords[index*4+i].wordTranslate]:element.vairaint.push(falseWords[index*4+i].wordTranslate)
+        }
+      })
+      console.log(preResult)
+    }
+    console.log(preResult)
+return preResult
+
+}
+async function createFalseWords(arr:Word[]){
+  console.log(1)
+  let numbers=Array(10).fill(0)
+  numbers=numbers.map( (element)=>element=[getRandomInt(0,29),getRandomInt(0,5)])
+  const q = []
+  for (let i = 0; i < numbers.length; i += 1) {
+    const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/words?page=${numbers[i][0]}&group=${numbers[i][1]}`
+    q.push(fetch(url))
+  }
+  const resp = await Promise.all(
+    q.map(async (elem) => {
+      const resp1 = await elem
+      const body = await resp1.json()
+      return body
+    })
+  )
+  return resp.flat().filter((elem) => !arr.some((element) => element.id === elem.id))
+}
