@@ -1,22 +1,11 @@
-import React, { useState,useEffect } from 'react'
-import {prepareAudioChallenge} from '../../common/functions'
+import React, { useState} from 'react'
+import { AudioChallenge } from '../audiochallenge';
+
 export function Startscreen(props?: { page?: number; group?: number }) {
   const [group, setGroup] = useState(0 || props?.group)
-  const [start, setStart] = useState(false)
-  useEffect(() => {
-    const resp = async () => {
-      const response = console.log((await prepareAudioChallenge()))
-    }
-
-    resp()
-  },[])
-
-console.log()
-  return (
-    <div>
-      1234567npm st
-    </div>  )}
-    /*return (
+  const [start, setStart] = useState(false);
+  if(!start)
+      return (
 
       <div className="level_wrapper">
         <h2>Спринт</h2>
@@ -78,4 +67,7 @@ console.log()
         </button>
       </div>
     )
-  }*/
+    else return(
+      <AudioChallenge group={group}/>
+    )
+  }

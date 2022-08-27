@@ -34,6 +34,9 @@ export type WordSignature = {
   isKnown?: boolean
   currentStreak?: number
   difficulty?: string
+  variant?:string[],
+  wordTranslate?: string,
+  id?:string
 }
 export type Statistics = {
   learnedwords: number

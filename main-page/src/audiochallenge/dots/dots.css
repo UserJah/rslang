@@ -1,0 +1,19 @@
+.dotcontainer{
+  display:flex;
+  flex-direction:row;
+  gap:5px;
+  height:20px;
+}
+.dot{
+  width:10px;
+  height:10px;
+  display:inline-block;
+  border-radius: 5px;
+  background-color: grey;
+}
+div>.reddot{
+  background-color: red;
+}
+div>.greendot{
+  background-color: green;
+}
