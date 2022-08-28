@@ -22,7 +22,7 @@ const App = () => {
         <Route path="2" element={<h2>Аудиовызов</h2>} />
         <Route path="3" element={<Startscreen />} />
         <Route path="4" element={<Statistic />} />
-        <Route path="5" element={<h2>Словарь</h2>} />
+        <Route path="5" element={<Statistic />} />
       </Route>
     </Routes>
   )
