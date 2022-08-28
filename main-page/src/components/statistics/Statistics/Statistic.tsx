@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React from 'react'
 import Categories from '../Categories/Categories'
 import classes from './Statistic.module.css'
@@ -8,9 +9,9 @@ const Statistic = () => {
   return (
     <div className={classes.statistics}>
       <h2 className={classes.title}> Статистика</h2>
-      <a href="/" className={classes.btn}>
+      <Link to="/" className={classes.btn}>
         На главную
-      </a>
+      </Link>
       <Categories title="АУДИОВЫЗОВ" />
       <Categories title="СПРИНТ" />
     </div>
