@@ -17,6 +17,16 @@ export type Word = {
   isKnown?: boolean
   difficulty?: string
   isNew?: boolean
+  properties?:{
+    difficulty: string,
+    optional?:{
+      isKnown:boolean,
+      streak?:number,
+      lastaudio?:boolean,
+      lastsprint?:boolean
+    }
+  },
+  _id:string
 }
 export enum Path {
   base = 'https://qwerzxvxzvzxvxzv.herokuapp.com/',
@@ -33,7 +43,21 @@ export type WordSignature = {
   isNew?: boolean
   isKnown?: boolean
   currentStreak?: number
+  properties?:{
+    wordId?:string,
+    difficulty: string,
+    optional?:{
+      isKnown:boolean,
+      streak?:number,
+      lastaudio?:boolean,
+      lastsprint?:boolean
+    },
+    id?:string
+  }
   difficulty?: string
+  variant?:string[],
+  wordTranslate?: string,
+  id?:string
 }
 export type Statistics = {
   learnedwords: number
@@ -45,9 +69,11 @@ export type Statistics = {
 }
 export type UserWords = {
   difficulty: 'string'
-  optional: {
-    known: boolean
-    streak: number
+  optional?:{
+    isKnown:boolean,
+    streak?:number,
+    lastaudio?:boolean,
+    lastsprint?:boolean
   }
   id: string
   wordId: string

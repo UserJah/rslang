@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { Game } from '../mergeComp'
-import './startscreen.css'
+import React, { useState} from 'react'
+import { AudioChallenge } from '../gameboard/audiochallenge';
+
 export function Startscreen(props?: { page?: number; group?: number }) {
   const [group, setGroup] = useState(0 || props?.group)
-  const [start, setStart] = useState(false)
-  if (!start && !props?.group) {
-    return (
+  const [start, setStart] = useState(false);
+  if(!start && !props?.group)
+      return (
+
       <div className="level_wrapper">
         <h2>Спринт</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
@@ -66,12 +67,7 @@ export function Startscreen(props?: { page?: number; group?: number }) {
         </button>
       </div>
     )
-  } else {
-    return (
-      <Game
-        group={group as number}
-        page={props?.page === undefined ? 29 : props.page}
-      />
+    else return(
+      <AudioChallenge group={group} page={0} fromPage={true}/>
     )
   }
-}

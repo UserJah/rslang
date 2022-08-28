@@ -1,0 +1,45 @@
+.variants{
+  display:flex;
+  flex-direction:row;
+  margin-top:80px;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content: center;
+}
+.variants>button{
+  width:180px;
+  height:60px;
+  border-radius:10px;
+
+  font-size:16px;
+  transition-duration: 0.3s;
+  background-color:rgb(243, 113, 26);
+  color:white;
+  border:none;
+  font-weight: 700;
+}
+.audio{
+  margin:0 auto;
+  text-align: center;
+}
+.audio>button{
+opacity:0.6;
+  width:150px;
+  height:150px;
+  border-radius:75px;
+  transition-duration: 0.3s;
+
+}
+.variants>button:hover,
+.audio>button:hover{
+
+  transform:scale(1.05);
+  cursor:pointer
+}
+.audio>button>*{
+  transition: color 0.5s ease
+}
+.audio>button>*:hover{
+  color:rgb(243, 113, 26);
+}
