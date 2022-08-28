@@ -1,0 +1,9 @@
+.categories {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.catTitle{
+  align-self: flex-end;
+}
+
