@@ -1,3 +1,4 @@
+
 import { WordSignature, Word, UserWords } from '../api/types'
 
 export function shuffle<T>(array: T[]): T[] {
@@ -37,40 +38,39 @@ export async function prepare(
   group = 0,
   fromPage?: boolean
 ): Promise<WordSignature[]> {
-  let arr1: Word[] = []
+  let arr1:  Word[] = []
   const trick: WordSignature[] = []
-  const a = (await test(page, group)).flat() as Word[]
-  const isUser = localStorage.getItem('userinfo') !== null
+  const a = (await test(page, group)) as Word[][]
+  const isUser = await isUserHere()
 
   if (isUser && fromPage) {
     const known = await getKnownWords(page, group)
     const familiar = await getUserWords()
+    a.forEach(element=>shuffle(element))
     const filtered = a
       .flat()
-      .filter((elem) => !known.some((element) => element.id === elem.id))
+      .filter((elem) => !known.some((element) => element._id === elem.id))
     filtered.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-        element.streak = elem.optional.streak
-        element.difficulty = elem.difficulty
-        element.isKnown = elem.optional.known
-        element.isNew = false
+        element.properties=elem
       }
     })
-    arr1 = shuffle(filtered)
+    arr1 = filtered
   } else if (isUser) {
     const familiar = await getUserWords()
     const filtered = a.flat()
     filtered.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-        element.streak = elem.optional.streak
-        element.difficulty = elem.difficulty
-        element.isKnown = elem.optional.known
-        element.isNew = false
+       element.properties=elem
       }
     })
     arr1 = shuffle(filtered)
+  }
+  else if(fromPage){
+    a.forEach(element=>shuffle(element))
+    arr1=a.flat()
   } else {
     arr1 = shuffle(a.flat())
   }
@@ -83,10 +83,7 @@ export async function prepare(
       audio: elem.audio,
       phrase: elem.audioExample,
       correctTranslate: elem.wordTranslate,
-      isKnown: elem.isKnown,
-      isNew: elem.isNew,
-      difficulty: elem.difficulty,
-      currentStreak: elem.streak,
+      properties:elem.properties
     })
   })
   return trick
@@ -134,24 +131,12 @@ export async function getaudio(path: string) {
   return body
 }
 
-export function Score(
-  correct: boolean,
-  elem: WordSignature,
-  data: { streak: number; score: number; arr: WordSignature[] }
-): void {
-  if (elem.correct === correct) {
-    data.arr.push(elem)
-    data.score += 2 ** Math.floor(data.streak / 4) * 20
-    data.streak += 1
-  } else {
-    data.streak -= 1
-  }
-}
+
 export async function getUserWords() {
-  const NonStringedUser = localStorage.getItem('userinfo') as string
+  const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
-  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.id}/words`
+  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/words`
   const rawResp = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -163,10 +148,11 @@ export async function getUserWords() {
 }
 
 export async function getstats() {
-  const NonStringedUser = localStorage.getItem('userinfo') as string
+  const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
+  console.log(user.token)
   const token = user.token
-  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.id}/statistics`
+  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
   const rawResp = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -177,13 +163,14 @@ export async function getstats() {
   return resp
 }
 
-export async function setUserWords({ wordId, word }) {
-  const NonStringedUser = localStorage.getItem('userinfo') as string
+export async function setUserWords(wordId:string,word:Partial<WordSignature>,method='POST') {
+  const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
-  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.id}/words/${wordId}`
+  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/words/${wordId}`
+  console.log(word)
   const rawResp = await fetch(url, {
-    method: 'POST',
+    method: method,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
@@ -196,11 +183,12 @@ export async function setUserWords({ wordId, word }) {
 }
 
 export async function getKnownWords(page = 29, group = 0): Promise<Word[]> {
-  const NonStringedUser = localStorage.getItem('userinfo') as string
+  const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
+  console.log(user)
   const token = user.token
-  const id = user.id
-  const filter = { 'userWord.optional.known': true }
+  const id = user.userId
+  const filter = {'userWord.optional.isKnown': true}
   const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/aggregatedWords?group=${group}&wordsPerPage=
 ${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
   const rawResp = await fetch(baseurl, {
@@ -211,7 +199,9 @@ ${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
     },
   })
   const resp = await rawResp.json()
-  return resp.paginatedResults
+  console.log(resp)
+  console.log(resp[0].paginatedResults)
+  return resp[0].paginatedResults
 }
 
 export async function prepareAudioChallenge(
@@ -220,7 +210,8 @@ export async function prepareAudioChallenge(
   fromPage = false
 ) {
   const arr = await test(page, group);
-  const isUser = localStorage.getItem("userinfo") !== null;
+  const isUser =await isUserHere()
+  console.log(isUser)
   let preResult;
   if (isUser && fromPage) {
     arr.forEach((element) => shuffle(element));
@@ -228,7 +219,7 @@ export async function prepareAudioChallenge(
     const familiar = await getUserWords();
     const filtered = arr
       .flat()
-      .filter((elem) => !known.some((element) => element.id === elem.id));
+      .filter((elem) => !known.some((element) => element._id === elem.id));
     filtered.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id);
       if (elem) {
@@ -236,7 +227,7 @@ export async function prepareAudioChallenge(
         element.isNew = false;
       }
     });
-    preResult = arr.flat().slice(0, 20);
+    preResult = filtered.slice(0, 20);
     const falseWords = shuffle(await createFalseWords(preResult));
     preResult.forEach((element, index) => {
       element.variant = [element.wordTranslate];
@@ -247,6 +238,7 @@ export async function prepareAudioChallenge(
     });
   } else if (isUser) {
     const familiar = await getUserWords();
+    console.log(familiar)
     preResult = shuffle(arr.flat()).slice(0, 20);
     preResult.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id);
@@ -292,7 +284,8 @@ export async function prepareAudioChallenge(
 }
 
 async function createFalseWords(arr:Word[]){
-  console.log(1)
+
+
   let numbers=Array(10).fill(0)
   numbers=numbers.map( ()=>[getRandomInt(0,29),getRandomInt(0,5)])
   const q = []
@@ -308,4 +301,69 @@ async function createFalseWords(arr:Word[]){
     })
   )
   return resp.flat().filter((elem) => !arr.some((element) => element.id === elem.id))
+}
+
+export async function handleWord(element:WordSignature,correct:boolean,game:string){
+  let method='PUT'
+  if (!element.properties) {
+    method='POST'
+    element.properties={
+    difficulty:'easy',
+    optional:{
+      isKnown:false,
+      streak:correct?1:0
+    }
+  }
+}
+  else if (!correct){
+    element.properties={
+      difficulty:'easy',
+      optional:{
+        isKnown:false,
+        streak:0
+      }
+  }
+}
+  else {
+   delete element.properties.wordId
+   delete element.properties.id
+    if (element.properties.difficulty==='easy'){
+      if (element.properties.optional?.streak!==undefined){
+        element.properties.optional.streak=element.properties.optional?.streak+1
+        element.properties.optional.isKnown=element.properties.optional?.streak>2
+
+      }
+    }
+    else
+    if (element.properties.optional?.streak!==undefined  ){
+      element.properties.optional.streak=element.properties.optional.streak+1
+      if(element.properties.optional.streak>4 ){
+      element.properties.difficulty='easy'
+      element.properties.optional.isKnown=true}
+    }
+  }
+  if (element.properties.optional) {
+    if (game==='audiochallenge') element.properties.optional.lastaudio=correct
+ else element.properties.optional.lastsprint=correct}
+ try{
+  setUserWords(element.id || '',element.properties,method)
+ }
+catch(error){
+  console.log(error)
+}
+  }
+async function isUserHere(){
+  const userinfo=localStorage.getItem('userInfo')
+  if(!userinfo) return false
+  const user=JSON.parse(userinfo)
+  const baseurl=`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}`
+  const resp=await fetch(baseurl,{
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+      Accept: 'application/json',
+    },
+  })
+  if (resp.ok) return true
+  else return false
 }

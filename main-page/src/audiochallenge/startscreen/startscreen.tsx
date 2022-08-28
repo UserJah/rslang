@@ -1,10 +1,10 @@
 import React, { useState} from 'react'
-import { AudioChallenge } from '../audiochallenge';
+import { AudioChallenge } from '../gameboard/audiochallenge';
 
 export function Startscreen(props?: { page?: number; group?: number }) {
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false);
-  if(!start)
+  if(!start && !props?.group)
       return (
 
       <div className="level_wrapper">
@@ -68,6 +68,6 @@ export function Startscreen(props?: { page?: number; group?: number }) {
       </div>
     )
     else return(
-      <AudioChallenge group={group}/>
+      <AudioChallenge group={group} page={0} fromPage={true}/>
     )
   }

@@ -1,8 +1,10 @@
 import React ,{useState,useEffect}from "react";
-import { prepareAudioChallenge} from '../common/functions'
-import { WordSignature } from "../api/types";
-import { Controls } from "./controls";
-import { Dots } from "./dots/dots";
+import { prepareAudioChallenge,shuffle,handleWord} from '../../common/functions'
+import { WordSignature } from "../../api/types";
+import { Controls } from "../controls/controls";
+import { Dots } from "../dots/dots";
+import { PostGame } from "../endscreen/postgamescreen";
+import './gameboard.css'
 
 export function AudioChallenge(props?: { page?: number; group?: number,fromPage?:boolean }) {
   const [items, setItems] = useState<WordSignature[]>([]);
@@ -19,26 +21,34 @@ export function AudioChallenge(props?: { page?: number; group?: number,fromPage?
 
     resp();
   }, [props?.fromPage, props?.group, props?.page]);
+  function reset(){
+    isFinish(false)
+    setCounter(0)
+    setGuessed([])
+    setItems(shuffle(items))
+  }
 
   function updateCounter(element:string){
     if (items[counter].wordTranslate === element) {
                   items[counter].guessedCorrect=true
                  setGuessed(guessed=>[...guessed,items[counter]])
-
+                 handleWord(items[counter],true,'audiochallenge')
                 }
                 else{
                   items[counter].guessedCorrect=false
                   setGuessed(guessed=>[...guessed,items[counter]])
+                  handleWord(items[counter],false,'audiochallenge')
                 }
-                console.log(guessed)
-                setCounter(counter + 1);
+  if(counter!==items.length-1)setCounter(counter + 1);
+else isFinish(true)
+
               }
 
-  if (!load) {
+  if (!load && !finish) {
     return <div>qwer</div>;
-  } else {
+  } else if (!finish) {
     return (
-      <div>
+      <div className="gameboard">
 <div>
   <Dots arr={items} guessed={guessed}/>
 </div>
@@ -49,4 +59,7 @@ export function AudioChallenge(props?: { page?: number; group?: number,fromPage?
       </div>
     );
   }
+  else return (
+    <PostGame guessed={guessed} reset={reset}/>
+  )
 }
