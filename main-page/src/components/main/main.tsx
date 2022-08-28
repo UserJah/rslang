@@ -4,6 +4,7 @@ import img from '../../assets/img/english-img.png'
 import './main.css'
 import Team from './team'
 import CustomizedAccordions from './accordion'
+import { Link } from 'react-router-dom'
 
 const Main = () => {
   return (
@@ -39,14 +40,16 @@ const Main = () => {
             backgroundRepeat: 'no-repeat',
           }}
         >
-          <Button
-            variant="contained"
-            color="warning"
-            size="large"
-            sx={{ m: 8 }}
-          >
-            <Typography variant="h5">Начать учиться!</Typography>
-          </Button>
+          <Link className='link' to="1">
+            <Button
+              variant="contained"
+              color="warning"
+              size="large"
+              sx={{ m: 8 }}
+            >
+              <Typography variant="h5">Начать учиться!</Typography>
+            </Button>
+          </Link>
         </Container>
       </div>
       <Team />

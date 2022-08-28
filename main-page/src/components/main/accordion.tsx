@@ -8,6 +8,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,7 +72,9 @@ export default function CustomizedAccordions() {
             так же пример использования
           </Typography>
           <Button variant="contained" size="small">
-            Начать
+            <Link className="link" to="1">
+              Начать
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -92,7 +95,10 @@ export default function CustomizedAccordions() {
             перевода.
           </Typography>
           <Button variant="contained" size="small">
-            Попробовать
+            <Link className="link" to="2">
+              {' '}
+              Попробовать
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -111,7 +117,9 @@ export default function CustomizedAccordions() {
             обучения.
           </Typography>
           <Button variant="contained" size="small">
-            Перейти
+            <Link className="link" to="5">
+              Перейти
+            </Link>
           </Button>
         </AccordionDetails>
       </Accordion>
