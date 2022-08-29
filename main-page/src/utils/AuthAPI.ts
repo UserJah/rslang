@@ -1,5 +1,4 @@
-import { ISignin } from './../constants/Auth.interfaces';
-import AuthConstants from '../constants/Auth.constants'
+import { ISignin, IToken } from './../constants/Auth.interfaces';
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -10,7 +9,7 @@ class AuthAPI {
     tokens: AuthPathConstants.TOKENS
   }
 
-  public loginUser = async (user: ISignin): Promise<void> => {
+  public loginUser = async (user: ISignin): Promise<ISignin | undefined> => {
     try {
       const response = await fetch(`${this.paths.base}${this.paths.signin}`, {
         method: 'POST',
@@ -21,68 +20,48 @@ class AuthAPI {
         body: JSON.stringify(user),
       })
 
-      if (response.status === 200) {
-        const { token, refreshToken, userId, name } = await response.json()
-
-        const experience = new Date()
-
-        localStorage.setItem(
-          AuthConstants.USER_KEY_STORAGE,
-          JSON.stringify({ userId, name, token, refreshToken, isAuth: true, experience })
-        )
-
-
-        const authTimerId = setTimeout(() => {
-
-          this.setNewToken(userId, refreshToken)
-
-        }, AuthConstants.REFRESH_TOKEN_DELAY)
-
-        window.addEventListener('beforeunload', () => {
-          clearTimeout(authTimerId)
-        })
-      }
-
-      if (response.status === 403) {
-        const { userId, refreshToken, } = await response.json()
-
-        this.setNewToken(userId, refreshToken)
-      }
+      return response.json()
 
     } catch (error) {
-      console.log(error)
+      console.log('loginUser api', error)
     }
   }
 
-  public setNewToken = async (id: string, refToken: string):Promise<void> => {
-  const experience: Date = new Date()
+  public getNewToken = async (id: string, refToken: string): Promise<IToken | undefined> => {
 
-  const newToken = await fetch(`${this.paths.base}${this.paths.users}/${id}${AuthPathConstants.TOKENS}`, {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${refToken}`
-    },
-  })
+    try {
+      const newToken = await fetch(`${this.paths.base}${this.paths.users}/${id}${AuthPathConstants.TOKENS}`, {
+        method: "GET",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${refToken}`
+        },
+      })
 
-  const { token, refreshToken, userId, name } = await newToken.json()
+      return await newToken.json()
+    } catch (error) {
+      console.log('getNewToken api', error)
+    }
+  }
 
+  public createUser = async (user: ISignin): Promise<Response | undefined> => {
+    try {
+      const response = await fetch(`${this.paths.base}${this.paths.users}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      })
 
-  localStorage.setItem(
-    AuthConstants.USER_KEY_STORAGE,
-    JSON.stringify({ userId, name, token, refreshToken, isAuth: true, experience })
-  )
-}
+      return response;
 
-  public createUser = async (user: ISignin): Promise<void> => {
-  await fetch(`${this.paths.base}${this.paths.users}`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user),
-  })
-}
+    } catch (error) {
+      console.log('createUser api', error)
+    }
+  }
 
 }
 

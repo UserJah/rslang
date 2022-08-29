@@ -6,7 +6,7 @@ import AuthConstants, {
 } from '../../constants/Auth.constants'
 import { Box, Button, Modal, TextField } from '@mui/material'
 import handlerSetState from '../../utils/handlerSetState'
-import ErrorMessage from '../Error/ErrorMessage'
+import ErrorMessage from '../Auth/Error/ErrorMessage'
 import { style } from '../navigation/navigation'
 
 const LoginModal = () => {

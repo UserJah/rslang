@@ -1,5 +1,5 @@
 const enum AuthPathConstants {
-  BASE = 'https://qwerzxvxzvzxvxzv.herokuapp.com',
+  BASE = 'https://my-base-rs.herokuapp.com',
   USERS = '/users',
   SIGIN = '/signin',
   TOKENS = '/tokens',
