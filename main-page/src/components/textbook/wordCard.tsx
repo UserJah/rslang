@@ -7,12 +7,20 @@ import './wordCard.css'
 const WordCard = (props: Word) => {
   const htmlString = props.textExample
   const audioWord = new Audio(Path.base + props.audio),
-    audioMeaning = new Audio(Path.base + props.audioMeaning),
-    audioExample = new Audio(Path.base + props.audioExample)
+        audioMeaning = new Audio(Path.base + props.audioMeaning),
+        audioExample = new Audio(Path.base + props.audioExample)
   const playAudio = () => {
     const arr = [audioWord, audioMeaning, audioExample]
-    audioWord.play()
-  }
+      setTimeout(() => {
+        arr[0].play()
+        setTimeout(() => {
+          arr[1].play()
+          setTimeout(() => {
+            arr[2].play()
+          }, arr[1].duration*1000)
+        }, arr[0].duration*1000)
+      })
+    }
 
   return (
     <Card
