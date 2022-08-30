@@ -5,15 +5,27 @@
   padding: 1rem;
 
   position: absolute;
-  top: 50px;
-  right: 30px;
+  top: 3%;
+  right: 3%;
 
   text-align: center;
   color: white;
-  opacity: 0.7;
 
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 1rem;
 
-  z-index: 10000;
+  z-index: 5;
+
+  animation: popup 500ms ease-in-out;
+}
+
+@keyframes popup {
+  from {
+    top: 0%;
+    opacity: 0;
+  }
+  to {
+    top: 3%;
+    opacity: 1;
+  }
 }

@@ -57,6 +57,10 @@ const LoginModal = ({
             {error === AuthConstants.ERROR_TOKEN_MISS && (
               <ErrorMessage text={AuthConstants.ERROR_TOKEN_MISS as string} />
             )}
+
+            {error === AuthConstants.ERROR_SIGIN && (
+              <ErrorMessage text={AuthConstants.ERROR_SIGIN as string} />
+            )}
             <Button type="submit" variant="contained" onClick={logIn}>
               Войти
             </Button>
