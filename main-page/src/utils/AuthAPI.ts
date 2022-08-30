@@ -1,4 +1,4 @@
-import { ISignin, IToken } from './../constants/Auth.interfaces';
+import { ISignin } from './../constants/Auth.interfaces';
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -27,19 +27,19 @@ class AuthAPI {
     }
   }
 
-  public getNewToken = async (id: string, refToken: string): Promise<IToken | undefined> => {
+  public getNewToken = async (id: string, refToken: string): Promise<Response | undefined> => {
 
     try {
-      const newToken = await fetch(`${this.paths.base}${this.paths.users}/${id}${AuthPathConstants.TOKENS}`, {
+      const newToken = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.tokens}`, {
         method: "GET",
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${refToken}`
+          "Authorization": `Bearer ${refToken}`,
         },
       })
 
-      return await newToken.json()
+      return newToken.json()
     } catch (error) {
       console.log('getNewToken api', error)
     }

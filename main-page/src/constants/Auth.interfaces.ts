@@ -1,21 +1,19 @@
 export interface ISignin {
   email: string
   password: string
+  login: string
 }
 
 export interface IUserInfo {
-  isAuth: boolean
+  isAuth?: boolean
   token?: string
   refreshToken?: string
   userId?: string
   name?: string,
-  experience?: string
-}
+  experience?: Date
 
-export interface IDataAuth extends ISignin {
-  login: string
+  message?: string
 }
-
 
 export interface IToken {
   message: string;

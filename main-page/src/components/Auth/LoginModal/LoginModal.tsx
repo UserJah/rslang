@@ -46,6 +46,17 @@ const LoginModal = ({
             {error === AuthConstants.ERROR_PASS && (
               <ErrorMessage text={AuthConstants.ERROR_PASS as string} />
             )}
+            {error === AuthConstants.ERROR_EMAIL && (
+              <ErrorMessage text={AuthConstants.ERROR_EMAIL as string} />
+            )}
+
+            {error === AuthConstants.ERROR_AUTH && (
+              <ErrorMessage text={AuthConstants.ERROR_AUTH as string} />
+            )}
+
+            {error === AuthConstants.ERROR_TOKEN_MISS && (
+              <ErrorMessage text={AuthConstants.ERROR_TOKEN_MISS as string} />
+            )}
             <Button type="submit" variant="contained" onClick={logIn}>
               Войти
             </Button>
