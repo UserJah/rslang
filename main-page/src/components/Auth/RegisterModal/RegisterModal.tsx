@@ -60,6 +60,10 @@ const RegisterModal = ({
             {error === AuthConstants.ERROR_EMAIL && (
               <ErrorMessage text={AuthConstants.ERROR_EMAIL as string} />
             )}
+
+            {error === AuthConstants.ERROR_CREATE && (
+              <ErrorMessage text={AuthConstants.ERROR_CREATE as string} />
+            )}
             <Button type="submit" variant="contained" onClick={create}>
               Регистрация
             </Button>

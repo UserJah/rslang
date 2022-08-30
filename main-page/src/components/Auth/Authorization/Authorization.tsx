@@ -22,6 +22,10 @@ const Authorization = () => {
   const [isGreeting, setGreeting] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
 
+  //===========
+
+  const [openLogin, setOpenLogin] = useState(false)
+
   const handleOpen = () => setOpen(true)
 
   const handleClose = () => setOpen(false)
@@ -79,28 +83,29 @@ const Authorization = () => {
       } else {
         setErr('')
         setGreeting(true)
+        setTimeout(() => {
+          setGreeting(false)
+          setOpenLogin(true)
+        }, AuthConstants.GREETING_DELAY)
       }
     })
   }
 
-  const logInUser = () => {
-    if (err) return
-  }
-
   const setDBUSer = (): void => {
-    if (err === AuthConstants.ERROR_CREATE) {
-      setTimeout(() => {
-        setOpen(true)
-      }, AuthConstants.GREETING_DELAY)
-    }
-
     if (err === '') {
       setOpen(false)
       setDataAuth({ ...userState, ...initialDataAuth })
-      setTimeout(() => setGreeting(false), AuthConstants.GREETING_DELAY)
     }
   }
+  //==============
 
+  const handleOpenLogin = () => setOpenLogin(true)
+
+  const handleCloseLogin = () => setOpenLogin(false)
+
+  const logInUser = () => {}
+
+  //======
   useEffect(setDBUSer, [err])
 
   return (
@@ -112,9 +117,9 @@ const Authorization = () => {
         changeFields={handleDataFields}
         submit={handlerSubmit}
         logIn={logInUser}
-        open={open}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
+        open={openLogin}
+        handleOpen={handleOpenLogin}
+        handleClose={handleCloseLogin}
       />
       <RegisterModal
         login={dataAuth.login}
@@ -129,12 +134,6 @@ const Authorization = () => {
         handleClose={handleClose}
       />
       <Logout onClick={unAuthorization} />
-
-      {err === AuthConstants.ERROR_CREATE && (
-        <div
-          className={classes.greeting}
-        >{`${dataAuth.login} Пользователь уже зарегистрирован `}</div>
-      )}
       {isGreeting && (
         <div
           className={classes.greeting}

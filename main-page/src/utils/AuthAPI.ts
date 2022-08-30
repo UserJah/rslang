@@ -9,7 +9,7 @@ class AuthAPI {
     tokens: AuthPathConstants.TOKENS
   }
 
-  public loginUser = async (user: ISignin): Promise<ISignin | undefined> => {
+  public loginUser = async (user: ISignin): Promise<Response | undefined> => {
     try {
       const response = await fetch(`${this.paths.base}${this.paths.signin}`, {
         method: 'POST',
@@ -20,7 +20,7 @@ class AuthAPI {
         body: JSON.stringify(user),
       })
 
-      return response.json()
+      return response
 
     } catch (error) {
       console.log('loginUser api', error)
