@@ -96,7 +96,6 @@ const useAuthContext = () => {
       setOpen(false)
     }
   }
-  //==============
 
   const handleOpenLogin = () => setOpenLogin(true)
 
