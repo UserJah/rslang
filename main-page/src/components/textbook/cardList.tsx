@@ -3,7 +3,7 @@ import { Path, Word } from '../../api/types'
 import WordCard from './wordCard'
 import { Container } from '@mui/material'
 
-const CardList = ({ page, group }) => {
+const CardList = ({ page, group, color }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
@@ -21,7 +21,7 @@ const CardList = ({ page, group }) => {
           setError(error)
         }
       )
-  }, [page, group])
+  }, [group, page])
 
   if (error) {
     return <div>Ошибка: {error}</div>
@@ -31,12 +31,13 @@ const CardList = ({ page, group }) => {
     return (
       <Container
         maxWidth="xl"
-        sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}
       >
         {items.map((item: Word) => (
-          <WordCard {...item} key={item.id} />
+          <WordCard props={item} key={item.id} color={color}/>
         ))}
       </Container>
+
     )
   }
 }

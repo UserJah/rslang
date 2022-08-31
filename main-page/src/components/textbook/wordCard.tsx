@@ -4,11 +4,13 @@ import { Path, Word } from '../../api/types'
 import Typography from '@mui/material/Typography'
 import './wordCard.css'
 
-const WordCard = (props: Word) => {
+const WordCard = ({props, color}) => {
   const htmlString = props.textExample
+
   const audioWord = new Audio(Path.base + props.audio),
         audioMeaning = new Audio(Path.base + props.audioMeaning),
         audioExample = new Audio(Path.base + props.audioExample)
+
   const playAudio = () => {
     const arr = [audioWord, audioMeaning, audioExample]
       setTimeout(() => {
@@ -27,7 +29,7 @@ const WordCard = (props: Word) => {
       sx={{
         maxWidth: '265px',
         m: 2,
-        bgcolor: '#ffdba4',
+        bgcolor: color,
       }}
     >
       <CardMedia
@@ -45,7 +47,7 @@ const WordCard = (props: Word) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }}
+        }} 
       >
         <Typography color="#black" variant="h5">
           {props.word} &mdash; {props.transcription}
