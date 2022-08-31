@@ -17,6 +17,7 @@ const RegisterModal = ({
   open,
   handleOpen,
   handleClose,
+  preloader,
 }: IRegisterModalProps) => {
   return (
     <div>
@@ -64,7 +65,12 @@ const RegisterModal = ({
             {error === AuthConstants.ERROR_CREATE && (
               <ErrorMessage text={AuthConstants.ERROR_CREATE as string} />
             )}
-            <Button type="submit" variant="contained" onClick={create}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={preloader}
+              onClick={create}
+            >
               Регистрация
             </Button>
           </form>

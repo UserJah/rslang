@@ -18,13 +18,17 @@ const useAuthContext = () => {
   const [isGreeting, setGreeting] = useState<boolean>(false)
   const [isParting, setParting] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
-
   const [isAuth, setAuth] = useState<boolean>(false)
   const [openLogin, setOpenLogin] = useState(false)
+  const [preloader, setPreloader] = useState(false)
 
   const handleOpen = () => setOpen(true)
 
   const handleClose = () => setOpen(false)
+
+  const handleOpenLogin = () => setOpenLogin(true)
+
+  const handleCloseLogin = () => setOpenLogin(false)
 
   const unAuthorization = () => {
     setUserState({ isAuth: false })
@@ -66,42 +70,39 @@ const useAuthContext = () => {
 
     if (!validateEmail(email)) {
       setErr(AuthConstants.ERROR_EMAIL)
+      setPreloader(false)
       return
     }
 
     if (password.length < 8) {
       setErr(AuthConstants.ERROR_PASS)
+      setPreloader(false)
       return
     }
+
+    setPreloader(true)
 
     const newUser = { email, password, name: login }
 
     api.createUser(newUser).then((response) => {
       if (response && response.status === 417) {
         setErr(AuthConstants.ERROR_CREATE)
+        setPreloader(false)
       } else {
         setErr('')
         setGreeting(true)
         setTimeout(() => {
           setGreeting(false)
           setOpen(false)
+          setPreloader(false)
           setOpenLogin(true)
         }, AuthConstants.POP_UP_DELAY)
       }
     })
   }
 
-  const setDBUSer = (): void => {
-    if (err === '') {
-      setOpen(false)
-    }
-  }
-
-  const handleOpenLogin = () => setOpenLogin(true)
-
-  const handleCloseLogin = () => setOpenLogin(false)
-
   const logInUser = () => {
+
     const { email, password, login } = dataAuth
 
     if (!validateEmail(email)) {
@@ -113,13 +114,16 @@ const useAuthContext = () => {
       setErr(AuthConstants.ERROR_PASS)
       return
     }
+    setPreloader(true)
 
     api.loginUser({ email, password, login }).then(async (response) => {
       if (response && response.status === 404) {
         setErr(AuthConstants.ERROR_AUTH)
+        setPreloader(false)
       }
       if (response && response.status === 403) {
         setErr(AuthConstants.ERROR_SIGIN)
+        setPreloader(false)
       }
 
       if (response && response.status === 200) {
@@ -138,13 +142,19 @@ const useAuthContext = () => {
           experience,
         })
         setDataAuth(initialDataAuth)
+        setPreloader(false)
         setOpenLogin(false)
-
         setTimeout(() => {
           setAuth(false)
         }, AuthConstants.POP_UP_DELAY)
       }
     })
+  }
+
+  const setDBUSer = (): void => {
+    if (err === '') {
+      setOpen(false)
+    }
   }
 
   const notifyAuth = () => {
@@ -159,6 +169,7 @@ const useAuthContext = () => {
 
       if (tokenTimeDelta > AuthConstants.REFRESH_TOKEN_LIFE) {
         setErr(AuthConstants.ERROR_TOKEN_MISS)
+        setAuth(false)
         LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, { ...userInfo, isAuth: false })
         handleOpenLogin()
         return;
@@ -166,7 +177,7 @@ const useAuthContext = () => {
     }
   }
 
-  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, notifyAuth }
+  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, notifyAuth, preloader }
 }
 
 export default useAuthContext;

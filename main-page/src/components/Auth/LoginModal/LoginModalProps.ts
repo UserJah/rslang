@@ -5,6 +5,7 @@ export interface ILoginModalProps {
   password: string;
   error: string;
   open: boolean,
+  preloader: boolean,
   logIn?: () => void,
   handleOpen: () => void,
   handleClose: () => void,

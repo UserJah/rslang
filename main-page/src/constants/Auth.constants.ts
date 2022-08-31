@@ -12,7 +12,7 @@ const enum AuthConstants {
   USER_KEY_STORAGE = 'userInfo',
   POP_UP_DELAY = 2000,
   //REFRESH_TOKEN_LIFE = 12600000, //3.5h
-  REFRESH_TOKEN_LIFE = 30000, //3.5h
+  REFRESH_TOKEN_LIFE = 100000, //3.5h
 }
 
 export default AuthConstants;

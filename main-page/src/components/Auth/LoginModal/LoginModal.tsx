@@ -16,6 +16,7 @@ const LoginModal = ({
   open,
   handleOpen,
   handleClose,
+  preloader,
 }: ILoginModalProps) => {
   return (
     <div>
@@ -61,7 +62,7 @@ const LoginModal = ({
             {error === AuthConstants.ERROR_SIGIN && (
               <ErrorMessage text={AuthConstants.ERROR_SIGIN as string} />
             )}
-            <Button type="submit" variant="contained" onClick={logIn}>
+            <Button type="submit" variant="contained" disabled={preloader} onClick={logIn}>
               Войти
             </Button>
           </form>
