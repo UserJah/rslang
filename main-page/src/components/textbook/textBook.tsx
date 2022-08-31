@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import CardList from './cardList'
-import { Pagination, Typography } from '@mui/material'
+import { Button, Pagination, Typography } from '@mui/material'
 import { Container } from '@mui/system'
 import './wordCard.css'
 
@@ -21,7 +21,7 @@ export const TextBook = () => {
       <Typography variant="h5" textAlign="center">
         Уровень {group}
       </Typography>
-      <div className="levels">
+      <Container maxWidth='sm' sx={{display: 'flex'}}>
         {levels.map((level, index) => {
           return (
             <Container
@@ -32,7 +32,6 @@ export const TextBook = () => {
                 localStorage.setItem('group', JSON.stringify(level))
                 localStorage.setItem('color', JSON.stringify(colors[index]))
                 localStorage.setItem('page', JSON.stringify(1))
-                window.location.reload()
               }}
               onKeyDown={() => setGroup(level)}
               key={String(level) + 'key'}
@@ -61,7 +60,6 @@ export const TextBook = () => {
               localStorage.setItem('group', JSON.stringify(7))
               localStorage.setItem('color', JSON.stringify('brown'))
               localStorage.setItem('page', JSON.stringify(1))
-              window.location.reload()
             }}
             onKeyDown={() => setGroup(7)}
             key={String(7) + 'key'}
@@ -80,7 +78,11 @@ export const TextBook = () => {
             {7}
           </Container> : null
         }
-      </div>
+      </Container>
+      <Container maxWidth='sm' sx={{display: 'flex', justifyContent: 'center', gap:'10px', justifySelf:'center', alignSelf:'center'}}>
+        <Button variant='contained' sx={{backgroundColor: color}}>Аудиовызов</Button>
+        <Button variant='contained' sx={{backgroundColor: color}}>Спринт</Button>
+      </Container>
       <CardList page={page} group={group} color={color}/>
       <Pagination
         count={30}
