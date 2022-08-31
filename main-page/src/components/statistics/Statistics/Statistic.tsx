@@ -11,6 +11,9 @@ const Statistic = () => {
     AuthConstants.USER_KEY_STORAGE
   )
 
+  const id = local?.userId
+  const token = local?.token
+
   return (
     <div className={classes.statistics}>
       <h2 className={classes.title}> Статистика</h2>
@@ -19,8 +22,16 @@ const Statistic = () => {
       </Link>
       {local && local.isAuth ? (
         <>
-          <Categories title="АУДИОВЫЗОВ" />
-          <Categories title="СПРИНТ" />
+          <Categories
+            id={id as string}
+            token={token as string}
+            title="АУДИОВЫЗОВ"
+          />
+          <Categories
+            id={id as string}
+            token={token as string}
+            title="СПРИНТ"
+          />
         </>
       ) : (
         <h2 className={classes.unAuth}>

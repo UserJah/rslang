@@ -23,3 +23,14 @@ export interface IToken {
   userId: string;
   name: string;
 }
+
+export interface IStat {
+  learnedWords: number,
+  optional: {
+    dayWords: string,
+    words: string,
+    percentage: string,
+    date: Date,
+    series: string,
+  },,
+}
