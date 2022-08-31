@@ -74,7 +74,7 @@ const useAuthContext = () => {
       return
     }
 
-    const newUser = { login, email, password }
+    const newUser = { email, password, name: login }
 
     api.createUser(newUser).then((response) => {
       if (response && response.status === 417) {
@@ -130,9 +130,11 @@ const useAuthContext = () => {
 
         setUserState({ isAuth: true })
         setAuth(true)
+
         LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, {
           ...userInfo,
           isAuth: true,
+          name,
           experience,
         })
         setDataAuth(initialDataAuth)
@@ -157,12 +159,14 @@ const useAuthContext = () => {
 
       if (tokenTimeDelta > AuthConstants.REFRESH_TOKEN_LIFE) {
         setErr(AuthConstants.ERROR_TOKEN_MISS)
+        LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, { ...userInfo, isAuth: false })
         handleOpenLogin()
+        return;
       }
     }
   }
 
-  return { dataAuth,userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, notifyAuth }
+  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, notifyAuth }
 }
 
 export default useAuthContext;

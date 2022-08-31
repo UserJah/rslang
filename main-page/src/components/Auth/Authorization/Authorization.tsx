@@ -50,7 +50,7 @@ const Authorization = () => {
         handleClose={handleCloseLogin}
       />
       <RegisterModal
-        login={dataAuth.login}
+        login={dataAuth.login as string}
         email={dataAuth.email}
         password={dataAuth.password}
         error={err}

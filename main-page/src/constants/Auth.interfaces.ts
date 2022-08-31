@@ -1,7 +1,8 @@
 export interface ISignin {
   email: string
   password: string
-  login: string
+  login?: string
+  name?: string
 }
 
 export interface IUserInfo {
