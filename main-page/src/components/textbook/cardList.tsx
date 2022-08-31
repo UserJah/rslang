@@ -31,13 +31,12 @@ const CardList = ({ page, group, color }) => {
     return (
       <Container
         maxWidth="xl"
-        sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}
+        sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
       >
         {items.map((item: Word) => (
-          <WordCard props={item} key={item.id} color={color}/>
+          <WordCard props={item} key={item.id} color={color} />
         ))}
       </Container>
-
     )
   }
 }

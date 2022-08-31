@@ -5,15 +5,28 @@ import { Container } from '@mui/system'
 import './wordCard.css'
 
 export const TextBook = () => {
-  const [page, setPage] = useState(JSON.parse(localStorage.getItem('page')!) || 1)
-  const [group, setGroup] = useState(JSON.parse(localStorage.getItem('group')!) || 1)
-  const [color, setColor] = useState(JSON.parse(localStorage.getItem('color')!) || 'lightgreen')
-  
+  const [page, setPage] = useState(
+    JSON.parse(localStorage.getItem('page')!) || 1
+  )
+  const [group, setGroup] = useState(
+    JSON.parse(localStorage.getItem('group')!) || 1
+  )
+  const [color, setColor] = useState(
+    JSON.parse(localStorage.getItem('color')!) || 'lightgreen'
+  )
+
   const levels = [1, 2, 3, 4, 5, 6]
-  const colors = ['lightgreen', 'lightskyblue', 'yellow', 'orange', 'orangered', 'red']
+  const colors = [
+    'lightgreen',
+    'lightskyblue',
+    'yellow',
+    'orange',
+    'orangered',
+    'red',
+  ]
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h3" textAlign="center">
         Электронный учебник страница {page}
       </Typography>
@@ -21,7 +34,7 @@ export const TextBook = () => {
       <Typography variant="h5" textAlign="center">
         Уровень {group}
       </Typography>
-      <Container maxWidth='sm' sx={{display: 'flex'}}>
+      <Container maxWidth="sm" sx={{ display: 'flex' }}>
         {levels.map((level, index) => {
           return (
             <Container
@@ -51,7 +64,7 @@ export const TextBook = () => {
             </Container>
           )
         })}
-        {localStorage.userInfo ? 
+        {localStorage.userInfo ? (
           <Container
             onClick={() => {
               setGroup(7)
@@ -76,20 +89,33 @@ export const TextBook = () => {
             }}
           >
             {7}
-          </Container> : null
-        }
+          </Container>
+        ) : null}
       </Container>
-      <Container maxWidth='sm' sx={{display: 'flex', justifyContent: 'center', gap:'10px', justifySelf:'center', alignSelf:'center'}}>
-        <Button variant='contained' sx={{backgroundColor: color}}>Аудиовызов</Button>
-        <Button variant='contained' sx={{backgroundColor: color}}>Спринт</Button>
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '10px',
+          justifySelf: 'center',
+          alignSelf: 'center',
+        }}
+      >
+        <Button variant="contained" sx={{ backgroundColor: color }}>
+          Аудиовызов
+        </Button>
+        <Button variant="contained" sx={{ backgroundColor: color }}>
+          Спринт
+        </Button>
       </Container>
-      <CardList page={page} group={group} color={color}/>
+      <CardList page={page} group={group} color={color} />
       <Pagination
         count={30}
         showFirstButton
         showLastButton
         defaultPage={page}
-        sx={{justifySelf: 'center', alignSelf: 'center',}}
+        sx={{ justifySelf: 'center', alignSelf: 'center' }}
         onChange={(_, page) => {
           if (page !== null) {
             setPage(page)

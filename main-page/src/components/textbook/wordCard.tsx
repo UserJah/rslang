@@ -3,35 +3,44 @@ import React, { useState } from 'react'
 import { Path, Word } from '../../api/types'
 import Typography from '@mui/material/Typography'
 import './wordCard.css'
-import { PlayArrow, Spellcheck, StopCircleOutlined, WatchLater } from '@mui/icons-material'
+import {
+  PlayArrow,
+  Spellcheck,
+  StopCircleOutlined,
+  WatchLater,
+} from '@mui/icons-material'
 
-const WordCard = ({props, color}) => {
+const WordCard = ({ props, color }) => {
   const [clicked, setClicked] = useState(false)
   const [learned, setLearned] = useState(false)
 
   const htmlString = props.textExample
 
   const audioWord = new Audio(Path.base + props.audio),
-        audioMeaning = new Audio(Path.base + props.audioMeaning),
-        audioExample = new Audio(Path.base + props.audioExample)
+    audioMeaning = new Audio(Path.base + props.audioMeaning),
+    audioExample = new Audio(Path.base + props.audioExample)
   const arr = [audioWord, audioMeaning, audioExample]
 
   const playAudio = () => {
+    setTimeout(() => {
+      arr[0].play()
       setTimeout(() => {
-        arr[0].play()
+        arr[1].play()
         setTimeout(() => {
-          arr[1].play()
-          setTimeout(() => {
-            arr[2].play()
-          }, arr[1].duration*1000)
-        }, arr[0].duration*1000)
-      })
+          arr[2].play()
+        }, arr[1].duration * 1000)
+      }, arr[0].duration * 1000)
+    })
   }
 
   const handlePlayIconClick = () => {
     setClicked(true)
     playAudio()
-    setTimeout(() => setClicked(false), (audioWord.duration + audioMeaning.duration + audioExample.duration)*1000)
+    setTimeout(
+      () => setClicked(false),
+      (audioWord.duration + audioMeaning.duration + audioExample.duration) *
+        1000
+    )
   }
 
   const handleLearnWordIconClick = () => {
@@ -48,7 +57,7 @@ const WordCard = ({props, color}) => {
         bgcolor: learned ? 'gold' : color,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
       <CardMedia
@@ -62,7 +71,7 @@ const WordCard = ({props, color}) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-        }} 
+        }}
       >
         <Typography color="#black" variant="h5">
           {props.word} &mdash; {props.transcription}
@@ -88,16 +97,27 @@ const WordCard = ({props, color}) => {
           {props.textExampleTranslate}
         </Typography>
       </CardContent>
-      <CardActions sx={{display: 'flex', justifyContent: 'space-around'}}>
-          {clicked ? <StopCircleOutlined /> : <PlayArrow onClick={() => {clicked ?  null : handlePlayIconClick()}}/>}
-          {
-            localStorage.userInfo ? 
-            <>
-            <WatchLater sx={{color: learned ? 'gold' : 'black', cursor: 'pointer'}}/>
-            <Spellcheck sx={{color: learned ? 'gold' : 'black', cursor: 'pointer'}} onClick={() => handleLearnWordIconClick()}/>
-            </> : null
-          }
-          
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+        {clicked ? (
+          <StopCircleOutlined />
+        ) : (
+          <PlayArrow
+            onClick={() => {
+              clicked ? null : handlePlayIconClick()
+            }}
+          />
+        )}
+        {localStorage.userInfo ? (
+          <>
+            <WatchLater
+              sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
+            />
+            <Spellcheck
+              sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
+              onClick={() => handleLearnWordIconClick()}
+            />
+          </>
+        ) : null}
       </CardActions>
     </Card>
   )
