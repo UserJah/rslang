@@ -21,7 +21,11 @@
 }
 
 .btn{
+  text-decoration: none;
   cursor: pointer;
 }
 
+.unAuth{
+  text-align: center;
+}
 

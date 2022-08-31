@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthConstants from "../../constants/Auth.constants"
-import { ISignin, IUserInfo } from '../../constants/Auth.interfaces';
+import { ISignin, IUserInfo } from './../../constants/Auth.interfaces';
 import LocalStorageService from "./../../utils/LocalStorageService"
 import api from './../../utils/AuthAPI';
 
@@ -35,6 +35,8 @@ const useAuthContext = () => {
     setParting(true)
 
     setTimeout(() => setParting(false), AuthConstants.POP_UP_DELAY)
+
+    window.location.reload()
 
     LocalStorageService.clear()
   }
@@ -144,6 +146,9 @@ const useAuthContext = () => {
         setDataAuth(initialDataAuth)
         setPreloader(false)
         setOpenLogin(false)
+
+        window.location.reload()
+
         setTimeout(() => {
           setAuth(false)
         }, AuthConstants.POP_UP_DELAY)
