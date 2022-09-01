@@ -1,10 +1,11 @@
+
 .row {
   display: flex;
 }
 
 .title,
 .data {
-  padding: .5rem;
+  padding: 0.5rem;
   flex-basis: 25%;
 
   display: flex;

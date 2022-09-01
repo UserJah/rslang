@@ -24,13 +24,29 @@ export interface IToken {
   name: string;
 }
 
-export interface IStat {
-  learnedWords: number,
-  optional: {
-    dayWords: string,
-    words: string,
-    percentage: string,
-    date: Date,
-    series: string,
-  },,
+
+export interface IStatistics {
+  learnedWords: number
+  optional?: {
+    audiochallenge?: {
+      biggestStreak?: number
+      answers?: number
+      percentage?: number,
+      newWords: number
+    },
+    sprint?: {
+      biggestStreak?: number
+      answers?: number
+      percentage?: number,
+      newWords: number
+    }
+    , date: Date
+  }
+}
+
+export interface IGame {
+  biggestStreak?: number
+  answers?: number
+  percentage?: number,
+  newWords: number
 }

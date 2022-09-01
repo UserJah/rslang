@@ -1,4 +1,4 @@
-import { ISignin, IStat } from './../constants/Auth.interfaces';
+import { ISignin, IStatistics } from './../constants/Auth.interfaces';
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -30,7 +30,7 @@ class AuthAPI {
     }
   }
 
-  public updateStat = async (id: string, token: string, optional: IStat): Promise<Response | undefined> => {
+  public updateStat = async (id: string, token: string, optional: IStatistics): Promise<Response | undefined> => {
     try {
       const response = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.statistics}`, {
         method: 'PUT',
@@ -46,7 +46,7 @@ class AuthAPI {
       return response
 
     } catch (error) {
-      console.log('getStat api', error)
+      console.log('updateStat api', error)
     }
   }
 

@@ -1,18 +1,42 @@
 import { Link } from 'react-router-dom'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Categories from '../Categories/Categories'
 import localStorageService from './../../../utils/LocalStorageService'
 import AuthConstants from '../../../constants/Auth.constants'
-import { IUserInfo } from '../../../constants/Auth.interfaces'
+import {
+  IGame,
+  IStatistics,
+  IUserInfo,
+} from '../../../constants/Auth.interfaces'
+import api from './../../../utils/AuthAPI'
 import classes from './Statistic.module.css'
 
 const Statistic = () => {
-  const local = localStorageService.getItem<IUserInfo>(
-    AuthConstants.USER_KEY_STORAGE
-  )
+  const [stat, setStat] = useState<IStatistics | null>(null)
+  const [show, setShow] = useState<boolean>(false)
 
-  const id = local?.userId
-  const token = local?.token
+  const getStatAsync = async (): Promise<void> => {
+    const local = localStorageService.getItem<IUserInfo>(
+      AuthConstants.USER_KEY_STORAGE
+    )
+    if (local) {
+      const stat = await api.getStat(
+        local.userId as string,
+        local.token as string
+      )
+
+      if (stat && stat.status === 200) {
+        const resp = await stat.json()
+
+        setStat(resp)
+        setShow(true)
+      }
+    }
+  }
+
+  useEffect(() => {
+    getStatAsync()
+  }, [show])
 
   return (
     <div className={classes.statistics}>
@@ -20,17 +44,19 @@ const Statistic = () => {
       <Link to="/" className={classes.btn}>
         На главную
       </Link>
-      {local && local.isAuth ? (
+      {show && stat && stat.optional ? (
         <>
           <Categories
-            id={id as string}
-            token={token as string}
             title="АУДИОВЫЗОВ"
+            words={stat.learnedWords}
+            game={stat.optional.audiochallenge as IGame}
+            date={stat.optional.date}
           />
           <Categories
-            id={id as string}
-            token={token as string}
             title="СПРИНТ"
+            words={stat.learnedWords}
+            game={stat.optional.sprint as IGame}
+            date={stat.optional.date}
           />
         </>
       ) : (

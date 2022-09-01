@@ -1,4 +1,6 @@
+import { IGame } from './../../../constants/Auth.interfaces';
 export interface IStatTableProps {
-  id: string
-  token: string
+  game: IGame
+  words: number
+  date: Date
 }

@@ -1,5 +1,7 @@
+import { IGame } from './../../../constants/Auth.interfaces';
 export interface CategoryProps {
   title: string
-  id: string
-  token: string
+  game: IGame
+  words: number
+  date: Date
 }

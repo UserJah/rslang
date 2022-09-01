@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthConstants from "../../constants/Auth.constants"
-import { ISignin, IUserInfo } from './../../constants/Auth.interfaces';
+import { ISignin, IStatistics, IUserInfo } from './../../constants/Auth.interfaces';
 import LocalStorageService from "./../../utils/LocalStorageService"
 import api from './../../utils/AuthAPI';
 
@@ -8,6 +8,25 @@ const initialDataAuth: ISignin = {
   email: '',
   password: '',
   login: '',
+}
+
+const defaultStats: IStatistics = {
+  learnedWords: 100,
+  optional: {
+    audiochallenge: {
+      biggestStreak: 5,
+      answers: 4,
+      percentage: 80,
+      newWords: 7
+    },
+    sprint: {
+      biggestStreak: 10,
+      answers: 12,
+      percentage: 100,
+      newWords: 6
+    }
+    , date: new Date()
+  }
 }
 
 const useAuthContext = () => {
@@ -143,17 +162,28 @@ const useAuthContext = () => {
           name,
           experience,
         })
+
         setDataAuth(initialDataAuth)
         setPreloader(false)
         setOpenLogin(false)
 
-        window.location.reload()
+        api.getStat(userId as string, token as string).then(resp => {
+          if (resp && resp.status !== 200) {
+            api.updateStat(userId as string, token as string, defaultStats)
+          }
+
+          return
+        })
+
 
         setTimeout(() => {
           setAuth(false)
+
+          window.location.reload()
         }, AuthConstants.POP_UP_DELAY)
       }
     })
+
   }
 
   const setDBUSer = (): void => {
