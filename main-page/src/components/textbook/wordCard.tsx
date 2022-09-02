@@ -1,25 +1,25 @@
 import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
 import React, { useState } from 'react'
-import { Path, Word } from '../../api/types'
+import { Path } from '../../api/types'
 import Typography from '@mui/material/Typography'
 import './wordCard.css'
 import {
+  DoneAll,
   PlayArrow,
   Spellcheck,
   StopCircleOutlined,
   WatchLater,
 } from '@mui/icons-material'
+import { getUserWord, setUserWordsTextBook } from '../../common/functions'
 
 const WordCard = ({ props, color }) => {
   const [clicked, setClicked] = useState(false)
   const [learned, setLearned] = useState(false)
+  const [userWord, setUserWord] = useState(false)
 
   const htmlString = props.textExample
 
-  const audioWord = new Audio(Path.base + props.audio),
-    audioMeaning = new Audio(Path.base + props.audioMeaning),
-    audioExample = new Audio(Path.base + props.audioExample)
-  const arr = [audioWord, audioMeaning, audioExample]
+  const arr = [new Audio(Path.base + props.audio), new Audio(Path.base + props.audioMeaning), new Audio(Path.base + props.audioExample)]
 
   const playAudio = () => {
     setTimeout(() => {
@@ -38,14 +38,33 @@ const WordCard = ({ props, color }) => {
     playAudio()
     setTimeout(
       () => setClicked(false),
-      (audioWord.duration + audioMeaning.duration + audioExample.duration) *
+      (arr[0].duration + arr[1].duration + arr[2].duration) *
         1000
     )
   }
+  const handleSetHardWord = async () => {
+    (await getUserWord(props.id) ?
+    setUserWordsTextBook(props.id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
+    : 
+    setUserWordsTextBook(props.id, {difficulty: 'hard', optional : {isKnown : false}}))
+    setUserWord((userWord: boolean) => userWord ? false : true)
+  }
+  
+  const isUserWord = async () => {
+    if (localStorage.userInfo && await getUserWord(props.id)) {
+      (await getUserWord(props.id))?.difficulty.includes('hard') ? setUserWord(true) : null
+    }
+  }
+
+  isUserWord()
+
+  const handleSetNormalWord = async () => {
+    await setUserWordsTextBook(props.id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
+    setUserWord((userWord: boolean) => userWord ? false : true)
+  }
 
   const handleLearnWordIconClick = () => {
-    setLearned(true)
-    console.log(learned)
+    return
   }
 
   return (
@@ -54,7 +73,7 @@ const WordCard = ({ props, color }) => {
         boxSizing: 'border-box',
         maxWidth: '265px',
         m: 2,
-        bgcolor: learned ? 'gold' : color,
+        bgcolor: userWord ? 'brown' : color,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -102,6 +121,7 @@ const WordCard = ({ props, color }) => {
           <StopCircleOutlined />
         ) : (
           <PlayArrow
+            sx={{cursor: 'pointer'}}
             onClick={() => {
               clicked ? null : handlePlayIconClick()
             }}
@@ -109,9 +129,19 @@ const WordCard = ({ props, color }) => {
         )}
         {localStorage.userInfo ? (
           <>
-            <WatchLater
+          {
+            userWord ? 
+              <DoneAll 
+                sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
+                onClick = {() => {handleSetNormalWord()}}
+              />
+              :
+              <WatchLater
               sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
-            />
+              onClick={() => handleSetHardWord()}
+            /> 
+          }
+
             <Spellcheck
               sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
               onClick={() => handleLearnWordIconClick()}
