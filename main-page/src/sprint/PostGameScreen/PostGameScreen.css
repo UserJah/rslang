@@ -1,7 +1,14 @@
 .postGameScreen {
-  width: 50vw;
+  width: 40vw;
   margin: 0 auto;
   list-style: none;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-evenly;
+  border:1px solid grey;
+  border-radius:10px;
+  background-color: aquamarine;
+  align-items: center;
 }
 .postGameElement {
   width: 100%;
@@ -12,5 +19,27 @@
 }
 
 .postGameWord {
-  width: 100px;
+  width: 120px;
+}
+.postgame_audio{
+  text-align: center;
+  width:40px;
+  height:40px;
+  border-radius: 50%;
+  background-color: grey;
+  transition-duration: 0.3s;
+}
+.postgame_audio:hover,
+.again{
+  cursor: pointer;
+transform: scale(1.05);
+}
+.postgame_audio:hover>*{
+  transition-duration: 0.3s;
+  color:green;
+}
+.again{
+  width:100px;
+  height:40px;
+  background-color: orange;
 }

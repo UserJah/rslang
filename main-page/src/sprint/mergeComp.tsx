@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { Card } from './GameScreen'
+import { Card } from './gameScreen/GameScreen'
 import { Timer } from './Timer/Timer'
 import { WordSignature } from '../api/types'
 import { prepare } from '../common/functions'
-export function Game(props: { group: number; page: number }) {
+import { Preloader } from './preload/preloader'
+export function Game(props: { group: number; page: number,fromPage:boolean }) {
   const [end, setEnd] = useState(false)
-  const [again, setAgain] = useState(1)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState<WordSignature[]>([])
   function updateEnd() {
     setEnd(true)
   }
   function playAgain() {
-    console.log(again)
     setEnd(false)
-    setAgain(again + 1)
   }
 
   useEffect(() => {
     const resp = async () => {
       const response = (await prepare(
         props.page,
-        props.group
+        props.group,props.fromPage
       )) as WordSignature[]
-
+console.log(response)
       setIsLoaded(true)
       setItems(response)
     }
 
     resp()
-  }, [props.group, props.page])
+  }, [props.fromPage, props.group, props.page])
   if (!isLoaded) {
-    return <div>Загрузка...</div>
-  } else if (again) {
+    return <Preloader/>
+  } else {
     return (
       <div>
-        <Timer seconds="1000" endFunc={updateEnd} reset={again} />
-        <Card items={items} end={end} func={playAgain} reset={again} />
+        <Timer seconds="10" endFunc={updateEnd} reset={end} />
+        <Card items={items} end={end} func={playAgain} reset={end} fromPage={props.fromPage || false} endfunc={updateEnd}/>
       </div>
     )
   }
