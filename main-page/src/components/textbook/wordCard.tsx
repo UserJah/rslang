@@ -12,10 +12,10 @@ import {
 } from '@mui/icons-material'
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
 
-const WordCard = ({ props, color }) => {
+const WordCard = ({ props, color, group }) => {
   const [clicked, setClicked] = useState(false)
-  const [learned, setLearned] = useState(false)
-  const [userWord, setUserWord] = useState(false)
+  const [userDifficultyWord, setUserDifficultyWord] = useState(false)
+  const [userLearnedWord, setUserLearnedWord] = useState(false)
 
   const htmlString = props.textExample
 
@@ -43,29 +43,50 @@ const WordCard = ({ props, color }) => {
     )
   }
   const handleSetHardWord = async () => {
-    (await getUserWord(props.id) ?
-    setUserWordsTextBook(props.id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
+    (await getUserWord(group === 7 ? props._id : props.id) ?
+    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
     : 
-    setUserWordsTextBook(props.id, {difficulty: 'hard', optional : {isKnown : false}}))
-    setUserWord((userWord: boolean) => userWord ? false : true)
+    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'hard', optional : {isKnown : false}}))
+    setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
+    console.log(userDifficultyWord);
+  }
+
+  const handleSetNormalWord = async () => {
+    await setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
+    setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
+    console.log(userDifficultyWord);
+  }
+
+  const handleSetLearnedWorld = async () => {
+    (await getUserWord(group === 7 ? props._id : props.id) ?
+    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : true}}, 'PUT')
+    : 
+    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : true}}))
+    setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
+  }
+
+  const handleSetUnlearnedWorld = async () => {
+    setUserWordsTextBook(group ===7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : false}}, 'PUT')
+    setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
+  }
+
+  const isUserDifficultyWord = async () => {
+    if (localStorage.userInfo && await getUserWord(group ===7 ? props._id : props.id)) {
+      (await getUserWord(group ===7 ? props._id : props.id))?.difficulty.includes('hard') ? setUserDifficultyWord(true) : null
+    }
   }
   
-  const isUserWord = async () => {
+  const isUserLearnedWord = async () => {
     if (localStorage.userInfo && await getUserWord(props.id)) {
-      (await getUserWord(props.id))?.difficulty.includes('hard') ? setUserWord(true) : null
+      (await getUserWord(group ===7 ? props._id : props.id))?.optional?.isKnown ? setUserLearnedWord(true) : null
     }
   }
 
-  isUserWord()
-
-  const handleSetNormalWord = async () => {
-    await setUserWordsTextBook(props.id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
-    setUserWord((userWord: boolean) => userWord ? false : true)
+  if (group !== 7) {
+    isUserDifficultyWord()
+    isUserLearnedWord()
   }
 
-  const handleLearnWordIconClick = () => {
-    return
-  }
 
   return (
     <Card
@@ -73,7 +94,7 @@ const WordCard = ({ props, color }) => {
         boxSizing: 'border-box',
         maxWidth: '265px',
         m: 2,
-        bgcolor: userWord ? 'brown' : color,
+        bgcolor: userLearnedWord ? 'gold' : ( userDifficultyWord? 'brown' : color),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -129,22 +150,25 @@ const WordCard = ({ props, color }) => {
         )}
         {localStorage.userInfo ? (
           <>
-          {
-            userWord ? 
-              <DoneAll 
-                sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
+          {userLearnedWord ? null :  
+          
+            userDifficultyWord ? 
+              <DoneAll
+                sx={{ cursor: 'pointer' }}
                 onClick = {() => {handleSetNormalWord()}}
               />
               :
               <WatchLater
-              sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
+              sx={{ cursor: 'pointer' }}
               onClick={() => handleSetHardWord()}
             /> 
           }
 
             <Spellcheck
-              sx={{ color: learned ? 'gold' : 'black', cursor: 'pointer' }}
-              onClick={() => handleLearnWordIconClick()}
+              sx={{ cursor: 'pointer' }}
+              onClick={() => {
+                userLearnedWord ? handleSetUnlearnedWorld() : handleSetLearnedWorld()
+              } }
             />
           </>
         ) : null}

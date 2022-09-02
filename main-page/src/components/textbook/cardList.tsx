@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import WordCard from './wordCard'
 import { Container } from '@mui/material'
 import AuthPathConstants from '../../constants/AuthPath.constants'
-import { Word, WordSignature } from '../../api/types'
+import { UserWords, Word } from '../../api/types'
 
 const CardList = ({ page, group, color }) => {
   const [error, setError] = useState(null)
@@ -24,7 +24,6 @@ const CardList = ({ page, group, color }) => {
           (result) => {
             setIsLoaded(true)
             setItems(Object.entries(...result)[0][1])
-            console.log(Object.entries(...result)[0][1]);
           },
           (error) => {
             setIsLoaded(true)
@@ -37,8 +36,7 @@ const CardList = ({ page, group, color }) => {
       .then(
         (result) => {
           setIsLoaded(true)
-          setItems(result)
-          console.log(items);
+          setItems(result);
         },
         (error) => {
           setIsLoaded(true)
@@ -47,7 +45,7 @@ const CardList = ({ page, group, color }) => {
       )
       }
   }, [group, page])
-
+  {console.log(items)}
   if (error) {
     return <div>Ошибка: {error}</div>
   } else if (!isLoaded) {
@@ -59,8 +57,7 @@ const CardList = ({ page, group, color }) => {
         sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
       >
         {items.map((item: Word) => (
-          group === 7 ? <WordCard props={item} key={item.word} color={color} /> : <WordCard props={item} key={item.id} color={color} />
-          
+          <WordCard props={item} key={item.word} color={color} group={group}/>
         ))}
       </Container>
     )

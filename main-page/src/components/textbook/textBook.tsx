@@ -17,14 +17,14 @@ export const TextBook = () => {
   )
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="h3" textAlign="center">
-        Электронный учебник страница {page}
+    <div style={{ display: 'flex', flexDirection: 'column'}}>
+      <Typography variant="h3" textAlign="center" sx={{p: 2}}>
+        ЭЛЕКТРОННЫЙ УЧЕБНИК
       </Typography>
-      <Typography variant="h5" textAlign="center">
-        {group === 7 ? 'Сложные слова ': `Уровень ${group}`}
+      <Typography variant="h5" textAlign="center" sx={{p: 2}}>
+        {group === 7 ? 'Сложные слова': `Уровень ${group}, страница ${page}`}
       </Typography>
-      <Container maxWidth="sm" sx={{ display: 'flex' }}>
+      <Container maxWidth="sm" sx={{ display: 'flex', p: 2 }}>
         {groups.map((group, index) => {
           return (
             <Container
@@ -46,6 +46,10 @@ export const TextBook = () => {
                 height: '50px',
                 borderRadius: '50%',
                 border: '1px solid black',
+                cursor: 'pointer',
+                ":hover" : {
+                  boxShadow: '6px 6px rgba(0, 0, 255, .2)'
+                }
               }}
             >
               {group}
@@ -72,6 +76,9 @@ export const TextBook = () => {
               height: '50px',
               borderRadius: '50%',
               border: '1px solid black',
+              ":hover" : {
+                boxShadow: '6px 6px rgba(0, 0, 255, .2)'
+              }
             }}
           >
             {7}
@@ -81,6 +88,7 @@ export const TextBook = () => {
       <Container
         maxWidth="sm"
         sx={{
+          p: 3,
           display: 'flex',
           justifyContent: 'center',
           gap: '10px',
@@ -88,7 +96,7 @@ export const TextBook = () => {
           alignSelf: 'center',
         }}
       >
-        <Button variant="contained" sx={{ backgroundColor: color }}>
+        <Button variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
           Аудиовызов
         </Button>
         <Button variant="contained" sx={{ backgroundColor: color }}>
@@ -98,10 +106,11 @@ export const TextBook = () => {
       <CardList page={page} group={group} color={color} />
       <Pagination
         count={group === 7 ? 1 : 30}
+        size='large'
         showFirstButton
         showLastButton
         page={page}
-        sx={{ justifySelf: 'center', alignSelf: 'center' }}
+        sx={{ justifySelf: 'center', alignSelf: 'center', p: 4}}
         onChange={(_, page) => {
           if (page !== null) {
             setPage(page)
