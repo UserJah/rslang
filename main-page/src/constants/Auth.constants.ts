@@ -5,6 +5,7 @@ const enum AuthConstants {
 
   ERROR_SIGIN = '* Некорректный пароль или email',
   ERROR_EMAIL = '* Некорректный email',
+  ERROR_LOGIN = '* Введите login',
   ERROR_AUTH = '* Пользователь не зарегистрирован',
   ERROR_CREATE = '* Такой пользователь уже зарегистрирован',
   ERROR_PASS = '* Пароль меньше 8 символов',
