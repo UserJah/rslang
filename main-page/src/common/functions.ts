@@ -144,6 +144,23 @@ export async function getaudio(path: string) {
 }
 
 
+export async function getUserWord(id: string) {
+  const NonStringedUser = localStorage.getItem('userInfo') as string
+  const user = JSON.parse(NonStringedUser)
+  const token = user.token
+  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/words/${id}`
+  const rawResp: Response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
+  })
+  if (rawResp.ok) {
+    const resp = await (rawResp.json() as Promise<UserWords>)
+    return resp
+  }
+}
+
 export async function getUserWords() {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
@@ -181,8 +198,7 @@ export async function setUserWords(wordId: string, word: Partial<WordSignature>,
   const user = JSON.parse(NonStringedUser)
   const token = user.token
   const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/words/${wordId}`
-  console.log(word)
-  const rawResp = await fetch(url, {
+  const rawResp: Response = await fetch(url, {
     method: method,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -459,4 +475,22 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
 export function learned(before: boolean, after: boolean | undefined) {
   if (!before && after) return 1
   else return 0
+}
+
+export async function setUserWordsTextBook(wordId:string,word:UserWords,method='POST') {
+  const NonStringedUser = localStorage.getItem('userInfo') as string
+  const user = JSON.parse(NonStringedUser)
+  const token = user.token
+  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/words/${wordId}`
+  const rawResp: Response = await fetch(url, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(word),
+  })
+  const resp = await (rawResp.json() as Promise<Word>)
+  return resp
 }
