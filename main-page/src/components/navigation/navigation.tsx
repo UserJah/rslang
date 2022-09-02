@@ -1,6 +1,5 @@
 import React from 'react'
-import LoginModal from '../LoginModal'
-import RegisterModal from '../RegisterModal'
+import Authorization from '../Auth/Authorization/Authorization'
 import img from './../../assets/img/logo.svg'
 import TemporalyDrawer from './drawer'
 import './navigation.css'
@@ -11,8 +10,7 @@ const Navigation = () => {
       <TemporalyDrawer />
       <img src={img} alt="rs-logo" className="rs-logo" />
       <div className="button-group-user">
-        <LoginModal />
-        <RegisterModal />
+        <Authorization />
       </div>
     </div>
   )

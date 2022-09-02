@@ -117,7 +117,7 @@ export default function CustomizedAccordions() {
             обучения.
           </Typography>
           <Button variant="contained" size="small">
-            <Link className="link" to="5">
+            <Link className="link" to="4">
               Перейти
             </Link>
           </Button>
