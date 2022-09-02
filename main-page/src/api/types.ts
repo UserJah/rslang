@@ -57,14 +57,25 @@ export type WordSignature = {
   difficulty?: string
   variant?:string[],
   wordTranslate?: string,
-  id?:string
+  id?:string,
+  image?: string,
 }
 export type Statistics = {
-  learnedwords: number
-  optional?: {
-    biggestStreak?: number
-    answers?: number
-    percentage?: number
+  id?:string,
+  learnedWords: number
+  optional: {
+    audiochallenge:{ biggestStreak: number
+    answers: number
+    percentage: number,
+    newWords:number
+  },
+    sprint:{
+      biggestStreak: number
+      answers: number
+      percentage: number,
+      newWords:number
+    },
+date:Date
   }
 }
 export type UserWords = {
@@ -78,5 +89,10 @@ export type UserWords = {
   id: string
   wordId: string
 }
-
-
+export type GatheredStats={
+  new:number,
+  answers:number,
+  correctAnswers:number,
+  learned:number,
+  bigStreak:number
+}
