@@ -1,4 +1,4 @@
-import { ISignin, IStatistics } from './../constants/Auth.interfaces';
+import { ISignin, IStatistics, IToken } from './../constants/Auth.interfaces';
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -68,7 +68,7 @@ class AuthAPI {
     }
   }
 
-  public getNewToken = async (id: string, refToken: string): Promise<Response | undefined> => {
+  public getNewToken = async (id: string, refToken: string): Promise<IToken | undefined> => {
 
     try {
       const newToken = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.tokens}`, {

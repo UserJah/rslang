@@ -9,11 +9,11 @@ const setTextBookGameRoutes = (gameName: string) => {
 
   for (let i = 1; i <= TextBookConstants.MAX_GROUPS; i++) {
     for (let j = 1; j <= TextBookConstants.MAX_PAGES; j++) {
-      if (gameName === 'audioChallenge') {
+      if (gameName === 'audio') {
         routes.push(
           <Route
             key={`gameName${j}`}
-            path={`${gameName}/${i}/${j}`}
+            path={`/${gameName}/${i}/${j}`}
             element={
               <AudioChallenge group={i - 1} page={j - 1} fromPage={true} />
             }
@@ -25,7 +25,7 @@ const setTextBookGameRoutes = (gameName: string) => {
         routes.push(
           <Route
             key={`gameName${j}`}
-            path={`${gameName}/${i}/${j}`}
+            path={`/${gameName}/${i}/${j}`}
             element={<Sprint group={i - 1} page={j - 1} fromPage={true} />}
           />
         )

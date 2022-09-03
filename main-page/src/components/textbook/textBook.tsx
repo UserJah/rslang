@@ -122,7 +122,9 @@ export const TextBook = () => {
       >
         <Link
           to={
-            group !== 7 && !allLearned ? `/audioChallenge/${group}/${page}` : window.location
+            group !== 7 && !allLearned
+              ? `/audio/${group}/${page}`
+              : window.location
           }
           style={{ textDecoration: 'none' }}
         >
@@ -135,7 +137,11 @@ export const TextBook = () => {
           </Button>
         </Link>
         <Link
-          to={group !== 7 && !allLearned ? `/sprint/${group}/${page}` : window.location}
+          to={
+            group !== 7 && !allLearned
+              ? `/sprint/${group}/${page}`
+              : window.location
+          }
           style={{ textDecoration: 'none' }}
         >
           <Button

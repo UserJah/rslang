@@ -42,8 +42,9 @@ const Statistic = () => {
             result.optional?.audiochallenge?.percentage
           const learnedWords = result.learnedWords
 
-          const answersSprint = result.optional?.sprint?.answers
-          const answersAudioChallenge = result.optional?.audiochallenge?.answers
+          const answersSprint = result.optional?.sprint?.newWords
+          const answersAudioChallenge =
+            result.optional?.audiochallenge?.newWords
 
           if (
             percentageSprint !== undefined &&
@@ -51,14 +52,17 @@ const Statistic = () => {
             answersSprint !== undefined &&
             answersAudioChallenge !== undefined
           ) {
-            //TODO To read 5th grade math))
             const averagePercentage =
               percentageSprint && percentageAudioChallenge > 0
-                ? (+(percentageSprint + percentageAudioChallenge).toFixed(1) *
-                    100) /
-                  2
-                : +(percentageSprint + percentageAudioChallenge).toFixed(1) *
-                  100
+                ? Math.ceil(
+                    (+(percentageSprint + percentageAudioChallenge).toFixed(2) *
+                      100) /
+                      2
+                  )
+                : Math.ceil(
+                    +(percentageSprint + percentageAudioChallenge).toFixed(2) *
+                      100
+                  )
 
             const averageAnswers = answersSprint + answersAudioChallenge
 
@@ -77,6 +81,7 @@ const Statistic = () => {
         }
       })()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showStat])
 
   return (
@@ -128,7 +133,8 @@ const Statistic = () => {
         </div>
       ) : (
         <Typography className={classes.fail} variant="h4" component="h2">
-          Статистика доступна только зарегистрированным пользователям войдите в ваш аккаунт
+          Статистика доступна только зарегистрированным пользователям войдите в
+          ваш аккаунт
         </Typography>
       )}
     </>
