@@ -10,7 +10,7 @@ export const pidgeon = `
     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
     xmlns:ns1="http://sozi.baierouge.fr"
-    width="70"
+    width="50"
     viewBox="0 0 63 85"
     id="Layer_2"
   >

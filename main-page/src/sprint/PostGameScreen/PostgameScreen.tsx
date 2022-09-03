@@ -10,8 +10,8 @@ export function Postgame(props: {
   func: () => void
 }) {
   function check(elem:WordSignature){
-    if (elem.guessedCorrect) return <CheckIcon sx={{color:'green'}}/>
-    else return <ClearIcon sx={{color:'red'}}/>
+    if (elem.guessedCorrect) return <CheckIcon sx={{color:'green',fontSize:30}}/>
+    else return <ClearIcon sx={{color:'red',fontSize:30}}/>
   }
   return (
     <div className="postGameScreen">
@@ -19,13 +19,10 @@ export function Postgame(props: {
       <ul>
         {props.elements.map((item) => (
           <li className="postGameElement" key={item.audio}>
-            <button
-              className="postgame_audio"
-              onClick={() => playaudio(getaudio(item.audio))}
-            >
-              <VolumeUpIcon sx={{fontSize:20 ,color:'grey' }}/>
-            </button>
-            <p className="postGameWord">{item.word}</p>
+            <button className='postgame_audio'>
+           <VolumeUpIcon sx={{fontSize:40,color:'#d66d27'}} onClick={() => playaudio(getaudio(item.audio))}/>
+           </button>
+            <p className="postGameWord postGameWord_eng">{item.word}</p>
             <p className="postGameWord">{item.correctTranslate}</p>
             <p>{check(item)}</p>
 
