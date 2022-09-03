@@ -55,7 +55,7 @@ const useAuthContext = () => {
 
     setTimeout(() => setParting(false), AuthConstants.POP_UP_DELAY)
 
-    window.location.reload()
+    // window.location.reload()
 
     LocalStorageService.clear()
   }
@@ -172,6 +172,7 @@ const useAuthContext = () => {
         setDataAuth(initialDataAuth)
         setPreloader(false)
         setOpenLogin(false)
+        setGreeting(true)
 
         api.getStat(userId as string, token as string).then(resp => {
 
@@ -185,8 +186,9 @@ const useAuthContext = () => {
 
         setTimeout(() => {
           setAuth(false)
+          setGreeting(false)
 
-          window.location.reload()
+          // window.location.reload()
         }, AuthConstants.POP_UP_DELAY)
       }
     })
@@ -199,27 +201,9 @@ const useAuthContext = () => {
     }
   }
 
-  const notifyAuth = () => {
-    const userInfo: IUserInfo | null = LocalStorageService.getItem(
-      AuthConstants.USER_KEY_STORAGE
-    )
-
-    if (userInfo) {
-      const now = Date.now()
-      const lastVisit = Date.parse(String(userInfo.experience))
-      const tokenTimeDelta = now - lastVisit
-
-      if (tokenTimeDelta > AuthConstants.REFRESH_TOKEN_LIFE) {
-        setErr(AuthConstants.ERROR_TOKEN_MISS)
-        setAuth(false)
-        LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, { ...userInfo, isAuth: false })
-        handleOpenLogin()
-        return;
-      }
-    }
-  }
-
-  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, notifyAuth, preloader }
+  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, preloader }
 }
+
+
 
 export default useAuthContext;

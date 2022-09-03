@@ -12,12 +12,15 @@ const GameStat = ({ title, cn, game }: IGameStatProps) => {
         {title}
       </Typography>
       <div className={classes.rows}>
-        <p>{game ? game.answers : 0}</p>
+        <p>{game ? game.newWords : 0}</p>
         <p>Новые слова</p>
       </div>
       <div className={classes.rows}>
         <p>
-          {game && game.percentage ? +game.percentage.toFixed(2) * 100 : 0}%
+          {game && game.percentage
+            ? Math.ceil(+game.percentage.toFixed(2) * 100)
+            : 0}
+          %
         </p>
         <p>Точность</p>
       </div>
