@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent, CardMedia } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Path } from '../../api/types'
 import Typography from '@mui/material/Typography'
 import './wordCard.css'
@@ -18,10 +18,7 @@ const WordCard = ({ props, color, group }) => {
   const [userLearnedWord, setUserLearnedWord] = useState(false)
 
   const htmlString = props.textExample
-
-  const arr = [new Audio(Path.base + props.audio), new Audio(Path.base + props.audioMeaning), new Audio(Path.base + props.audioExample)]
-
-  const playAudio = () => {
+  const playAudio = (arr: HTMLAudioElement[]) => {
     setTimeout(() => {
       arr[0].play()
       setTimeout(() => {
@@ -34,58 +31,59 @@ const WordCard = ({ props, color, group }) => {
   }
 
   const handlePlayIconClick = () => {
-    setClicked(true)
-    playAudio()
-    setTimeout(
-      () => setClicked(false),
-      (arr[0].duration + arr[1].duration + arr[2].duration) *
-        1000
-    )
+    const arr = [new Audio(Path.base + props.audio), new Audio(Path.base + props.audioMeaning), new Audio(Path.base + props.audioExample)]
+    setTimeout (() => {    setClicked(true)
+      playAudio(arr)
+      setTimeout(
+        () => setClicked(false),
+        (arr[0].duration + arr[1].duration + arr[2].duration) *
+          1000
+      )}, 100)
   }
   const handleSetHardWord = async () => {
-    (await getUserWord(group === 7 ? props._id : props.id) ?
-    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
+    (await getUserWord(props._id) ?
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
     : 
-    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'hard', optional : {isKnown : false}}))
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false}}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
-    console.log(userDifficultyWord);
   }
 
   const handleSetNormalWord = async () => {
-    await setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
+    await setUserWordsTextBook(props._id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
-    console.log(userDifficultyWord);
   }
 
   const handleSetLearnedWorld = async () => {
-    (await getUserWord(group === 7 ? props._id : props.id) ?
-    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : true}}, 'PUT')
+    (await getUserWord(props._id) ?
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}, 'PUT')
     : 
-    setUserWordsTextBook(group === 7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : true}}))
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
   }
 
   const handleSetUnlearnedWorld = async () => {
-    setUserWordsTextBook(group ===7 ? props._id : props.id, {difficulty: 'easy', optional : {isKnown : false}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false}}, 'PUT')
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
   }
 
-  const isUserDifficultyWord = async () => {
-    if (localStorage.userInfo && await getUserWord(group ===7 ? props._id : props.id)) {
-      (await getUserWord(group ===7 ? props._id : props.id))?.difficulty.includes('hard') ? setUserDifficultyWord(true) : null
-    }
-  }
-  
-  const isUserLearnedWord = async () => {
-    if (localStorage.userInfo && await getUserWord(props.id)) {
-      (await getUserWord(group ===7 ? props._id : props.id))?.optional?.isKnown ? setUserLearnedWord(true) : null
-    }
-  }
 
-  if (group !== 7) {
+
+  useEffect(() => {
+    const isUserDifficultyWord = () => {
+      if (localStorage.userInfo && props.userWord && group !== 7) {
+        (props.userWord.difficulty === 'hard') ? setUserDifficultyWord(true) : null;
+      }
+    }
+  
+    const isUserLearnedWord = () => {
+      if (localStorage.userInfo && props.userWord && props.userWord.optional && group !== 7) {
+          props.userWord.optional.isKnown ? setUserLearnedWord(true) : null;
+      }
+    }
+
     isUserDifficultyWord()
     isUserLearnedWord()
-  }
+  }, [])
 
 
   return (

@@ -15,6 +15,11 @@ export const TextBook = () => {
   const [color, setColor] = useState(
     JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!) ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!).color : 'lightgreen'
   )
+  const [allLearned, setAllLearned] = useState(false)
+
+  const updateAllLearned = (value: boolean) => {
+    setAllLearned(value)
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column'}}>
@@ -96,14 +101,14 @@ export const TextBook = () => {
           alignSelf: 'center',
         }}
       >
-        <Button variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
+        <Button disabled={allLearned? true : false} variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
           Аудиовызов
         </Button>
-        <Button variant="contained" sx={{ backgroundColor: color }}>
+        <Button disabled={allLearned? true : false} variant="contained" sx={{ backgroundColor: color }}>
           Спринт
         </Button>
       </Container>
-      <CardList page={page} group={group} color={color} />
+      <CardList page={page} group={group} color={color} updateAllLearned={updateAllLearned} allLearned={allLearned}/>
       <Pagination
         count={group === 7 ? 1 : 30}
         size='large'
