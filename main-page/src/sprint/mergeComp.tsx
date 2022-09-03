@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Card } from './gameScreen/GameScreen'
 import { Timer } from './Timer/Timer'
 import { WordSignature } from '../api/types'
-import { prepare } from '../common/functions'
+import { prepare, test1 } from '../common/functions'
 import { Preloader } from './preload/preloader'
 export function Game(props: { group: number; page: number,fromPage:boolean }) {
   const [end, setEnd] = useState(false)
@@ -17,11 +17,13 @@ export function Game(props: { group: number; page: number,fromPage:boolean }) {
 
   useEffect(() => {
     const resp = async () => {
+      test1()
       const response = (await prepare(
         props.page,
         props.group,props.fromPage
       )) as WordSignature[]
 console.log(response)
+
       setIsLoaded(true)
       setItems(response)
     }
@@ -32,8 +34,8 @@ console.log(response)
     return <Preloader/>
   } else {
     return (
-      <div>
-        <Timer seconds="10" endFunc={updateEnd} reset={end} />
+      <div className='gameboard'>
+        <Timer seconds="60" endFunc={updateEnd} reset={end} />
         <Card items={items} end={end} func={playAgain} reset={end} fromPage={props.fromPage || false} endfunc={updateEnd}/>
       </div>
     )

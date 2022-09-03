@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import './timer.css'
 export function Timer(props: {
   seconds: string
   endFunc: () => void
@@ -31,7 +32,7 @@ function timing(time:number,over:boolean){
 }
   return (
     <div>
-      <p>{timing(time,over)}</p>
+      <p className='timer'>{timing(time,over)}</p>
     </div>
   )
 }

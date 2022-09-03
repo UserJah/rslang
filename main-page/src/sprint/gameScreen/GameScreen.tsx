@@ -103,19 +103,20 @@ if (load){
     for (let index = 0; index < 3; index++) {
       if (index < strk % mult)
         arr.push(<StarIconFilled sx={{ color: '#FC0', fontSize: '60px' }} />)
-      else arr.push(<StarIcon sx={{ color: '#000', fontSize: '60px' }} />)
+      else arr.push(<StarIconFilled sx={{ color: '#51876f', fontSize: '60px' }} />)
     }
     return arr
   }
 
   const birds = function (strk: number, mult: number) {
     const arr = [pteroIMG(), pidgeionIMG(), turkeyIMG(), penguinIMG()]
-    return [arr[0]].concat(
+return [arr[0]].concat(
       arr.slice(
         1,
         1 + (Math.floor(strk / mult) > 5 ? 4 : Math.floor(strk / mult))
       )
     )
+
   }
 
 
@@ -129,7 +130,7 @@ if (load){
             <span className="Score">Score:{score}</span>
           </div>
           <div>{birds(streak, 4)}</div>
-          <div dangerouslySetInnerHTML={{ __html: stick }} />
+          <div className='stick' dangerouslySetInnerHTML={{ __html: stick }} />
 
           <Morebuttons
             elems={props.fromPage? props.items.filter(element=>!element.properties?.optional?.isKnown):props.items}
@@ -138,7 +139,6 @@ if (load){
             endfunc={props.endfunc}
           />
         </div>
-        {streak}
       </div>
     )
   } else {

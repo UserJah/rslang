@@ -101,6 +101,12 @@ const useAuthContext = () => {
       return
     }
 
+    if (!login) {
+      setErr(AuthConstants.ERROR_LOGIN)
+      setPreloader(false)
+      return
+    }
+
     setPreloader(true)
 
     const newUser = { email, password, name: login }

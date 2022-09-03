@@ -1,33 +1,41 @@
 .postGameScreen {
-  width: 40vw;
+  width: 550px;
+  margin: 0 auto;
+padding:30px;
+  background-color: rgba(238, 236, 209, 0.5);
+  border-radius: 20px;
   margin: 0 auto;
   list-style: none;
   display:flex;
   flex-direction:column;
-  justify-content: space-evenly;
-  border:1px solid grey;
-  border-radius:10px;
-  background-color: aquamarine;
-  align-items: center;
+  justify-content: flex-start;
+  align-items:center;
 }
 .postGameElement {
+  height:60px;
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
 }
-
+.postGameScreen>ul{
+  padding:20px;
+  padding-top:0;
+  width:100%
+}
 .postGameWord {
-  width: 120px;
+  min-width: 120px;
+  font-size: 25px;
 }
 .postgame_audio{
   text-align: center;
-  width:40px;
-  height:40px;
+  width:50px;
+  height:50px;
   border-radius: 50%;
-  background-color: grey;
   transition-duration: 0.3s;
+  border:none;
+  background-color: inherit;
 }
 .postgame_audio:hover,
 .again{
@@ -39,7 +47,20 @@ transform: scale(1.05);
   color:green;
 }
 .again{
-  width:100px;
-  height:40px;
-  background-color: orange;
+  width:180px;
+  height:60px;
+  border-radius:10px;
+  font-size:24px;
+  transition-duration: 0.3s;
+  background-color:rgb(243, 113, 26);
+  color:white;
+  border:none;
+  font-weight: 700;
+}
+.postGameWord_eng{
+  font-weight:700;
+}
+.postGameScreen>h2{
+  font-size: 45px;
+  margin:10px 0;
 }

@@ -494,3 +494,23 @@ export async function setUserWordsTextBook(wordId:string,word:UserWords,method='
   const resp = await (rawResp.json() as Promise<Word>)
   return resp
 }
+export async function test1(page=0,group=0){
+  const NonStringedUser = localStorage.getItem('userInfo') as string
+  const user = JSON.parse(NonStringedUser)
+  console.log(user)
+  const token = user.token
+  const id = user.userId
+  const filter = {"$or":[{"userWord.difficulty" : 'hard',"userWord.optional.isKnown":"true"}]}
+  const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/aggregatedWords?group=${group}
+&wordsPerPage=${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
+  const rawResp = await fetch(baseurl, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
+  })
+  const resp = await rawResp.json()
+  console.log(resp)
+  return resp[0].paginatedResults
+}
