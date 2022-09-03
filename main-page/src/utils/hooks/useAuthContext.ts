@@ -11,21 +11,21 @@ const initialDataAuth: ISignin = {
 }
 
 const defaultStats: IStatistics = {
-  learnedWords: 100,
+  learnedWords: 0,
   optional: {
     audiochallenge: {
-      biggestStreak: 5,
-      answers: 4,
-      percentage: 80,
-      newWords: 7
+      biggestStreak: 0,
+      answers: 0,
+      percentage: 0,
+      newWords: 0
     },
     sprint: {
-      biggestStreak: 10,
-      answers: 12,
-      percentage: 100,
-      newWords: 6
-    }
-    , date: new Date()
+      biggestStreak: 0,
+      answers: 0,
+      percentage: 0,
+      newWords: 0
+    },
+    date: new Date(),
   }
 }
 
@@ -168,7 +168,8 @@ const useAuthContext = () => {
         setOpenLogin(false)
 
         api.getStat(userId as string, token as string).then(resp => {
-          if (resp && resp.status !== 200) {
+
+          if (resp && resp.status === 404) {
             api.updateStat(userId as string, token as string, defaultStats)
           }
 
