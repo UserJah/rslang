@@ -34,7 +34,6 @@ const Main = () => {
           <CustomizedAccordions />
         </Container>
         <Container
-          className='image-container'
           maxWidth="md"
           sx={{
             backgroundImage: `url(${img})`,
@@ -54,7 +53,7 @@ const Main = () => {
           </Link>
         </Container>
       </div>
-      <YoutubeEmbed embedId={'zaglushka'}/>
+      <YoutubeEmbed embedId={'SnHTTOM9OPY'}/>
       <Team />
     </>
   )
