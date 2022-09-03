@@ -72,7 +72,7 @@ export function Startscreen(props?: { page?: number; group?: number,fromPage?:bo
 
   } else {
     return (
-      <Typography>
+      <Typography component={'section'} variant={'body2'}>
       <Game
         group={group as number}
         page={props?.page === undefined ? 29 : props.page}
