@@ -71,7 +71,7 @@ const WordCard = ({ props, color, group }) => {
 
   useEffect(() => {
     const isUserDifficultyWord = () => {
-      if (localStorage.userInfo && props.userWord && group !== 7) {
+      if (localStorage.userInfo && props.userWord) {
         (props.userWord.difficulty === 'hard') ? setUserDifficultyWord(true) : null;
       }
     }
