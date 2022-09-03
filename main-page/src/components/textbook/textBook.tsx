@@ -121,12 +121,12 @@ export const TextBook = () => {
         }}
       >
         <Link to={`/audio/hard/${group}`} style={{ textDecoration: 'none' }}>
-          <Button variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
+          <Button variant="contained" disabled={allLearned ? true : false} sx={{ backgroundColor: color, mr: 5 }}>
             Аудиовызов
           </Button>
         </Link>
         <Link to={`/sprint/hard/${group}`} style={{ textDecoration: 'none' }}>
-          <Button variant="contained" sx={{ backgroundColor: color }}>
+          <Button variant="contained" disabled={allLearned ? true : false} sx={{ backgroundColor: color }}>
             Спринт
           </Button>
         </Link>
