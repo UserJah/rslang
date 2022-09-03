@@ -3,26 +3,39 @@ import CardList from './cardList'
 import { Button, Pagination, Typography } from '@mui/material'
 import { Container } from '@mui/system'
 import './wordCard.css'
-import { groups, TextBookConstants, colors } from '../../constants/TextBook.constants'
+import {
+  groups,
+  TextBookConstants,
+  colors,
+} from '../../constants/TextBook.constants'
+import { Link } from 'react-router-dom'
 
 export const TextBook = () => {
   const [page, setPage] = useState(
-    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!) ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!).page : 1
+    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!)
+      ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!).page
+      : 1
   )
   const [group, setGroup] = useState(
-    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!) ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!).group : 1
+    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!)
+      ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!)
+          .group
+      : 1
   )
   const [color, setColor] = useState(
-    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!) ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!).color : 'lightgreen'
+    JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!)
+      ? JSON.parse(localStorage.getItem(TextBookConstants.TEXT_BOOK_INFO)!)
+          .color
+      : 'lightgreen'
   )
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column'}}>
-      <Typography variant="h3" textAlign="center" sx={{p: 2}}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography variant="h3" textAlign="center" sx={{ p: 2 }}>
         ЭЛЕКТРОННЫЙ УЧЕБНИК
       </Typography>
-      <Typography variant="h5" textAlign="center" sx={{p: 2}}>
-        {group === 7 ? 'Сложные слова': `Уровень ${group}, страница ${page}`}
+      <Typography variant="h5" textAlign="center" sx={{ p: 2 }}>
+        {group === 7 ? 'Сложные слова' : `Уровень ${group}, страница ${page}`}
       </Typography>
       <Container maxWidth="sm" sx={{ display: 'flex', p: 2 }}>
         {groups.map((group, index) => {
@@ -32,7 +45,10 @@ export const TextBook = () => {
                 setGroup(group)
                 setColor(colors[index])
                 setPage(1)
-                localStorage.setItem(TextBookConstants.TEXT_BOOK_INFO, JSON.stringify({group, color: colors[index], page : 1}))
+                localStorage.setItem(
+                  TextBookConstants.TEXT_BOOK_INFO,
+                  JSON.stringify({ group, color: colors[index], page: 1 })
+                )
               }}
               onKeyDown={() => setGroup(group)}
               key={String(group) + 'key'}
@@ -47,9 +63,9 @@ export const TextBook = () => {
                 borderRadius: '50%',
                 border: '1px solid black',
                 cursor: 'pointer',
-                ":hover" : {
-                  boxShadow: '6px 6px rgba(0, 0, 255, .2)'
-                }
+                ':hover': {
+                  boxShadow: '6px 6px rgba(0, 0, 255, .2)',
+                },
               }}
             >
               {group}
@@ -62,7 +78,10 @@ export const TextBook = () => {
               setGroup(7)
               setColor('brown')
               setPage(1)
-              localStorage.setItem(TextBookConstants.TEXT_BOOK_INFO, JSON.stringify({group: 7, color: 'brown', page : 1}))
+              localStorage.setItem(
+                TextBookConstants.TEXT_BOOK_INFO,
+                JSON.stringify({ group: 7, color: 'brown', page: 1 })
+              )
             }}
             onKeyDown={() => setGroup(7)}
             key={String(7) + 'key'}
@@ -76,9 +95,9 @@ export const TextBook = () => {
               height: '50px',
               borderRadius: '50%',
               border: '1px solid black',
-              ":hover" : {
-                boxShadow: '6px 6px rgba(0, 0, 255, .2)'
-              }
+              ':hover': {
+                boxShadow: '6px 6px rgba(0, 0, 255, .2)',
+              },
             }}
           >
             {7}
@@ -96,25 +115,32 @@ export const TextBook = () => {
           alignSelf: 'center',
         }}
       >
-        <Button variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
-          Аудиовызов
-        </Button>
-        <Button variant="contained" sx={{ backgroundColor: color }}>
-          Спринт
-        </Button>
+        <Link to={`/audio/hard/${group}`} style={{ textDecoration: 'none' }}>
+          <Button variant="contained" sx={{ backgroundColor: color, mr: 5 }}>
+            Аудиовызов
+          </Button>
+        </Link>
+        <Link to={`/sprint/hard/${group}`} style={{ textDecoration: 'none' }}>
+          <Button variant="contained" sx={{ backgroundColor: color }}>
+            Спринт
+          </Button>
+        </Link>
       </Container>
       <CardList page={page} group={group} color={color} />
       <Pagination
         count={group === 7 ? 1 : 30}
-        size='large'
+        size="large"
         showFirstButton
         showLastButton
         page={page}
-        sx={{ justifySelf: 'center', alignSelf: 'center', p: 4}}
+        sx={{ justifySelf: 'center', alignSelf: 'center', p: 4 }}
         onChange={(_, page) => {
           if (page !== null) {
             setPage(page)
-            localStorage.setItem(TextBookConstants.TEXT_BOOK_INFO, JSON.stringify({group, color, page}))
+            localStorage.setItem(
+              TextBookConstants.TEXT_BOOK_INFO,
+              JSON.stringify({ group, color, page })
+            )
           }
         }}
       />

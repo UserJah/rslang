@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Typography } from '@mui/material'
+import { IAccuracyStatProps } from './AccuracyStatProps'
 
-const AccuracyStat = () => {
+const AccuracyStat = ({ averagePercentage }: IAccuracyStatProps) => {
   return (
     <div
       style={{
@@ -10,7 +11,7 @@ const AccuracyStat = () => {
         gap: 10,
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent:'space-around'
+        justifyContent: 'space-around',
       }}
     >
       <Typography variant="h5" component="h5" sx={{ fontWeight: 'bold' }}>
@@ -20,13 +21,18 @@ const AccuracyStat = () => {
         variant="h3"
         component="h3"
         sx={{
+          height: 150,
+          width: 150,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           border: '5px solid #d2cdcd',
           boxShadow: '0 0 .5rem gray',
           padding: '.5rem .5rem',
           borderRadius: 100,
         }}
       >
-        0%
+        {averagePercentage}%
       </Typography>
     </div>
   )
