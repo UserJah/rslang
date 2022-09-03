@@ -39,7 +39,7 @@ const Statistic = () => {
 
   return (
     <>
-      {showStat ? (
+      {showStat && stat ? (
         <div className={classes.content}>
           <div className={classes.btns}>
             <Typography variant="h2" component="h2">
