@@ -34,6 +34,7 @@ const Main = () => {
           <CustomizedAccordions />
         </Container>
         <Container
+          className='image-container'
           maxWidth="md"
           sx={{
             backgroundImage: `url(${img})`,
