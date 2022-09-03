@@ -9,6 +9,7 @@ export function Morebuttons(props: {
   elems: WordSignature[]
   updatefunc: (correct: boolean, elem: WordSignature) => void
   known: WordSignature[]
+  endfunc:()=>void
 }) {
   const [counter, setCounter] = useState(0)
 
@@ -16,11 +17,16 @@ export function Morebuttons(props: {
     function keyboardhadler(evt: KeyboardEvent): void {
       if (evt.code === 'ArrowLeft') {
         props.updatefunc(false, props.elems[counter])
+        if(counter===props.elems.length-1) props.endfunc()
         setCounter(counter + 1)
       }
       if (evt.code === 'ArrowRight') {
         props.updatefunc(true, props.elems[counter])
+        if(counter===props.elems.length-1) props.endfunc()
         setCounter(counter + 1)
+      }
+      if(evt.code==='Space'){
+        playaudio(getaudio(props.elems[counter].audio))
       }
     }
     document.addEventListener('keydown', keyboardhadler)
@@ -52,7 +58,8 @@ export function Morebuttons(props: {
           color="error"
           onClick={() => {
             props.updatefunc(false, props.elems[counter])
-            setCounter(counter + 1)
+            if(counter===props.elems.length-1) props.endfunc()
+            else setCounter(counter + 1)
           }}
         >
           WRONG!!!!!111
@@ -64,8 +71,8 @@ export function Morebuttons(props: {
           color="success"
           onClick={() => {
             props.updatefunc(true, props.elems[counter])
-            console.log(counter)
-            setCounter(counter + 1)
+            if(counter===props.elems.length-1) props.endfunc()
+            else setCounter(counter + 1)
           }}
         >
           {' '}

@@ -1,10 +1,10 @@
 
-import { WordSignature, Word, UserWords } from '../api/types'
+import { WordSignature, Word, UserWords, Statistics, GatheredStats } from '../api/types'
 
 export function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]]
+      ;[array[i], array[j]] = [array[j], array[i]]
   }
   return array
 }
@@ -38,43 +38,52 @@ export async function prepare(
   group = 0,
   fromPage?: boolean
 ): Promise<WordSignature[]> {
-  let arr1:  Word[] = []
+  let arr1: Word[] = []
   const trick: WordSignature[] = []
   const a = (await test(page, group)) as Word[][]
   const isUser = await isUserHere()
-
   if (isUser && fromPage) {
     const known = await getKnownWords(page, group)
     const familiar = await getUserWords()
-    a.forEach(element=>shuffle(element))
+    a.forEach(element => shuffle(element))
     const filtered = a
       .flat()
       .filter((elem) => !known.some((element) => element._id === elem.id))
     filtered.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-        element.properties=elem
+
+        element.properties = elem
+      }
+      else {
+        element.isNew = true
       }
     })
     arr1 = filtered
-  } else if (isUser) {
+  }
+  else if (isUser) {
     const familiar = await getUserWords()
     const filtered = a.flat()
     filtered.forEach((element) => {
-      const elem = familiar.find((q) => q.wordId === element.id)
+      const elem = familiar.find((q) => q.wordId === element.id);
       if (elem) {
-       element.properties=elem
+        element.properties = elem
+      }
+      else {
+        element.isNew = true
       }
     })
     arr1 = shuffle(filtered)
   }
-  else if(fromPage){
-    a.forEach(element=>shuffle(element))
-    arr1=a.flat()
+  else if (fromPage) {
+    a.forEach(element => shuffle(element))
+    arr1 = a.flat()
   } else {
     arr1 = shuffle(a.flat())
   }
   arr1.map(async (elem) => {
+
+
     const isTrue = coinToss(0.5)
     trick.push({
       correct: isTrue,
@@ -83,8 +92,11 @@ export async function prepare(
       audio: elem.audio,
       phrase: elem.audioExample,
       correctTranslate: elem.wordTranslate,
-      properties:elem.properties
+      properties: elem.properties,
+      isNew: elem.isNew,
+      id: elem.id
     })
+
   })
   return trick
 }
@@ -159,11 +171,12 @@ export async function getstats() {
       Accept: 'application/json',
     },
   })
-  const resp = await (rawResp.json() as Promise<Word[]>)
+  if (!rawResp.ok) return false
+  const resp = await rawResp.json()
   return resp
 }
 
-export async function setUserWords(wordId:string,word:Partial<WordSignature>,method='POST') {
+export async function setUserWords(wordId: string, word: Partial<WordSignature>, method = 'POST') {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
@@ -188,7 +201,7 @@ export async function getKnownWords(page = 29, group = 0): Promise<Word[]> {
   console.log(user)
   const token = user.token
   const id = user.userId
-  const filter = {'userWord.optional.isKnown': true}
+  const filter = { 'userWord.optional.isKnown': true }
   const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/aggregatedWords?group=${group}&wordsPerPage=
 ${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
   const rawResp = await fetch(baseurl, {
@@ -210,7 +223,7 @@ export async function prepareAudioChallenge(
   fromPage = false
 ) {
   const arr = await test(page, group);
-  const isUser =await isUserHere()
+  const isUser = await isUserHere()
   console.log(isUser)
   let preResult;
   if (isUser && fromPage) {
@@ -225,6 +238,9 @@ export async function prepareAudioChallenge(
       if (elem) {
         element.properties = elem;
         element.isNew = false;
+      }
+      else {
+        element.isNew = true
       }
     });
     preResult = filtered.slice(0, 20);
@@ -245,6 +261,9 @@ export async function prepareAudioChallenge(
       if (elem) {
         element.properties = elem;
         element.isNew = false;
+      }
+      else {
+        element.isNew = true
       }
     });
     const falseWords = shuffle(await createFalseWords(preResult));
@@ -283,11 +302,9 @@ export async function prepareAudioChallenge(
   return preResult;
 }
 
-async function createFalseWords(arr:Word[]){
-
-
-  let numbers=Array(10).fill(0)
-  numbers=numbers.map( ()=>[getRandomInt(0,29),getRandomInt(0,5)])
+async function createFalseWords(arr: Word[]) {
+  let numbers = Array(10).fill(0)
+  numbers = numbers.map(() => [getRandomInt(0, 29), getRandomInt(0, 5)])
   const q = []
   for (let i = 0; i < numbers.length; i += 1) {
     const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/words?page=${numbers[i][0]}&group=${numbers[i][1]}`
@@ -303,67 +320,143 @@ async function createFalseWords(arr:Word[]){
   return resp.flat().filter((elem) => !arr.some((element) => element.id === elem.id))
 }
 
-export async function handleWord(element:WordSignature,correct:boolean,game:string){
-  let method='PUT'
+export async function handleWord(element: WordSignature, correct: boolean, game: string) {
+
+  let method = 'PUT'
   if (!element.properties) {
-    method='POST'
-    element.properties={
-    difficulty:'easy',
-    optional:{
-      isKnown:false,
-      streak:correct?1:0
+    method = 'POST'
+    element.properties = {
+      difficulty: 'easy',
+      optional: {
+        isKnown: false,
+        streak: correct ? 1 : 0
+      }
     }
   }
-}
-  else if (!correct){
-    element.properties={
-      difficulty:'easy',
-      optional:{
-        isKnown:false,
-        streak:0
+  else if (!correct) {
+    element.properties = {
+      difficulty: 'easy',
+      optional: {
+        isKnown: false,
+        streak: 0
       }
+    }
   }
-}
   else {
-   delete element.properties.wordId
-   delete element.properties.id
-    if (element.properties.difficulty==='easy'){
-      if (element.properties.optional?.streak!==undefined){
-        element.properties.optional.streak=element.properties.optional?.streak+1
-        element.properties.optional.isKnown=element.properties.optional?.streak>2
-
+    delete element.properties.wordId
+    delete element.properties.id
+    if (element.properties.difficulty === 'easy') {
+      if (element.properties.optional?.streak !== undefined) {
+        element.properties.optional.streak = element.properties.optional?.streak + 1
+        element.properties.optional.isKnown = element.properties.optional?.streak > 2
       }
     }
     else
-    if (element.properties.optional?.streak!==undefined  ){
-      element.properties.optional.streak=element.properties.optional.streak+1
-      if(element.properties.optional.streak>4 ){
-      element.properties.difficulty='easy'
-      element.properties.optional.isKnown=true}
-    }
+      if (element.properties.optional?.streak !== undefined) {
+        element.properties.optional.streak = element.properties.optional.streak + 1
+        if (element.properties.optional.streak > 4) {
+          element.properties.difficulty = 'easy'
+          element.properties.optional.isKnown = true
+        }
+      }
   }
   if (element.properties.optional) {
-    if (game==='audiochallenge') element.properties.optional.lastaudio=correct
- else element.properties.optional.lastsprint=correct}
- try{
-  setUserWords(element.id || '',element.properties,method)
- }
-catch(error){
-  console.log(error)
-}
+    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct
+    else element.properties.optional.lastsprint = correct
   }
-async function isUserHere(){
-  const userinfo=localStorage.getItem('userInfo')
-  if(!userinfo) return false
-  const user=JSON.parse(userinfo)
-  const baseurl=`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}`
-  const resp=await fetch(baseurl,{
-    method: 'GET',
+
+  const isUser = await isUserHere()
+  if (isUser) {
+    try {
+      setUserWords(element.id || '', element.properties, method)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+}
+async function isUserHere() {
+  try {
+    const userinfo = localStorage.getItem('userInfo')
+    if (!userinfo) return false
+    const user = JSON.parse(userinfo)
+    const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}`
+    const resp = await fetch(baseurl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        Accept: 'application/json',
+      },
+    })
+    if (!resp.ok) throw new Error('qwertr')
+    else return true
+  }
+  catch (err) {
+    console.log(err)
+    return false
+  }
+}
+export async function setUserStats(stats: Statistics) {
+  const userinfo = localStorage.getItem('userInfo')
+  const user = JSON.parse(userinfo as string)
+  const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
+  fetch(baseurl, {
+    method: 'PUT',
     headers: {
       Authorization: `Bearer ${user.token}`,
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify(stats),
+    keepalive: true
+
   })
-  if (resp.ok) return true
-  else return false
+}
+
+export function handleStats(stats: Statistics, gathered: GatheredStats, game: string) {
+  delete stats.id
+  const timestamp = new Date(stats?.optional?.date)
+  const now = new Date()
+
+  if (game === 'sprint') {
+    if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
+      (stats.optional.sprint.percentage) = (stats.optional?.sprint?.percentage * stats.optional.sprint.answers + gathered.correctAnswers) / (stats.optional.sprint.answers + gathered.answers);
+      (stats.optional.sprint.answers) += gathered.answers;
+      (stats.optional.sprint.newWords) += gathered.new
+      stats.optional.sprint.biggestStreak = stats.optional.sprint.biggestStreak > gathered.bigStreak ? stats.optional.sprint.biggestStreak : gathered.bigStreak
+      stats.learnedWords += gathered.learned
+    }
+    else {
+      stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
+      stats.optional.sprint.answers = gathered.answers
+      stats.optional.sprint.biggestStreak = gathered.bigStreak
+      stats.optional.sprint.newWords = gathered.new
+      stats.learnedWords = gathered.learned
+      stats.optional.date = new Date()
+    }
+  }
+
+  else {
+    if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
+      (stats.optional.audiochallenge.percentage) = (stats.optional?.audiochallenge?.percentage * stats.optional.audiochallenge.answers + gathered.correctAnswers) / (stats.optional.audiochallenge.answers + gathered.answers);
+      (stats.optional.audiochallenge.answers) += gathered.answers
+      stats.optional.audiochallenge.newWords += gathered.new
+      stats.optional.audiochallenge.biggestStreak = stats.optional.audiochallenge.biggestStreak > gathered.bigStreak ? stats.optional.audiochallenge.biggestStreak : gathered.bigStreak
+      stats.learnedWords += gathered.learned
+    }
+    else {
+      stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
+      stats.optional.audiochallenge.answers = gathered.answers
+      stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
+      stats.optional.audiochallenge.newWords = gathered.new
+      stats.learnedWords = gathered.learned
+      stats.optional.date = new Date()
+    }
+  }
+  setUserStats(stats)
+}
+
+export function learned(before: boolean, after: boolean | undefined) {
+  if (!before && after) return 1
+  else return 0
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Game } from '../mergeComp'
 import './startscreen.css'
-export function Startscreen(props?: { page?: number; group?: number }) {
+export function Startscreen(props?: { page?: number; group?: number,fromPage?:boolean }) {
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false)
-  if (!start && !props?.group) {
+  if (!props?.fromPage && !start) {
     return (
       <div className="level_wrapper">
         <h2>Спринт</h2>
@@ -71,6 +71,7 @@ export function Startscreen(props?: { page?: number; group?: number }) {
       <Game
         group={group as number}
         page={props?.page === undefined ? 29 : props.page}
+        fromPage={props?.fromPage || false}
       />
     )
   }
