@@ -9,7 +9,11 @@ import api from './../../../utils/AuthAPI'
 import localStorageService from './../../../utils/LocalStorageService'
 import AuthConstants from '../../../constants/Auth.constants'
 import classes from './Statistic.module.css'
-import { IStatistics, IUserInfo } from '../../../constants/Auth.interfaces'
+import {
+  IGame,
+  IStatistics,
+  IUserInfo,
+} from '../../../constants/Auth.interfaces'
 
 const Statistic = () => {
   const [stat, setStat] = useState<IStatistics | null>(null)
@@ -62,11 +66,15 @@ const Statistic = () => {
             </div>
 
             <div>
-              <StatCard width={500} height={300}>
+              {/* <StatCard width={500} height={300}>
                 <GameStat title="Аудиовызов" cn="audio" />
-              </StatCard>
+              </StatCard> */}
               <StatCard width={500} height={300}>
-                <GameStat title="Спринт" cn="sprint" />
+                <GameStat
+                  title="Спринт"
+                  cn="sprint"
+                  game={stat.optional?.sprint as IGame}
+                />
               </StatCard>
             </div>
           </div>
