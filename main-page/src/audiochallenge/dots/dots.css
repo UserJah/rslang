@@ -9,11 +9,11 @@
   height:15px;
   display:inline-block;
   border-radius: 50%;
-  background-color: grey;
+  background-color: rgb(204, 221, 197);
 }
 div>.reddot{
-  background-color: red;
+  background-color: rgb(255, 79, 60);
 }
 div>.greendot{
-  background-color: green;
+  background-color: rgb(88, 181, 51);
 }

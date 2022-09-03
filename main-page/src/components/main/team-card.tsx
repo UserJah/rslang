@@ -11,11 +11,11 @@ export default function ImgMediaCard(props: {
   href: string
 }) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 300 }}>
       <CardMedia
         component="img"
         alt="avatar"
-        height="200"
+        height="340"
         image={props.photoLink}
       />
       <CardContent>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Card } from './gameScreen/GameScreen'
 import { Timer } from './Timer/Timer'
 import { WordSignature } from '../api/types'
-import { prepare, test1 } from '../common/functions'
+import { prepare} from '../common/functions'
 import { Preloader } from './preload/preloader'
 export function Game(props: { group: number; page: number,fromPage:boolean }) {
   const [end, setEnd] = useState(false)
@@ -17,7 +17,6 @@ export function Game(props: { group: number; page: number,fromPage:boolean }) {
 
   useEffect(() => {
     const resp = async () => {
-      test1()
       const response = (await prepare(
         props.page,
         props.group,props.fromPage

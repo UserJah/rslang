@@ -11,6 +11,7 @@ import {
   WatchLater,
 } from '@mui/icons-material'
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
+import { Container } from '@mui/system'
 
 const WordCard = ({ props, color, group }) => {
   const [clicked, setClicked] = useState(false)
@@ -38,7 +39,7 @@ const WordCard = ({ props, color, group }) => {
         () => setClicked(false),
         (arr[0].duration + arr[1].duration + arr[2].duration) *
           1000
-      )}, 100)
+      )}, 500)
   }
   const handleSetHardWord = async () => {
     (await getUserWord(props._id) ?
@@ -70,7 +71,7 @@ const WordCard = ({ props, color, group }) => {
 
   useEffect(() => {
     const isUserDifficultyWord = () => {
-      if (localStorage.userInfo && props.userWord && group !== 7) {
+      if (localStorage.userInfo && props.userWord) {
         (props.userWord.difficulty === 'hard') ? setUserDifficultyWord(true) : null;
       }
     }
@@ -95,7 +96,7 @@ const WordCard = ({ props, color, group }) => {
         bgcolor: userLearnedWord ? 'gold' : ( userDifficultyWord? 'brown' : color),
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
       }}
     >
       <CardMedia
@@ -104,73 +105,109 @@ const WordCard = ({ props, color, group }) => {
         image={Path.base + props.image}
         alt={props.word}
       />
-      <CardContent
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography color="#black" variant="h5">
-          {props.word} &mdash; {props.transcription}
-        </Typography>
-        <Typography gutterBottom color="gray">
-          {props.wordTranslate}
-        </Typography>
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'calc(100% - 240px)'}}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography color="#black" variant="h5">
+            {props.word} &mdash; {props.transcription}
+          </Typography>
+          <Typography gutterBottom color="gray">
+            {props.wordTranslate}
+          </Typography>
 
-        <Typography
-          dangerouslySetInnerHTML={{ __html: props.textMeaning }}
-          color="#black"
-          sx={{ alignSelf: 'stretch' }}
-        />
-        <Typography gutterBottom color="gray" sx={{ alignSelf: 'stretch' }}>
-          {props.textMeaningTranslate}
-        </Typography>
-        <Typography
-          dangerouslySetInnerHTML={{ __html: htmlString }}
-          color="#black"
-          sx={{ alignSelf: 'stretch' }}
-        />
-        <Typography color="gray" sx={{ alignSelf: 'stretch' }}>
-          {props.textExampleTranslate}
-        </Typography>
-      </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
-        {clicked ? (
-          <StopCircleOutlined />
-        ) : (
-          <PlayArrow
-            sx={{cursor: 'pointer'}}
-            onClick={() => {
-              clicked ? null : handlePlayIconClick()
-            }}
+          <Typography
+            dangerouslySetInnerHTML={{ __html: props.textMeaning }}
+            color="#black"
+            sx={{ alignSelf: 'stretch' }}
           />
-        )}
-        {localStorage.userInfo ? (
-          <>
-          {userLearnedWord ? null :  
+          <Typography gutterBottom color="gray" sx={{ alignSelf: 'stretch' }}>
+            {props.textMeaningTranslate}
+          </Typography>
+          <Typography
+            dangerouslySetInnerHTML={{ __html: htmlString }}
+            color="#black"
+            sx={{ alignSelf: 'stretch' }}
+          />
+          <Typography color="gray" sx={{ alignSelf: 'stretch' }}>
+            {props.textExampleTranslate}
+          </Typography>
           
-            userDifficultyWord ? 
-              <DoneAll
-                sx={{ cursor: 'pointer' }}
-                onClick = {() => {handleSetNormalWord()}}
-              />
-              :
-              <WatchLater
-              sx={{ cursor: 'pointer' }}
-              onClick={() => handleSetHardWord()}
-            /> 
-          }
-
-            <Spellcheck
-              sx={{ cursor: 'pointer' }}
+              {props.userWord && props.userWord.optional && props.userWord.optional.lastsprint ?
+              <Typography component={'span'} color="green" sx={{ alignSelf: 'center', p:1}}>
+                Спринт: угадано
+              </Typography>
+              : 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastsprint !== undefined ? 
+              <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
+                Спринт: не угадано
+              </Typography> 
+              : localStorage.userInfo ?
+              <Typography component={'span'} color="gray" sx={{ alignSelf: 'center', p:1}}>
+                Спринт: не попадалось
+              </Typography> : null
+            }
+              {props.userWord && props.userWord.optional && props.userWord.optional.lastaudio ?
+                <Typography component={'span'} color="green" sx={{ alignSelf: 'center', p:1}}>
+                  Аудиовызов: угадано
+                </Typography> 
+              : 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastaudio !== undefined ? 
+                <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
+                  Аудиовызов: не угадано
+                </Typography> 
+              : localStorage.userInfo ?
+                <Typography component={'span'} color="gray" sx={{ alignSelf: 'center', p:1}}>
+                  Аудиовызов: не попадалось
+                </Typography> : null
+}
+          
+        </CardContent>
+        <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          {clicked ? (
+            <StopCircleOutlined />
+          ) : (
+            <PlayArrow
+              titleAccess='Воспроизвести'
+              sx={{cursor: 'pointer'}}
               onClick={() => {
-                userLearnedWord ? handleSetUnlearnedWorld() : handleSetLearnedWorld()
-              } }
+                clicked ? null : handlePlayIconClick()
+              }}
             />
-          </>
-        ) : null}
-      </CardActions>
+          )}
+          {localStorage.userInfo ? (
+            <>
+            {userLearnedWord ? null :  
+            
+              userDifficultyWord ? 
+                <DoneAll
+                  titleAccess='Убрать из сложных'
+                  sx={{ cursor: 'pointer' }}
+                  onClick = {() => {handleSetNormalWord()}}
+                />
+                :
+                <WatchLater
+                  titleAccess='Сделать сложным'
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => handleSetHardWord()}
+              /> 
+            }
+
+              <Spellcheck
+                titleAccess='Изученное'
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  userLearnedWord ? handleSetUnlearnedWorld() : handleSetLearnedWorld()
+                } }
+              />
+            </>
+          ) : null}
+        </CardActions>
+      </div>
     </Card>
   )
 }

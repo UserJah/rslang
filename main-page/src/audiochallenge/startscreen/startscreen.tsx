@@ -1,12 +1,14 @@
 import React, { useState} from 'react'
 import { AudioChallenge } from '../gameboard/audiochallenge';
+import { Typography } from '@mui/material';
 
 export function Startscreen(props?: { page?: number; group?: number, fromPage?:boolean}) {
+  console.log(props)
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false);
-  if(!start && !props?.group)
+  if(!start && props?.group===undefined)
       return (
-
+        <Typography component={'section'} variant={'body2'}>
       <div className="level_wrapper">
         <h2>Аудиовызов</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
@@ -67,8 +69,11 @@ export function Startscreen(props?: { page?: number; group?: number, fromPage?:b
           Уровень 6
         </button>
       </div>
+      </Typography>
     )
     else return(
+       <Typography component={'section'} variant={'body2'}>
       <AudioChallenge group={group} page={props?.page|| 29} fromPage={props?.fromPage}/>
+      </Typography>
     )
   }

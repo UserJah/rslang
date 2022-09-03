@@ -177,9 +177,10 @@ export async function getUserWords() {
 }
 
 export async function getstats() {
+  const isUser=await isUserHere()
+  if (isUser){
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
-  console.log(user.token)
   const token = user.token
   const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
   const rawResp = await fetch(url, {
@@ -190,7 +191,7 @@ export async function getstats() {
   })
   if (!rawResp.ok) return false
   const resp = await rawResp.json()
-  return resp
+  return resp}
 }
 
 export async function setUserWords(wordId: string, word: Partial<WordSignature>, method = 'POST') {
@@ -240,7 +241,6 @@ export async function prepareAudioChallenge(
 ) {
   const arr = await test(page, group);
   const isUser = await isUserHere()
-  console.log(isUser)
   let preResult;
   if (isUser && fromPage) {
     arr.forEach((element) => shuffle(element));

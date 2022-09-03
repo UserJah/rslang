@@ -46,7 +46,7 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     isFinish(false)
     setCounter(0)
     setGuessed([])
-    setItems(shuffle(items))
+    setItems(props?.fromPage?shuffle(items.filter(element=>!element.properties?.optional?.isKnown)):shuffle(items))
   }
 
   function updateData(element: string) {

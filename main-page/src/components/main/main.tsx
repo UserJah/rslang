@@ -5,6 +5,7 @@ import './main.css'
 import Team from './team'
 import CustomizedAccordions from './accordion'
 import { Link } from 'react-router-dom'
+import { YoutubeEmbed } from './youtubeEmbed'
 
 const Main = () => {
   return (
@@ -52,6 +53,7 @@ const Main = () => {
           </Link>
         </Container>
       </div>
+      <YoutubeEmbed embedId={'zaglushka'}/>
       <Team />
     </>
   )
