@@ -53,7 +53,7 @@ const Main = () => {
           </Link>
         </Container>
       </div>
-      <YoutubeEmbed embedId={'zaglushka'}/>
+      <YoutubeEmbed embedId={'SnHTTOM9OPY'}/>
       <Team />
     </>
   )
