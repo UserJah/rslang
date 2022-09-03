@@ -17,7 +17,7 @@ const GameStat = ({ title, cn, game }: IGameStatProps) => {
       </div>
       <div className={classes.rows}>
         <p>
-          {game && game.percentage ? +game.percentage.toFixed(1) * 100 : 0}%
+          {game && game.percentage ? +game.percentage.toFixed(2) * 100 : 0}%
         </p>
         <p>Точность</p>
       </div>
