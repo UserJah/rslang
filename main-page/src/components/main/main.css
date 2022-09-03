@@ -13,3 +13,7 @@
 .accordion {
   margin-bottom: 10px;
 }
+
+iframe {
+  margin: 0 auto;
+}
