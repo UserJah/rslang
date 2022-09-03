@@ -6,6 +6,9 @@ const enum AuthPathConstants {
   SIGIN = '/signin',
   TOKENS = '/tokens',
   STATISTICS = '/statistics',
+  WORDS = '/words',
+  AGGREGATED_WORDS = '/aggregatedWords',
+  FILTER_BY_HARD = `filter={"userWord.difficulty":"hard"}`
 
 }
 
