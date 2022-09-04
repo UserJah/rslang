@@ -167,7 +167,7 @@ const WordCard = ({ props, color, group, change }) => {
                 <Typography component={'span'} color="gray" sx={{ alignSelf: 'center', p:1}}>
                   Аудиовызов: не попадалось
                 </Typography> : null
-}
+              }
           
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
