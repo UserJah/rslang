@@ -1,7 +1,7 @@
 import React, { useState} from 'react'
 import { AudioChallenge } from '../gameboard/audiochallenge';
 import { Typography } from '@mui/material';
-
+import './startscreen.css'
 export function Startscreen(props?: { page?: number; group?: number, fromPage?:boolean}) {
   console.log(props)
   const [group, setGroup] = useState(0 || props?.group)
@@ -9,11 +9,14 @@ export function Startscreen(props?: { page?: number; group?: number, fromPage?:b
   if(!start && props?.group===undefined)
       return (
         <Typography component={'section'} variant={'body2'}>
+          <div className="gameboard">
       <div className="level_wrapper">
+<div className='text_startScreen'>
         <h2>Аудиовызов</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
         <p>Для управления используйте мышь или 1,2,3,4,5 для выбора соответствующего варианта</p>
        <p>После выбора варианта используйте Пробел для перехода к следующему слову</p>
+
              <button
           className="chose_level green"
           onClick={() => {
@@ -68,6 +71,8 @@ export function Startscreen(props?: { page?: number; group?: number, fromPage?:b
         >
           Уровень 6
         </button>
+      </div>
+      </div>
       </div>
       </Typography>
     )

@@ -1,17 +1,19 @@
 .chose_level {
-  width: 300px;
+  width: 280px;
   height: 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 30px;
-  margin: 10px auto;
+  margin: 10px 100px;
   transition: 0.3s;
+  border:none;
+
 }
 .chose_level:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
 .level_wrapper {
-  width: 350px;
+  width: 650px;
   margin: 100px auto;
   text-align: center;
 }
