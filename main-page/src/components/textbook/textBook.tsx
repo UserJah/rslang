@@ -120,18 +120,40 @@ export const TextBook = () => {
           alignSelf: 'center',
         }}
       >
-        <Link to={`/audio/hard/${group}`} style={{ textDecoration: 'none' }}>
-          <Button variant="contained" disabled={allLearned ? true : false} sx={{ backgroundColor: color, mr: 5 }}>
+        <Link
+          to={
+            !allLearned ? `/audioChallenge/${group}/${page}` : window.location
+          }
+          style={{ textDecoration: 'none' }}
+        >
+          <Button
+            variant="contained"
+            disabled={allLearned ? true : false}
+            sx={{ backgroundColor: color, mr: 5 }}
+          >
             Аудиовызов
           </Button>
         </Link>
-        <Link to={`/sprint/hard/${group}`} style={{ textDecoration: 'none' }}>
-          <Button variant="contained" disabled={allLearned ? true : false} sx={{ backgroundColor: color }}>
+        <Link
+          to={!allLearned ? `/sprint/${group}/${page}` : window.location}
+          style={{ textDecoration: 'none' }}
+        >
+          <Button
+            variant="contained"
+            disabled={allLearned ? true : false}
+            sx={{ backgroundColor: color }}
+          >
             Спринт
           </Button>
         </Link>
       </Container>
-      <CardList page={page} group={group} color={color} updateAllLearned={updateAllLearned} allLearned={allLearned}/>
+      <CardList
+        page={page}
+        group={group}
+        color={color}
+        updateAllLearned={updateAllLearned}
+        allLearned={allLearned}
+      />
       <Pagination
         count={group === 7 ? 1 : 30}
         size="large"
