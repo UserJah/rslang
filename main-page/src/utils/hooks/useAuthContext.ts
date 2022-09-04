@@ -192,7 +192,16 @@ const useAuthContext = () => {
         }, AuthConstants.POP_UP_DELAY)
       }
     })
+  }
 
+  const notifyAuthFalse = () => {
+    const userInfo: IUserInfo | null = LocalStorageService.getItem(
+      AuthConstants.USER_KEY_STORAGE
+    )
+    setErr(AuthConstants.ERROR_TOKEN_MISS)
+    setAuth(false)
+    LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, { ...userInfo, isAuth: false })
+    handleOpenLogin()
   }
 
   const setDBUSer = (): void => {
@@ -201,7 +210,7 @@ const useAuthContext = () => {
     }
   }
 
-  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, preloader }
+  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, preloader, notifyAuthFalse }
 }
 
 

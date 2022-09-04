@@ -5,12 +5,12 @@ import AuthConstants from '../../../constants/Auth.constants'
 import LoginModal from '../LoginModal/LoginModal'
 import RegisterModal from '../RegisterModal/RegisterModal'
 import PopUp from '../../PopUp/PopUp'
-import classes from './Authorization.module.css'
 import useAuthContext from '../../../utils/hooks/useAuthContext'
-import api from './../../../utils/AuthAPI'
 import localStorageService from './../../../utils/LocalStorageService'
 import { IToken, IUserInfo } from '../../../constants/Auth.interfaces'
 import UserInfo from '../UserInfo/UserInfo'
+import AuthPathConstants from '../../../constants/AuthPath.constants'
+import classes from './Authorization.module.css'
 
 const Authorization = () => {
   const {
@@ -32,6 +32,7 @@ const Authorization = () => {
     handleCloseLogin,
     logInUser,
     preloader,
+    notifyAuthFalse,
   } = useAuthContext()
 
   const local = localStorageService.getItem<IUserInfo>(
@@ -41,38 +42,51 @@ const Authorization = () => {
   useEffect(setDBUSer, [err])
 
   useEffect(() => {
-    const setNewToken = async () => {
-      const userInfo: IUserInfo | null = localStorageService.getItem(
-        AuthConstants.USER_KEY_STORAGE
-      )
+    async function setNewToken() {
+      const user = localStorage.getItem('userInfo') as string
+      if (!user) return
+      const info: IUserInfo = JSON.parse(user)
+      const id = info.userId
 
-      if (userInfo) {
+      if (info && id) {
         const now = Date.now()
-        const lastVisit = Date.parse(String(userInfo.experience))
+        const lastVisit = Date.parse(String(info.experience))
         const tokenTimeDelta = now - lastVisit
 
         if (tokenTimeDelta > AuthConstants.REFRESH_TOKEN_LIFE) {
-          const { token, refreshToken } = (await api.getNewToken(
-            userInfo.userId as string,
-            userInfo.refreshToken as string
-          )) as IToken
+          const response = await fetch(
+            `${AuthPathConstants.BASE}${AuthPathConstants.USERS}/${id}${AuthPathConstants.TOKENS}`,
+            {
+              headers: {
+                Authorization: `Bearer ${info.refreshToken}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            }
+          )
+          const status = response
 
-          localStorageService.setItem(AuthConstants.USER_KEY_STORAGE, {
-            ...userInfo,
-            token,
-            refreshToken,
-            experience: new Date(),
-          })
+          if (status.ok) {
+            const resp: IToken = await response.json()
+
+            localStorageService.setItem(AuthConstants.USER_KEY_STORAGE, {
+              ...info,
+              experience: new Date(),
+              token: resp.token,
+              refreshToken: resp.refreshToken,
+            })
+          }
+          if (!status.ok) {
+            notifyAuthFalse
+          }
         }
       }
     }
 
-    const setTimerToken = () => {
-      return setInterval(setNewToken, AuthConstants.REFRESH_TOKEN_LIFE)
-    }
-
     setNewToken()
-    setTimerToken()
+    const timerID = setInterval(setNewToken, AuthConstants.REFRESH_TOKEN_LIFE)
+
+    return () => clearInterval(timerID)
   }, [])
 
   return (
