@@ -44,8 +44,9 @@ const WordCard = ({ props, color, group, change }) => {
     (await getUserWord(props._id) ?
     setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak}}))
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0}}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
+    change()
   }
 
   const handleSetNormalWord = async () => {
