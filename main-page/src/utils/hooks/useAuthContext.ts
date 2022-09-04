@@ -26,6 +26,7 @@ const defaultStats: IStatistics = {
       newWords: 0
     },
     date: new Date(),
+    long: [],
   }
 }
 

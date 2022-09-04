@@ -40,14 +40,21 @@ export interface IStatistics {
       answers?: number
       percentage?: number,
       newWords: number
-    }
-    , date: Date
+    },
+    date: Date,
+    long: ILongStat[]
   }
 }
 
 export interface IGame {
   biggestStreak?: number
   answers?: number
-  percentage?: number,
+  percentage?: number
   newWords: number
+}
+
+export interface ILongStat {
+  date: Date,
+  new: number
+  learned: number
 }
