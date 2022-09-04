@@ -56,6 +56,7 @@ export function Morebuttons(props: {
           tabIndex={0}
           variant="contained"
           color="error"
+          key='Wrong'
           onClick={() => {
             props.updatefunc(false, props.elems[counter])
             if(counter===props.elems.length-1) props.endfunc()
@@ -69,6 +70,7 @@ export function Morebuttons(props: {
           className="right"
           variant="contained"
           color="success"
+          key='Right'
           onClick={() => {
             props.updatefunc(true, props.elems[counter])
             if(counter===props.elems.length-1) props.endfunc()

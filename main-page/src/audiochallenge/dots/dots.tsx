@@ -14,11 +14,10 @@ export function Dots(props:{arr:WordSignature[],guessed:WordSignature[]}){
   })
 
   useEffect(()=>
- 
+
   props.guessed.forEach((elem,index)=>{
 
     if (elem.guessedCorrect===true){
-      console.log( document.getElementsByClassName('dot')[index])
      document.getElementsByClassName('dot')[index].classList.add('greendot')
 
       }

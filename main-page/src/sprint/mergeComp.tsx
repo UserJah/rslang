@@ -4,6 +4,7 @@ import { Timer } from './Timer/Timer'
 import { WordSignature } from '../api/types'
 import { prepare} from '../common/functions'
 import { Preloader } from './preload/preloader'
+import './exit_link.css'
 export function Game(props: { group: number; page: number,fromPage:boolean }) {
   const [end, setEnd] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -33,7 +34,9 @@ console.log(response)
     return <Preloader/>
   } else {
     return (
+
       <div className='gameboard'>
+         
         <Timer seconds="60" endFunc={updateEnd} reset={end} />
         <Card items={items} end={end} func={playAgain} reset={end} fromPage={props.fromPage || false} endfunc={updateEnd}/>
       </div>

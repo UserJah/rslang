@@ -6,7 +6,8 @@ import { Dots } from "../dots/dots";
 import { PostGame } from "../endscreen/postgamescreen";
 import './gameboard.css'
 import { Preloader } from "./preloader";
-
+import ClearIcon from '@mui/icons-material/Clear';
+import { Link } from "react-router-dom";
 
 export function AudioChallenge(props?: { page?: number; group?: number, fromPage?: boolean }) {
   const [items, setItems] = useState<WordSignature[]>([]);
@@ -98,6 +99,11 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
   } else if (!finish) {
     return (
       <div className="gameboard">
+                  <Link to='/' className='exit_link'>
+          <ClearIcon onClick={()=>{
+              if (loadstats) handleStats(userStats as Statistics,statsData,'audiochallenge')}}
+              sx={{fontSize:40,color:'white'}}/>
+          </Link>
         <div>
           <Dots arr={items} guessed={guessed} />
         </div>
@@ -110,6 +116,11 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
   }
   else return (
     <div className="gameboard">
+                <Link to='/' className='exit_link'>
+          <ClearIcon onClick={()=>{
+              if (loadstats) handleStats(userStats as Statistics,statsData,'audiochallenge')}}
+              sx={{fontSize:40,color:'white'}}/>
+          </Link>
       <PostGame guessed={guessed} reset={reset} />
     </div>
   )

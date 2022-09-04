@@ -414,7 +414,8 @@ async function isUserHere() {
 }
 export async function setUserStats(stats: Statistics) {
   const userinfo = localStorage.getItem('userInfo')
-  const user = JSON.parse(userinfo as string)
+  if(userinfo===null) return
+  else {const user = JSON.parse(userinfo as string)
   const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
   fetch(baseurl, {
     method: 'PUT',
@@ -428,7 +429,7 @@ export async function setUserStats(stats: Statistics) {
 
   })
 }
-
+}
 export function handleStats(stats: Statistics, gathered: GatheredStats, game: string) {
   delete stats.id
   const timestamp = new Date(stats?.optional?.date)
@@ -513,4 +514,20 @@ export async function test1(page=0,group=0){
   const resp = await rawResp.json()
   console.log(resp)
   return resp[0].paginatedResults
+}
+export async function test3(){
+  const user=localStorage.getItem('userInfo') as string
+  const info=JSON.parse(user)
+  const id=info.userId
+  const raw=await fetch(`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/tokens`,{
+  headers: {
+    'Authorization': `Bearer ${info.refreshToken}`,
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },})
+  const resp=await raw.json()
+  info.token=resp.token
+  info.refreshToken=resp.refreshToken
+  const str=JSON.stringify(info)
+  localStorage.setItem('userInfo',str)
 }
