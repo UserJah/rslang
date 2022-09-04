@@ -65,7 +65,7 @@ export function Controls(props: { items: WordSignature[], updatefunc: (element: 
       })}
     </div>
     <div className='nextcontainer'>
-        <button className="next" onClick={() => {
+        <button className="next   red" onClick={() => {
           setAnswer('wqrqwerqwer')
           isScreen(true)
           props.updatefunc('qwerqwerqwer')
@@ -96,7 +96,7 @@ export function Controls(props: { items: WordSignature[], updatefunc: (element: 
         })}
       </div>
       <div className='nextcontainer'>
-        <button className="next" onClick={() => {
+        <button className="next green" onClick={() => {
           isScreen(false)
           props.updatecount()
         }}>
