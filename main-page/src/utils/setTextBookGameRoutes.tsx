@@ -33,8 +33,6 @@ const setTextBookGameRoutes = (gameName: string) => {
     }
   }
 
-  console.log(routes)
-
   return routes
 }
 
