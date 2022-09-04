@@ -42,9 +42,14 @@ const Statistic = () => {
             result.optional?.audiochallenge?.percentage
           const learnedWords = result.learnedWords
 
+          const answersSprint = result.optional?.sprint?.answers
+          const answersAudioChallenge = result.optional?.audiochallenge?.answers
+
           if (
             percentageSprint !== undefined &&
-            percentageAudioChallenge !== undefined
+            percentageAudioChallenge !== undefined &&
+            answersSprint !== undefined &&
+            answersAudioChallenge !== undefined
           ) {
             //TODO To read 5th grade math))
             const averagePercentage =
@@ -55,9 +60,16 @@ const Statistic = () => {
                 : +(percentageSprint + percentageAudioChallenge).toFixed(1) *
                   100
 
-            const averageValues = { learnedWords, averagePercentage }
+            const averageAnswers = answersSprint + answersAudioChallenge
+
+            const averageValues = {
+              learnedWords,
+              averagePercentage,
+              averageAnswers,
+            }
 
             setAverages(averageValues)
+            console.log(averages)
           }
 
           setStat(result)
@@ -83,7 +95,10 @@ const Statistic = () => {
           <div className={classes.container}>
             <div>
               <StatCard width={300} height={300}>
-                <WordsStat learnedWords={averages.learnedWords || 0} />
+                <WordsStat
+                  learnedWords={averages.learnedWords || 0}
+                  averageAnswers={averages.averageAnswers || 0}
+                />
               </StatCard>
 
               <StatCard width={300} height={300}>
