@@ -20,7 +20,7 @@ const App = () => {
             </h2>
           }
         />
-        <Route path="2" element={<AudioChallenge/>} />
+        <Route path="2" element={<AudioChallenge />} />
         <Route path="3" element={<Startscreen />} />
         <Route path="4" element={<Statistic />} />
         <Route

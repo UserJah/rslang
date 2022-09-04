@@ -5,9 +5,16 @@ import { IWordsStatProps } from './WordsStatProps'
 const WordsStat = ({ learnedWords, averageAnswers }: IWordsStatProps) => {
   return (
     <>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+      <div
+        style={{
+          padding: 20,
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 20,
+        }}
+      >
         <div>
-          <Typography variant="h2" component="h2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h4" component="h4" sx={{ fontWeight: 'bold' }}>
             {learnedWords}
           </Typography>
         </div>
@@ -23,13 +30,13 @@ const WordsStat = ({ learnedWords, averageAnswers }: IWordsStatProps) => {
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
           <div>
-            <Typography variant="h3" component="h3" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="h4" component="h4" sx={{ fontWeight: 'bold' }}>
               {averageAnswers}
             </Typography>
           </div>
           <div>
             <Typography variant="h5" component="h5" sx={{ fontWeight: 'bold' }}>
-              всего слов
+              новых слов
             </Typography>
             <Typography variant="h5" component="h5">
               за день
