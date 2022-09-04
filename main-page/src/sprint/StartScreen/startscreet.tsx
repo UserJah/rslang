@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Game } from '../mergeComp'
 import './startscreen.css'
+import { Typography } from '@mui/material';
 export function Startscreen(props?: { page?: number; group?: number,fromPage?:boolean }) {
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false)
   if (!props?.fromPage && !start) {
     return (
+      <Typography>
       <div className="level_wrapper">
         <h2>Спринт</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
@@ -65,14 +67,18 @@ export function Startscreen(props?: { page?: number; group?: number,fromPage?:bo
           Уровень 6
         </button>
       </div>
+      </Typography>
     )
+
   } else {
     return (
+      <Typography>
       <Game
         group={group as number}
         page={props?.page === undefined ? 29 : props.page}
         fromPage={props?.fromPage || false}
       />
+      </Typography>
     )
   }
 }

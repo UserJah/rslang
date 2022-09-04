@@ -3,7 +3,7 @@ export const penguin = `
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" id="svg3"
-width="75"
+width="60"
 viewBox="0 0 369.43 370.1" version="1.0" inkscape:version="0.91 r13725">
   <defs id="defs4">
     <linearGradient id="linearGradient3211" y2="537.41" gradientUnits="userSpaceOnUse" x2="352.31" gradientTransform="translate(0,-2)" y1="537.41" x1="351.79">
