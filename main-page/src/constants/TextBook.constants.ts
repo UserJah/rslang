@@ -1,17 +1,20 @@
 export enum TextBookConstants {
   TEXT_BOOK_INFO = 'TextBookInfo',
+  MAX_GROUPS = 7,
+  MAX_PAGES = 30,
 }
+
 
 export const groups = [1, 2, 3, 4, 5, 6]
 
 export const colors: string[] = [
-    'lightgreen',
-    'lightskyblue',
-    'yellow',
-    'orange',
-    'orangered',
-    'red',
-  ]
+  'lightgreen',
+  'lightskyblue',
+  'yellow',
+  'orange',
+  'orangered',
+  'red',
+]
 
 export const playAudio = (arr: HTMLAudioElement[]) => {
   setTimeout(() => {

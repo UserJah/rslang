@@ -1,15 +1,14 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { Startscreen as AudioChallenge } from '../audiochallenge/startscreen/startscreen'
+import { TextBookConstants } from '../constants/TextBook.constants'
 import { Startscreen as Sprint } from '../sprint/StartScreen/startscreet'
 
 const setTextBookGameRoutes = (gameName: string) => {
-  const MAX_GROUPS = 7
-  const MAX_PAGES = 30
   const routes = []
 
-  for (let i = 1; i <= MAX_GROUPS; i++) {
-    for (let j = 1; j < +MAX_PAGES; j++) {
+  for (let i = 1; i <= TextBookConstants.MAX_GROUPS; i++) {
+    for (let j = 1; j < TextBookConstants.MAX_PAGES; j++) {
       if (gameName === 'audioChallenge') {
         routes.push(
           <Route
