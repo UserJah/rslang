@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Typography } from '@mui/material'
+import { IWordsStatProps } from './WordsStatProps'
 
-const WordsStat = () => {
+const WordsStat = ({ learnedWords }: IWordsStatProps) => {
   return (
     <>
       <div>
@@ -10,7 +11,7 @@ const WordsStat = () => {
           component="h2"
           sx={{ fontWeight: 'bold', marginTop: 10 }}
         >
-          0
+          {learnedWords}
         </Typography>
       </div>
       <div>

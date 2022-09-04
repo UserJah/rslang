@@ -26,6 +26,7 @@ export interface IToken {
 
 
 export interface IStatistics {
+  id?: string
   learnedWords: number
   optional?: {
     audiochallenge?: {

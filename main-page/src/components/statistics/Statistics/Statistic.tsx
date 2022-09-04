@@ -18,6 +18,7 @@ import {
 const Statistic = () => {
   const [stat, setStat] = useState<IStatistics | null>(null)
   const [showStat, setShowStat] = useState<boolean>(false)
+  const [averages, setAverages] = useState<Record<string, number> | null>(null)
 
   useEffect(() => {
     const local: IUserInfo | null = localStorageService.getItem(
@@ -31,8 +32,29 @@ const Statistic = () => {
 
         const response = await api.getStat(id, token)
         if (response && response.status === 200) {
-          const result = await response.json()
+          const result: IStatistics = await response.json()
           delete result.id
+
+          console.log(result)
+
+          const percentageSprint = result.optional?.sprint?.percentage
+          const percentageAudioChallenge =
+            result.optional?.audiochallenge?.percentage
+          const learnedWords = result.learnedWords
+
+          if (
+            percentageSprint !== undefined &&
+            percentageAudioChallenge !== undefined
+          ) {
+            const averagePercentage =
+              (+(percentageSprint + percentageAudioChallenge).toFixed(1) *
+                100) /
+              2
+          
+            const averageValues = { learnedWords, averagePercentage }
+
+            setAverages(averageValues)
+          }
 
           setStat(result)
           setShowStat(true)
@@ -43,7 +65,7 @@ const Statistic = () => {
 
   return (
     <>
-      {showStat && stat ? (
+      {showStat && stat && averages ? (
         <div className={classes.content}>
           <div className={classes.btns}>
             <Typography variant="h2" component="h2">
@@ -57,18 +79,24 @@ const Statistic = () => {
           <div className={classes.container}>
             <div>
               <StatCard width={300} height={300}>
-                <WordsStat />
+                <WordsStat learnedWords={averages.learnedWords || 0} />
               </StatCard>
 
               <StatCard width={300} height={300}>
-                <AccuracyStat />
+                <AccuracyStat
+                  averagePercentage={averages.averagePercentage || 0}
+                />
               </StatCard>
             </div>
 
             <div>
-              {/* <StatCard width={500} height={300}>
-                <GameStat title="Аудиовызов" cn="audio" />
-              </StatCard> */}
+              <StatCard width={500} height={300}>
+                <GameStat
+                  title="Аудиовызов"
+                  cn="audio"
+                  game={stat.optional?.audiochallenge as IGame}
+                />
+              </StatCard>
               <StatCard width={500} height={300}>
                 <GameStat
                   title="Спринт"
