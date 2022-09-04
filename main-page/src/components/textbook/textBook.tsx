@@ -28,6 +28,11 @@ export const TextBook = () => {
           .color
       : 'lightgreen'
   )
+  const [allLearned, setAllLearned] = useState(false)
+
+  const updateAllLearned = (value: boolean) => {
+    setAllLearned(value)
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -126,7 +131,7 @@ export const TextBook = () => {
           </Button>
         </Link>
       </Container>
-      <CardList page={page} group={group} color={color} />
+      <CardList page={page} group={group} color={color} updateAllLearned={updateAllLearned} allLearned={allLearned}/>
       <Pagination
         count={group === 7 ? 1 : 30}
         size="large"
