@@ -11,7 +11,6 @@ import {
   WatchLater,
 } from '@mui/icons-material'
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
-import { Container } from '@mui/system'
 
 const WordCard = ({ props, color, group, change }) => {
   const [clicked, setClicked] = useState(false)
@@ -43,14 +42,14 @@ const WordCard = ({ props, color, group, change }) => {
   }
   const handleSetHardWord = async () => {
     (await getUserWord(props._id) ?
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false}}))
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak}}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
   }
 
   const handleSetNormalWord = async () => {
-    await setUserWordsTextBook(props._id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false, streak: props.userWord.optional.streak}}, 'PUT')
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
     change()
   }
