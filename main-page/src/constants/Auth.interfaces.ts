@@ -12,7 +12,6 @@ export interface IUserInfo {
   userId?: string
   name?: string,
   experience?: Date
-
   message?: string
 }
 
@@ -29,25 +28,32 @@ export interface IStatistics {
   id?: string
   learnedWords: number
   optional?: {
-    audiochallenge?: {
-      biggestStreak?: number
-      answers?: number
-      percentage?: number,
-      newWords: number
-    },
-    sprint?: {
-      biggestStreak?: number
-      answers?: number
-      percentage?: number,
-      newWords: number
-    }
-    , date: Date
+    audiochallenge?: IGame,
+    sprint?: IGame,
+    date: Date,
+    long: ILongStat[] | string
   }
 }
 
 export interface IGame {
   biggestStreak?: number
   answers?: number
-  percentage?: number,
+  percentage?: number
   newWords: number
 }
+
+export interface ILongStat {
+  date: Date,
+  new: number
+  learned: number
+}
+
+export interface IGraphData {
+  labels: string[] | null
+  datasets: {
+    label: string
+    data: number[]
+    borderColor: string
+    backgroundColor: string
+  }[]
+} 

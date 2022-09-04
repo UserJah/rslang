@@ -1,32 +1,14 @@
 import React, { useState } from 'react';
 import AuthConstants from "../../constants/Auth.constants"
-import { ISignin, IStatistics, IUserInfo } from './../../constants/Auth.interfaces';
+import { ISignin, IUserInfo } from './../../constants/Auth.interfaces';
 import LocalStorageService from "./../../utils/LocalStorageService"
+import { defaultstats } from '../../common/stats';
 import api from './../../utils/AuthAPI';
 
 const initialDataAuth: ISignin = {
   email: '',
   password: '',
   login: '',
-}
-
-const defaultStats: IStatistics = {
-  learnedWords: 0,
-  optional: {
-    audiochallenge: {
-      biggestStreak: 0,
-      answers: 0,
-      percentage: 0,
-      newWords: 0
-    },
-    sprint: {
-      biggestStreak: 0,
-      answers: 0,
-      percentage: 0,
-      newWords: 0
-    },
-    date: new Date(),
-  }
 }
 
 const useAuthContext = () => {
@@ -55,7 +37,7 @@ const useAuthContext = () => {
 
     setTimeout(() => setParting(false), AuthConstants.POP_UP_DELAY)
 
-    // window.location.reload()
+    window.location.reload()
 
     LocalStorageService.clear()
   }
@@ -123,6 +105,20 @@ const useAuthContext = () => {
           setOpen(false)
           setPreloader(false)
           setOpenLogin(true)
+
+          api.loginUser({ email, password, login }).then(async (resp) => {
+
+            if (resp && resp.ok) {
+              const { userId, token } = await resp.json();
+
+              api.getStat(userId as string, token as string).then(async (resp) => {
+
+                if (resp && resp.status === 404) {
+                  api.updateStat(userId as string, token as string, defaultstats)
+                }
+              })
+            }
+          })
         }, AuthConstants.POP_UP_DELAY)
       }
     })
@@ -174,21 +170,11 @@ const useAuthContext = () => {
         setOpenLogin(false)
         setGreeting(true)
 
-        api.getStat(userId as string, token as string).then(resp => {
-
-          if (resp && resp.status === 404) {
-            api.updateStat(userId as string, token as string, defaultStats)
-          }
-
-          return
-        })
-
-
         setTimeout(() => {
           setAuth(false)
           setGreeting(false)
 
-          // window.location.reload()
+          window.location.reload()
         }, AuthConstants.POP_UP_DELAY)
       }
     })
