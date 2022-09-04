@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { prepareAudioChallenge, shuffle, handleWord, getstats, handleStats, learned } from '../../common/functions'
+import { prepareAudioChallenge,  handleWord, getstats, handleStats, learned } from '../../common/functions'
 import { WordSignature, Statistics } from "../../api/types";
 import { Controls } from "../controls/controls";
 import { Dots } from "../dots/dots";
@@ -19,6 +19,7 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
   const [loadstats, isLoadstats] = useState(false)
   const [userStats, setUserStats] = useState<Statistics|Record<string,never>>({})
   const [streak, setStreak] = useState(0)
+  const [noWords,setnoWords]=useState(false)
   useEffect(() => {
     const resp = async () => {
       const response = await prepareAudioChallenge(props?.page, props?.group, props?.fromPage);
@@ -35,7 +36,6 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
       if (resp) {
         isLoadstats(true)
         setUserStats(resp)
-        console.log(resp)
       }
     }
     loadstats()
@@ -47,7 +47,7 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     isFinish(false)
     setCounter(0)
     setGuessed([])
-    setItems(props?.fromPage?shuffle(items.filter(element=>!element.properties?.optional?.isKnown)):shuffle(items))
+    setItems(filterItems())
   }
 
   function updateData(element: string) {
@@ -56,7 +56,6 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     const b = items[counter].isNew
     let strk = streak
     if (items[counter].wordTranslate === element) {
-      console.log('im correct')
       strk+=1
       setStreak(streak+1)
       items[counter].guessedCorrect = true
@@ -65,7 +64,6 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
 
     }
     else {
-      console.log('im not correct')
       strk = 0
       setStreak(0)
       items[counter].guessedCorrect = false
@@ -85,7 +83,6 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
 
   }
   function updateCounter(){
-    console.log(statsData)
     if (counter !== items.length - 1) setCounter(counter + 1);
     else {
       isFinish(true)
@@ -94,9 +91,34 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
             }
   }
   }
+
+  function filterItems(){
+    if (!props?.fromPage) return items
+    else {
+      const filtered=items.filter(element=>!element.properties?.optional?.isKnown)
+     if(filtered.length>0) return filtered
+     else {setnoWords(true)}
+      }
+    }
+
   if (!load && !finish) {
     return <Preloader/>
-  } else if (!finish) {
+  }
+  else if(noWords){
+    return (
+      <div className="gameboard">
+      <Link to='/' className='exit_link'>
+<ClearIcon onClick={()=>{
+              if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
+              sx={{fontSize:40,color:'white'}}/>
+  </Link>
+    Вы отгадали все слова.
+    Выйдите из игры для выбора другого уровня сложности или страницы учебника
+  </div>
+    )
+  }
+
+  else if (!finish) {
     return (
       <div className="gameboard">
                   <Link to='/' className='exit_link'>
@@ -105,11 +127,11 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
               sx={{fontSize:40,color:'white'}}/>
           </Link>
         <div>
-          <Dots arr={items} guessed={guessed} />
+          <Dots arr={filterItems()} guessed={guessed} />
         </div>
 
         <div>
-          <Controls items={items} updatefunc={updateData} counter={counter} load={load} updatecount={updateCounter}/>
+          <Controls items={filterItems()} updatefunc={updateData} counter={counter} load={load} updatecount={updateCounter}/>
         </div>
       </div>
     );

@@ -3,7 +3,6 @@ import { AudioChallenge } from '../gameboard/audiochallenge';
 import { Typography } from '@mui/material';
 import './startscreen.css'
 export function Startscreen(props?: { page?: number; group?: number, fromPage?:boolean}) {
-  console.log(props)
   const [group, setGroup] = useState(0 || props?.group)
   const [start, setStart] = useState(false);
   if(!start && props?.group===undefined)
@@ -78,7 +77,7 @@ export function Startscreen(props?: { page?: number; group?: number, fromPage?:b
     )
     else return(
        <Typography component={'section'} variant={'body2'}>
-      <AudioChallenge group={group} page={props?.page|| 29} fromPage={props?.fromPage}/>
+      <AudioChallenge group={group} page={props?.page===undefined?29:props.page} fromPage={props?.fromPage}/>
       </Typography>
     )
   }
