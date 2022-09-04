@@ -13,7 +13,7 @@ import {
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
 import { Container } from '@mui/system'
 
-const WordCard = ({ props, color, group }) => {
+const WordCard = ({ props, color, group, change }) => {
   const [clicked, setClicked] = useState(false)
   const [userDifficultyWord, setUserDifficultyWord] = useState(false)
   const [userLearnedWord, setUserLearnedWord] = useState(false)
@@ -52,6 +52,7 @@ const WordCard = ({ props, color, group }) => {
   const handleSetNormalWord = async () => {
     await setUserWordsTextBook(props._id, {difficulty: 'normal', optional : {isKnown : false}}, 'PUT');
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
+    change()
   }
 
   const handleSetLearnedWorld = async () => {
@@ -60,11 +61,13 @@ const WordCard = ({ props, color, group }) => {
     : 
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
+    change()
   }
 
   const handleSetUnlearnedWorld = async () => {
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false}}, 'PUT')
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
+    change()
   }
 
 
