@@ -191,7 +191,6 @@ export async function getstats() {
   })
   if (!rawResp.ok) return false
   const resp = await rawResp.json()
-  console.log(JSON.parse(resp.optional.long))
   return resp}
 }
 
