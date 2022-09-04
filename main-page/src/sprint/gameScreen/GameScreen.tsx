@@ -2,9 +2,10 @@ import { Morebuttons } from '../Controls/Buttons'
 import React, { useState, useEffect } from 'react'
 import { Statistics, WordSignature } from '../../api/types'
 import { Postgame } from '../PostGameScreen/PostgameScreen'
-import StarIcon from '@mui/icons-material/StarOutline'
+import { Link } from 'react-router-dom'
 import StarIconFilled from '@mui/icons-material/Star'
 import { stick } from '../../common/assets/stick.js'
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   pteroIMG,
   pidgeionIMG,
@@ -102,7 +103,7 @@ if (load){
     const arr = []
     for (let index = 0; index < 3; index++) {
       if (index < strk % mult)
-        arr.push(<StarIconFilled sx={{ color: '#FC0', fontSize: '60px' }} />)
+        arr.push(<StarIconFilled key={index} sx={{ color: '#FC0', fontSize: '60px' }} />)
       else arr.push(<StarIconFilled sx={{ color: '#51876f', fontSize: '60px' }} />)
     }
     return arr
@@ -110,7 +111,7 @@ if (load){
 
   const birds = function (strk: number, mult: number) {
     const arr = [pteroIMG(), pidgeionIMG(), turkeyIMG(), penguinIMG()]
-return [arr[0]].concat(
+    return [arr[0]].concat(
       arr.slice(
         1,
         1 + (Math.floor(strk / mult) > 5 ? 4 : Math.floor(strk / mult))
@@ -125,7 +126,13 @@ return [arr[0]].concat(
     return (
       <div>
         <div className="gameBoard">
+
           <div className="info">
+          <Link to='/' className='exit_link'>
+          <ClearIcon onClick={()=>{
+              if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
+              sx={{fontSize:40,color:'white'}}/>
+          </Link>
             <div className="starscontainer">{stars(streak, 4)}</div>
             <span className="Score">Score:{score}</span>
           </div>
@@ -142,6 +149,15 @@ return [arr[0]].concat(
       </div>
     )
   } else {
-    return <Postgame elements={guessed} func={props.func} />
+
+    return (<div>
+<Link to='/' className='exit_link'>
+<ClearIcon onClick={()=>{
+              if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
+              sx={{fontSize:40,color:'white'}}/>
+  </Link>
+    <Postgame elements={guessed} func={props.func} />
+    </div>
+    )
   }
 }

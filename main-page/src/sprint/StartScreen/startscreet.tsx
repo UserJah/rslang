@@ -8,7 +8,10 @@ export function Startscreen(props?: { page?: number; group?: number,fromPage?:bo
   if (!props?.fromPage && !start) {
     return (
       <Typography>
+        <div className="gameboard">
       <div className="level_wrapper">
+
+        <div className='text_startScreen'>
         <h2>Спринт</h2>
         <p>Выберите уровень игры.Чем выше уровень,тем сложнее слова!</p>
         <p>Для управления используйте мышь или кнопки Влево и Вправо</p>
@@ -66,6 +69,8 @@ export function Startscreen(props?: { page?: number; group?: number,fromPage?:bo
         >
           Уровень 6
         </button>
+      </div>
+      </div>
       </div>
       </Typography>
     )

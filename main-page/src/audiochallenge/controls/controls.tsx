@@ -64,6 +64,15 @@ export function Controls(props: { items: WordSignature[], updatefunc: (element: 
 
       })}
     </div>
+    <div className='nextcontainer'>
+        <button className="next" onClick={() => {
+          setAnswer('wqrqwerqwer')
+          isScreen(true)
+          props.updatefunc('qwerqwerqwer')
+        }}>
+          Я не знаю
+        </button>
+      </div>
   </div>
   )
   else return (
