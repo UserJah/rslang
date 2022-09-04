@@ -46,11 +46,15 @@ const Statistic = () => {
             percentageSprint !== undefined &&
             percentageAudioChallenge !== undefined
           ) {
+            //TODO To read 5th grade math))
             const averagePercentage =
-              (+(percentageSprint + percentageAudioChallenge).toFixed(1) *
-                100) /
-              2
-          
+              percentageSprint && percentageAudioChallenge > 0
+                ? (+(percentageSprint + percentageAudioChallenge).toFixed(1) *
+                    100) /
+                  2
+                : +(percentageSprint + percentageAudioChallenge).toFixed(1) *
+                  100
+
             const averageValues = { learnedWords, averagePercentage }
 
             setAverages(averageValues)
