@@ -35,13 +35,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', './build'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './src/index.html'),
     }),
     new CopyPlugin({
-      patterns: [{ from: 'src', to: 'dest' }]
-    })
+      patterns: [{ from: 'src', to: 'dest' }],
+    }),
   ],
 }

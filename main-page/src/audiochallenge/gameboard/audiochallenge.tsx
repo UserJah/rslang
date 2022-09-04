@@ -1,65 +1,127 @@
-import React ,{useState,useEffect}from "react";
-import { prepareAudioChallenge,shuffle,handleWord} from '../../common/functions'
-import { WordSignature } from "../../api/types";
+import React, { useState, useEffect } from "react";
+import { prepareAudioChallenge, shuffle, handleWord, getstats, handleStats, learned } from '../../common/functions'
+import { WordSignature, Statistics } from "../../api/types";
 import { Controls } from "../controls/controls";
 import { Dots } from "../dots/dots";
 import { PostGame } from "../endscreen/postgamescreen";
 import './gameboard.css'
+import { Preloader } from "./preloader";
+import ClearIcon from '@mui/icons-material/Clear';
+import { Link } from "react-router-dom";
 
-export function AudioChallenge(props?: { page?: number; group?: number,fromPage?:boolean }) {
+export function AudioChallenge(props?: { page?: number; group?: number, fromPage?: boolean }) {
   const [items, setItems] = useState<WordSignature[]>([]);
   const [load, isLoad] = useState(false);
   const [finish, isFinish] = useState(false);
   const [counter, setCounter] = useState(0);
-  const [guessed,setGuessed]=useState<WordSignature[]>([])
+  const [guessed, setGuessed] = useState<WordSignature[]>([])
+  const [statsData, setStatsData] = useState({ new: 0, answers: 0, correctAnswers: 0, learned: 0, bigStreak: 0 })
+  const [loadstats, isLoadstats] = useState(false)
+  const [userStats, setUserStats] = useState<Statistics|Record<string,never>>({})
+  const [streak, setStreak] = useState(0)
   useEffect(() => {
     const resp = async () => {
-      const response = await prepareAudioChallenge(props?.page,props?.group,props?.fromPage);
+      const response = await prepareAudioChallenge(props?.page, props?.group, props?.fromPage);
       setItems(response);
       isLoad(true);
     };
 
     resp();
   }, [props?.fromPage, props?.group, props?.page]);
-  function reset(){
+
+  useEffect(() => {
+    async function loadstats() {
+      const resp = await getstats()
+      if (resp) {
+        isLoadstats(true)
+        setUserStats(resp)
+        console.log(resp)
+      }
+    }
+    loadstats()
+  }, [finish])
+
+  function reset() {
+
+    setStatsData(()=>{return {new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0}})
     isFinish(false)
     setCounter(0)
     setGuessed([])
-    setItems(shuffle(items))
+    setItems(props?.fromPage?shuffle(items.filter(element=>!element.properties?.optional?.isKnown)):shuffle(items))
   }
 
-  function updateCounter(element:string){
+  function updateData(element: string) {
+
+    const a = items[counter].properties?.optional?.isKnown as boolean
+    const b = items[counter].isNew
+    let strk = streak
     if (items[counter].wordTranslate === element) {
-                  items[counter].guessedCorrect=true
-                 setGuessed(guessed=>[...guessed,items[counter]])
-                 handleWord(items[counter],true,'audiochallenge')
-                }
-                else{
-                  items[counter].guessedCorrect=false
-                  setGuessed(guessed=>[...guessed,items[counter]])
-                  handleWord(items[counter],false,'audiochallenge')
-                }
-  if(counter!==items.length-1)setCounter(counter + 1);
-else isFinish(true)
+      console.log('im correct')
+      strk+=1
+      setStreak(streak+1)
+      items[counter].guessedCorrect = true
+      setGuessed(guessed => [...guessed, items[counter]])
+      handleWord(items[counter], true, 'audiochallenge')
 
-              }
+    }
+    else {
+      console.log('im not correct')
+      strk = 0
+      setStreak(0)
+      items[counter].guessedCorrect = false
+      setGuessed(guessed => [...guessed, items[counter]])
+      handleWord(items[counter], false, 'audiochallenge')
 
+      }
+
+    setStatsData((statsData) => statsData = {
+      new: statsData.new + (b ? 1 : 0),
+      answers: statsData.answers + 1,
+      correctAnswers: statsData.correctAnswers + (items[counter].guessedCorrect ? 1 : 0),
+      learned: statsData.learned + learned(a, items[counter].properties?.optional?.isKnown),
+      bigStreak: (statsData.bigStreak > strk) ? statsData.bigStreak : strk
+    })
+
+
+  }
+  function updateCounter(){
+    console.log(statsData)
+    if (counter !== items.length - 1) setCounter(counter + 1);
+    else {
+      isFinish(true)
+      if(loadstats){
+        handleStats(userStats as Statistics,statsData,'audiochallenge')
+            }
+  }
+  }
   if (!load && !finish) {
-    return <div>qwer</div>;
+    return <Preloader/>
   } else if (!finish) {
     return (
       <div className="gameboard">
-<div>
-  <Dots arr={items} guessed={guessed}/>
-</div>
+                  <Link to='/' className='exit_link'>
+          <ClearIcon onClick={()=>{
+              if (loadstats) handleStats(userStats as Statistics,statsData,'audiochallenge')}}
+              sx={{fontSize:40,color:'white'}}/>
+          </Link>
+        <div>
+          <Dots arr={items} guessed={guessed} />
+        </div>
 
-      <div>
-      <Controls items={items} updatefunc={updateCounter} counter={counter} load={load}/>
-      </div>
+        <div>
+          <Controls items={items} updatefunc={updateData} counter={counter} load={load} updatecount={updateCounter}/>
+        </div>
       </div>
     );
   }
   else return (
-    <PostGame guessed={guessed} reset={reset}/>
+    <div className="gameboard">
+                <Link to='/' className='exit_link'>
+          <ClearIcon onClick={()=>{
+              if (loadstats) handleStats(userStats as Statistics,statsData,'audiochallenge')}}
+              sx={{fontSize:40,color:'white'}}/>
+          </Link>
+      <PostGame guessed={guessed} reset={reset} />
+    </div>
   )
 }

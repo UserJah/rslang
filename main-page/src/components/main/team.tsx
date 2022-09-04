@@ -20,21 +20,21 @@ const Team = () => {
       </Typography>
       <div className="team">
         <ImgMediaCard
-          name="Rustam"
+          name="Рустам"
           photoLink={img1}
-          description="Create mainpage"
+          description="Разработал главную страницу, электронный учебник, дизайн приложения."
           href="https://github.com/UserJah"
         />
         <ImgMediaCard
-          name="Ilya"
+          name="Илья"
           photoLink={img2}
-          description="Create games"
+          description="Разработал игры Спринт и Аудиовызов. Настроил API для общения с сервером."
           href="https://github.com/jardozzz"
         />
         <ImgMediaCard
-          name="Dmitry"
+          name="Дмитрий"
           photoLink={img3}
-          description="Create user auth"
+          description="Прикрутил авторизацию, настроил роутинг, разработал раздел статистики."
           href="https://github.com/PartyZzzan77"
         />
       </div>

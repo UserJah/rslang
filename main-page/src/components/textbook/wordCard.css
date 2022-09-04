@@ -3,3 +3,29 @@
   background-color: #ffdba4;
   cursor: pointer;
 }
+
+.levels {
+  display: flex;
+  justify-content: center;
+  max-width: 20%;
+  margin: 0 auto;
+}
+
+#1level {
+  background-color: lightgreen;
+}
+#2level {
+  background-color: lightskyblue;
+}
+#3level {
+  background-color: yellow;
+}
+#4level {
+  background-color: orange;
+}
+#5level {
+  background-color: orangered;
+}
+#6level {
+  background-color: red;
+}

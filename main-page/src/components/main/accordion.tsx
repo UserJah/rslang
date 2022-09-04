@@ -111,13 +111,13 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography sx={{ textAlign: 'justify' }}>
-            Твой личный словарь содержит изученные слова. Ты можешь отметить
+            В учебнике ты можешь отметить
             сложные слова, чтобы обратить на них внимание в будущем. <br />
             Раздел статистики поможет оставаться в тонусе и следить за процессом
             обучения.
           </Typography>
           <Button variant="contained" size="small">
-            <Link className="link" to="5">
+            <Link className="link" to="4">
               Перейти
             </Link>
           </Button>

@@ -10,6 +10,26 @@
   background-color: #94b49f;
 }
 
+@media screen and (max-width: 925px) {
+  .team {
+    flex-direction: column;
+  }
+
+  .image-container {
+    background-image: none !important;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+}
+
 .accordion {
   margin-bottom: 10px;
+}
+
+iframe {
+  margin: 0 auto;
+  width: 50%;
+  height: 50vh;
 }

@@ -2,10 +2,11 @@ body{
   margin:0;
 }
 .gameboard{
+  margin:0 auto;
   background-image: url('../../common/assets/bg.jpg');
   background-size:cover;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  min-height:calc(100vh - 160px);
   display: flex;
   flex-direction:column;
   align-items:center;
