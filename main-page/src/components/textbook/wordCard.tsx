@@ -42,22 +42,22 @@ const WordCard = ({ props, color, group, change }) => {
   }
   const handleSetHardWord = async () => {
     (await getUserWord(props._id) ?
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0}}))
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0, lastaudio: false, lastsprint: false}}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
     change()
   }
 
   const handleSetNormalWord = async () => {
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false, streak: props.userWord.optional.streak}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false, streak : props.userWord.optional.streak, lastaudio: props.userWord.optional.lastaudio, lastsprint: props.userWord.optional.lastsprint}}, 'PUT')
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
     change()
   }
 
   const handleSetLearnedWorld = async () => {
     (await getUserWord(props._id) ?
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
@@ -65,7 +65,7 @@ const WordCard = ({ props, color, group, change }) => {
   }
 
   const handleSetUnlearnedWorld = async () => {
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : false, streak : props.userWord.optional.streak, lastaudio: props.userWord.optional.lastaudio, lastsprint: props.userWord.optional.lastsprint}}, 'PUT')
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
     change()
   }
@@ -145,7 +145,7 @@ const WordCard = ({ props, color, group, change }) => {
                 Спринт: угадано
               </Typography>
               : 
-              props.userWord && props.userWord.optional && props.userWord.optional.lastsprint !== undefined ? 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastsprint ? 
               <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
                 Спринт: не угадано
               </Typography> 
@@ -159,7 +159,7 @@ const WordCard = ({ props, color, group, change }) => {
                   Аудиовызов: угадано
                 </Typography> 
               : 
-              props.userWord && props.userWord.optional && props.userWord.optional.lastaudio !== undefined ? 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastaudio ? 
                 <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
                   Аудиовызов: не угадано
                 </Typography> 
