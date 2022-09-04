@@ -9,6 +9,13 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
+  const [changed, setChanged] = useState(false)
+  console.log(changed);
+  console.log(items);
+  const change = () => {
+    setChanged(changed => !changed)
+  }
+
   useEffect(() => {
     if (group === 7) {
       const NonStringedUser = localStorage.getItem('userInfo') as string
@@ -65,7 +72,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
         )
       }
       }
-  }, [group, page])
+  }, [group, page, changed])
 
   if (localStorage.userInfo && items.filter((item) => item.userWord && item.userWord.optional && item.userWord.optional.isKnown === true).length === 20) {
     updateAllLearned(true)
@@ -84,7 +91,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
         sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', backgroundImage: allLearned ? `url(${img})`: 'none', backgroundSize: 'contain' }}
       >
         {items.map((item: Word) => (
-          <WordCard props={item} key={item.word} color={color} group={group}/>
+          <WordCard props={item} key={item.word} color={color} group={group} change={change}/>
         ))}
       </Container>
     )
