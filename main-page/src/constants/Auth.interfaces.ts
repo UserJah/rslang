@@ -29,20 +29,10 @@ export interface IStatistics {
   id?: string
   learnedWords: number
   optional?: {
-    audiochallenge?: {
-      biggestStreak?: number
-      answers?: number
-      percentage?: number,
-      newWords: number
-    },
-    sprint?: {
-      biggestStreak?: number
-      answers?: number
-      percentage?: number,
-      newWords: number
-    },
+    audiochallenge?: IGame,
+    sprint?: IGame,
     date: Date,
-    long: ILongStat[]
+    long: ILongStat | string
   }
 }
 

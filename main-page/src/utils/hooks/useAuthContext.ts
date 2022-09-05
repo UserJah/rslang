@@ -26,7 +26,7 @@ const defaultStats: IStatistics = {
       newWords: 0
     },
     date: new Date(),
-    long: [],
+    long: JSON.stringify([])
   }
 }
 
@@ -56,7 +56,7 @@ const useAuthContext = () => {
 
     setTimeout(() => setParting(false), AuthConstants.POP_UP_DELAY)
 
-    // window.location.reload()
+    window.location.reload()
 
     LocalStorageService.clear()
   }
@@ -178,10 +178,10 @@ const useAuthContext = () => {
         api.getStat(userId as string, token as string).then(resp => {
 
           if (resp && resp.status === 404) {
+            console.log('fail');
+
             api.updateStat(userId as string, token as string, defaultStats)
           }
-
-          return
         })
 
 
@@ -189,7 +189,7 @@ const useAuthContext = () => {
           setAuth(false)
           setGreeting(false)
 
-          // window.location.reload()
+          window.location.reload()
         }, AuthConstants.POP_UP_DELAY)
       }
     })

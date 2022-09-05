@@ -35,8 +35,6 @@ const Statistic = () => {
           const result: IStatistics = await response.json()
           delete result.id
 
-          console.log(result)
-
           const percentageSprint = result.optional?.sprint?.percentage
           const percentageAudioChallenge =
             result.optional?.audiochallenge?.percentage
@@ -73,7 +71,6 @@ const Statistic = () => {
             }
 
             setAverages(averageValues)
-            console.log(averages)
           }
 
           setStat(result)
