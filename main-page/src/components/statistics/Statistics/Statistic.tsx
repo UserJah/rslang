@@ -23,7 +23,7 @@ const dataNewWords: IGraphData = {
   datasets: [
     {
       label: 'новых за весь период обучения',
-      data: [],
+      data: [0],
       borderColor: 'blue',
       backgroundColor: 'blue',
     },
@@ -35,7 +35,7 @@ const dataLeanedWords: IGraphData = {
   datasets: [
     {
       label: 'изученных за весь период обучения',
-      data: [],
+      data: [0],
       borderColor: 'brown',
       backgroundColor: 'brown',
     },
@@ -75,21 +75,29 @@ const Statistic = () => {
             console.log(archiveStatDB)
 
             if (archiveStatDB) {
-              dataNewWords.labels = archiveStatDB
-                .map((item) => new Date(item.date).toLocaleDateString())
-                .reverse()
+              dataNewWords.labels = [
+                '0',
+                ...archiveStatDB
+                  .map((item) => new Date(item.date).toLocaleDateString())
+                  .reverse(),
+              ]
 
-              dataNewWords.datasets[0].data = archiveStatDB
-                .map((item) => +item.new)
-                .reverse()
+              dataNewWords.datasets[0].data = [
+                0,
+                ...archiveStatDB.map((item) => +item.new).reverse(),
+              ]
 
-              dataLeanedWords.labels = archiveStatDB
-                .map((item) => new Date(item.date).toLocaleDateString())
-                .reverse()
+              dataLeanedWords.labels = [
+                '0',
+                ...archiveStatDB
+                  .map((item) => new Date(item.date).toLocaleDateString())
+                  .reverse(),
+              ]
 
-              dataLeanedWords.datasets[0].data = archiveStatDB
-                .map((item) => +item.learned)
-                .reverse()
+              dataLeanedWords.datasets[0].data = [
+                0,
+                ...archiveStatDB.map((item) => +item.learned).reverse(),
+              ]
             }
           }
 
