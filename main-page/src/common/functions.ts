@@ -1,5 +1,6 @@
 
 import { WordSignature, Word, UserWords, Statistics, GatheredStats } from '../api/types'
+import { defaultstats } from './stats';
 export function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -440,17 +441,22 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       (stats.optional.sprint.newWords) += gathered.new
       stats.optional.sprint.biggestStreak = stats.optional.sprint.biggestStreak > gathered.bigStreak ? stats.optional.sprint.biggestStreak : gathered.bigStreak
       stats.learnedWords += gathered.learned
-
+      long[0]={
+        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+        date:stats.optional.date,
+        learned:stats.learnedWords
+      }
+      stats.optional.long=JSON.stringify(long)
 
     }
     else {
       long.unshift({
-        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-        date:stats.optional.date,
-        learned:stats.learnedWords
+        new:gathered.new,
+        date:now,
+        learned:gathered.learned
       })
       stats.optional.long=JSON.stringify(long)
-
+      stats.optional.audiochallenge=defaultstats.optional.audiochallenge
       stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
@@ -468,15 +474,21 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.optional.audiochallenge.newWords += gathered.new
       stats.optional.audiochallenge.biggestStreak = stats.optional.audiochallenge.biggestStreak > gathered.bigStreak ? stats.optional.audiochallenge.biggestStreak : gathered.bigStreak
       stats.learnedWords += gathered.learned
-    }
-    else {
-      long.unshift({
+      long[0]={
         new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
         date:stats.optional.date,
         learned:stats.learnedWords
+      }
+      stats.optional.long=JSON.stringify(long)
+    }
+    else {
+      long.unshift({
+        new:gathered.new,
+        date:now,
+        learned:gathered.learned
       })
       stats.optional.long=JSON.stringify(long)
-
+      stats.optional.sprint=defaultstats.optional.sprint
       stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
