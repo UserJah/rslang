@@ -45,12 +45,12 @@ loadstats()
 },[props.reset])
 
   useEffect(() => {
-    if(!props.reset){
+    if(props.reset){
 if (load){
 
   handleStats(userStats as Statistics,statsData,'sprint')
-}
-    isLoad(false)
+}}
+  else{  isLoad(false)
     setStatsData(()=>{return {new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0}})
     setGuessed(() => [])
     setStreak(0)
