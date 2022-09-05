@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { prepareAudioChallenge,  handleWord, getstats, handleStats, learned } from '../../common/functions'
+import { prepareAudioChallenge,  handleWord, getstats, handleStats, learned,shuffle } from '../../common/functions'
 import { WordSignature, Statistics } from "../../api/types";
 import { Controls } from "../controls/controls";
 import { Dots } from "../dots/dots";
@@ -25,6 +25,9 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
       const response = await prepareAudioChallenge(props?.page, props?.group, props?.fromPage);
       setItems(response);
       isLoad(true);
+      if(response.length===0){
+        setnoWords(true)
+      }
     };
 
     resp();
@@ -83,7 +86,11 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
 
   }
   function updateCounter(){
-    if (counter !== items.length - 1) setCounter(counter + 1);
+
+    if (counter !== items.length - 1) {setCounter(counter + 1);
+      console.log(items[counter+1])
+    }
+
     else {
       isFinish(true)
       if(loadstats){
@@ -93,13 +100,15 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
   }
 
   function filterItems(){
-    if (!props?.fromPage) return items
+    items.forEach(element=>element.variant=shuffle(element.variant as string []))
+    if (!props?.fromPage) return shuffle(items)
     else {
       const filtered=items.filter(element=>!element.properties?.optional?.isKnown)
      if(filtered.length>0) return filtered
      else {
        setnoWords(true)
-      return items}
+       return items
+     }
       }
     }
 
@@ -129,11 +138,11 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
               sx={{fontSize:40,color:'white'}}/>
           </Link>
         <div>
-          <Dots arr={filterItems()} guessed={guessed} />
+          <Dots arr={items} guessed={guessed} />
         </div>
 
         <div>
-          <Controls items={filterItems()} updatefunc={updateData} counter={counter} load={load} updatecount={updateCounter}/>
+          <Controls items={items} updatefunc={updateData} counter={counter} load={load} updatecount={updateCounter}/>
         </div>
       </div>
     );

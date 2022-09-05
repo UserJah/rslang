@@ -348,13 +348,11 @@ element.isNew=false
 
   }
   else if (!correct) {
-    element.properties = {
-      difficulty: 'easy',
-      optional: {
-        isKnown: false,
-        streak: 0
-      }
-    }
+    delete element.properties.wordId
+    delete element.properties.id
+    if ( element.properties.optional){
+    element.properties.optional.isKnown=false
+    element.properties.optional.streak=0}
   }
   else {
     delete element.properties.wordId
@@ -377,8 +375,8 @@ element.isNew=false
       }
   }
   if (element.properties.optional) {
-    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct
-    else element.properties.optional.lastsprint = correct
+    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct;
+    else element.properties.optional.lastsprint = correct;
   }
   console.log(element)
   const isUser = await isUserHere()
