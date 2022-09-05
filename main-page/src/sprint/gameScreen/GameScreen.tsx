@@ -41,13 +41,13 @@ useEffect(()=>{
     }
   }
 loadstats()
-if (load) return ()=>handleStats(userStats as Statistics,statsData,'sprint')
 
 },[props.reset])
 
   useEffect(() => {
     if(!props.reset){
 if (load){
+
   handleStats(userStats as Statistics,statsData,'sprint')
 }
     isLoad(false)
@@ -59,20 +59,19 @@ if (load){
 
   useEffect(() => {
     function qwer(){
+      if(load)
       handleStats(userStats as Statistics,statsData,'sprint')
     }
     window.addEventListener("beforeunload", qwer);
     return () => {
       window.removeEventListener("beforeunload",qwer);
     };
-  }, []);
+  }, [load, statsData, userStats]);
 
   function updateGameState(correct: boolean, elem: WordSignature): void {
     const a=elem.properties?.optional?.isKnown as boolean
     const b=elem.isNew
     let strk=streak
-console.log(statsData)
-console.log(a)
     if (elem.correct === correct) {
       strk+=1
       setStreak((streak)=>{return (streak + 1)})

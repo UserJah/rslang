@@ -44,6 +44,17 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     loadstats()
   }, [finish])
 
+  useEffect(() => {
+    function qwer(){
+      if(loadstats)
+      handleStats(userStats as Statistics,statsData,'audiochallenge')
+    }
+    window.addEventListener("beforeunload", qwer);
+    return () => {
+      window.removeEventListener("beforeunload",qwer);
+    };
+  }, [loadstats, statsData, userStats]);
+
   function reset() {
 
     setStatsData(()=>{return {new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0}})
@@ -88,7 +99,6 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
   function updateCounter(){
 
     if (counter !== items.length - 1) {setCounter(counter + 1);
-      console.log(items[counter+1])
     }
 
     else {
@@ -104,7 +114,7 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     if (!props?.fromPage) return shuffle(items)
     else {
       const filtered=items.filter(element=>!element.properties?.optional?.isKnown)
-     if(filtered.length>0) return filtered
+     if(filtered.length>0) return shuffle(filtered)
      else {
        setnoWords(true)
        return items

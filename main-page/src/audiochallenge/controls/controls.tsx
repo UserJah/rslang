@@ -25,7 +25,7 @@ export function Controls(props: { items: WordSignature[], updatefunc: (element: 
           if (evt.code === `Digit${i}`) {
             setAnswer((props.items[props.counter].variant as string[])[i - 1])
             isScreen(true)
-            props.updatefunc(answer)
+            props.updatefunc((props.items[props.counter].variant as string[])[i - 1])
           }
         }
       }
