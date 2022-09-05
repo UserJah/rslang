@@ -14,7 +14,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
   const change = () => {
     setChanged(changed => changed+=1)
   }
-  console.log(changed);
+
   useEffect(() => {
     if (group === 7) {
       const NonStringedUser = localStorage.getItem('userInfo') as string

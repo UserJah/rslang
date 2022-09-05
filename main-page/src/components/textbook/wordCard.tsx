@@ -59,7 +59,7 @@ const WordCard = ({ props, color, group, change }) => {
     (await getUserWord(props._id) ?
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true}}))
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: 0, lastaudio: false, lastsprint: false}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
     change()
   }
@@ -140,12 +140,12 @@ const WordCard = ({ props, color, group, change }) => {
             {props.textExampleTranslate}
           </Typography>
           
-              {props.userWord && props.userWord.optional && props.userWord.optional.lastsprint ?
+              {props.userWord && props.userWord.optional && props.userWord.optional.lastsprint === true ?
               <Typography component={'span'} color="green" sx={{ alignSelf: 'center', p:1}}>
                 Спринт: угадано
               </Typography>
               : 
-              props.userWord && props.userWord.optional && props.userWord.optional.lastsprint ? 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastsprint === false ? 
               <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
                 Спринт: не угадано
               </Typography> 
@@ -154,12 +154,12 @@ const WordCard = ({ props, color, group, change }) => {
                 Спринт: не попадалось
               </Typography> : null
             }
-              {props.userWord && props.userWord.optional && props.userWord.optional.lastaudio ?
+              {props.userWord && props.userWord.optional && props.userWord.optional.lastaudio === true?
                 <Typography component={'span'} color="green" sx={{ alignSelf: 'center', p:1}}>
                   Аудиовызов: угадано
                 </Typography> 
               : 
-              props.userWord && props.userWord.optional && props.userWord.optional.lastaudio ? 
+              props.userWord && props.userWord.optional && props.userWord.optional.lastaudio === false ? 
                 <Typography component={'span'} color="red" sx={{ alignSelf: 'center', p:1}}>
                   Аудиовызов: не угадано
                 </Typography> 
