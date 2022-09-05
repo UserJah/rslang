@@ -44,7 +44,7 @@ const WordCard = ({ props, color, group, change }) => {
     (await getUserWord(props._id) ?
     setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio !== undefined ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint !== undefined ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0, lastaudio: false, lastsprint: false}}))
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0 }}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
     change()
   }
@@ -59,7 +59,7 @@ const WordCard = ({ props, color, group, change }) => {
     (await getUserWord(props._id) ?
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio !== undefined ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint !== undefined ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: 0, lastaudio: false, lastsprint: false}}))
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: 0}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
     change()
   }
