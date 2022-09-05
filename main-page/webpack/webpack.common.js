@@ -14,7 +14,7 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'ts-loader',
           },
         ],
       },
@@ -35,14 +35,20 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '..', './build'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: '',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './src/index.html'),
     }),
     new CopyPlugin({
-      patterns: [{ from: 'src', to: 'dest' }],
+      patterns: [
+        {
+          from: `${__dirname}/src/assets/img`,
+          to: 'assets/img',
+          noErrorOnMissing: true,
+        },
+      ],
     }),
   ],
 }

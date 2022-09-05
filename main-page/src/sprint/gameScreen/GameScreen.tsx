@@ -59,8 +59,6 @@ export function Card(props: {
       if (load) {
         handleStats(userStats as Statistics, statsData, 'sprint')
       }
-    } else {
-      isLoad(false)
       setStatsData(() => {
         return {
           new: 0,
@@ -70,6 +68,9 @@ export function Card(props: {
           bigStreak: 0,
         }
       })
+    } else {
+      isLoad(false)
+
       setGuessed(() => [])
       setStreak(0)
       setScore(0)
@@ -124,7 +125,7 @@ export function Card(props: {
   }
 
   const stars = function (strk: number, mult: number) {
-    const arr = []
+    const arr :any[]= []
     for (let index = 0; index < 3; index++) {
       if (index < strk % mult)
         arr.push(

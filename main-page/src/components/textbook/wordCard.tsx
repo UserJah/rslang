@@ -12,7 +12,7 @@ import {
 } from '@mui/icons-material'
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
 
-const WordCard = ({ props, color, group, change }) => {
+const WordCard = ({ props, color, group, change }:{props:any,color:any,group:number,change:any}) => {
   const [clicked, setClicked] = useState(false)
   const [userDifficultyWord, setUserDifficultyWord] = useState(false)
   const [userLearnedWord, setUserLearnedWord] = useState(false)
@@ -46,7 +46,7 @@ const WordCard = ({ props, color, group, change }) => {
     }, 500)
   }
   const handleSetHardWord = async () => {
-    ;(await getUserWord(props._id))
+    (await getUserWord(props._id))
       ? setUserWordsTextBook(
           props._id,
           {
@@ -99,7 +99,7 @@ const WordCard = ({ props, color, group, change }) => {
   }
 
   const handleSetLearnedWorld = async () => {
-    ;(await getUserWord(props._id))
+    (await getUserWord(props._id))
       ? setUserWordsTextBook(
           props._id,
           {
