@@ -62,8 +62,6 @@ const Statistic = () => {
           const result: IStatistics = await response.json()
           delete result.id
 
-          console.log(result)
-
           if (
             result &&
             result.optional &&
@@ -71,8 +69,6 @@ const Statistic = () => {
             typeof result.optional.long === 'string'
           ) {
             const archiveStatDB: ILongStat[] = JSON.parse(result.optional.long)
-
-            console.log(archiveStatDB)
 
             if (archiveStatDB) {
               dataNewWords.labels = [
