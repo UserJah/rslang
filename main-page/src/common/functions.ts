@@ -177,21 +177,22 @@ export async function getUserWords() {
 }
 
 export async function getstats() {
-  const isUser=await isUserHere()
-  if (isUser){
-  const NonStringedUser = localStorage.getItem('userInfo') as string
-  const user = JSON.parse(NonStringedUser)
-  const token = user.token
-  const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
-  const rawResp = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    },
-  })
-  if (!rawResp.ok) return false
-  const resp = await rawResp.json()
-  return resp}
+  const isUser = await isUserHere()
+  if (isUser) {
+    const NonStringedUser = localStorage.getItem('userInfo') as string
+    const user = JSON.parse(NonStringedUser)
+    const token = user.token
+    const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
+    const rawResp = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    })
+    if (!rawResp.ok) return false
+    const resp = await rawResp.json()
+    return resp
+  }
 }
 
 export async function setUserWords(wordId: string, word: Partial<WordSignature>, method = 'POST') {
@@ -414,21 +415,22 @@ async function isUserHere() {
 }
 export async function setUserStats(stats: Statistics) {
   const userinfo = localStorage.getItem('userInfo')
-  if(userinfo===null) return
-  else {const user = JSON.parse(userinfo as string)
-  const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
-  fetch(baseurl, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(stats),
-    keepalive: true
+  if (userinfo === null) return
+  else {
+    const user = JSON.parse(userinfo as string)
+    const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${user.userId}/statistics`
+    fetch(baseurl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(stats),
+      keepalive: true
 
-  })
-}
+    })
+  }
 }
 export function handleStats(stats: Statistics, gathered: GatheredStats, game: string) {
   delete stats.id
@@ -436,6 +438,13 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
   const now = new Date()
 
   if (game === 'sprint') {
+    // long.unshift({
+    //   new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+    //   date:stats.optional.date,
+    //   learned:stats.learnedWords
+    // })
+    // stats.optional.long=JSON.stringify(long)
+
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.sprint.percentage) = (stats.optional?.sprint?.percentage * stats.optional.sprint.answers + gathered.correctAnswers) / (stats.optional.sprint.answers + gathered.answers);
       (stats.optional.sprint.answers) += gathered.answers;
@@ -452,8 +461,14 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.optional.date = new Date()
     }
   }
-
+  //TODO
   else {
+    // long.unshift({
+    //   new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+    //   date:stats.optional.date,
+    //   learned:stats.learnedWords
+    // })
+    // stats.optional.long=JSON.stringify(long)
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.audiochallenge.percentage) = (stats.optional?.audiochallenge?.percentage * stats.optional.audiochallenge.answers + gathered.correctAnswers) / (stats.optional.audiochallenge.answers + gathered.answers);
       (stats.optional.audiochallenge.answers) += gathered.answers
@@ -478,7 +493,7 @@ export function learned(before: boolean, after: boolean | undefined) {
   else return 0
 }
 
-export async function setUserWordsTextBook(wordId:string,word:UserWords,method='POST') {
+export async function setUserWordsTextBook(wordId: string, word: UserWords, method = 'POST') {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
@@ -495,13 +510,13 @@ export async function setUserWordsTextBook(wordId:string,word:UserWords,method='
   const resp = await (rawResp.json() as Promise<Word>)
   return resp
 }
-export async function test1(page=0,group=0){
+export async function test1(page = 0, group = 0) {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   console.log(user)
   const token = user.token
   const id = user.userId
-  const filter = {"$or":[{"userWord.difficulty" : 'hard',"userWord.optional.isKnown":"true"}]}
+  const filter = { "$or": [{ "userWord.difficulty": 'hard', "userWord.optional.isKnown": "true" }] }
   const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/aggregatedWords?group=${group}
 &wordsPerPage=${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
   const rawResp = await fetch(baseurl, {
@@ -515,19 +530,20 @@ export async function test1(page=0,group=0){
   console.log(resp)
   return resp[0].paginatedResults
 }
-export async function test3(){
-  const user=localStorage.getItem('userInfo') as string
-  const info=JSON.parse(user)
-  const id=info.userId
-  const raw=await fetch(`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/tokens`,{
-  headers: {
-    'Authorization': `Bearer ${info.refreshToken}`,
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },})
-  const resp=await raw.json()
-  info.token=resp.token
-  info.refreshToken=resp.refreshToken
-  const str=JSON.stringify(info)
-  localStorage.setItem('userInfo',str)
+export async function test3() {
+  const user = localStorage.getItem('userInfo') as string
+  const info = JSON.parse(user)
+  const id = info.userId
+  const raw = await fetch(`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/tokens`, {
+    headers: {
+      'Authorization': `Bearer ${info.refreshToken}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+  const resp = await raw.json()
+  info.token = resp.token
+  info.refreshToken = resp.refreshToken
+  const str = JSON.stringify(info)
+  localStorage.setItem('userInfo', str)
 }
