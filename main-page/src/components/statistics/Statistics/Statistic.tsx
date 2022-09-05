@@ -48,6 +48,7 @@ const Statistic = () => {
   const [averages, setAverages] = useState<Record<string, number> | null>(null)
 
   useEffect(() => {
+
     const local: IUserInfo | null = localStorageService.getItem(
       AuthConstants.USER_KEY_STORAGE
     )

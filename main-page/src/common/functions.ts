@@ -87,7 +87,7 @@ export async function prepare(
     trick.push({
       correct: isTrue,
       word: elem.word,
-      translate:createTranslation(a.flat(), elem, isTrue),
+      translate: createTranslation(a.flat(), elem, isTrue),
       audio: elem.audio,
       phrase: elem.audioExample,
       correctTranslate: elem.wordTranslate,
@@ -335,7 +335,7 @@ async function createFalseWords(arr: Word[]) {
 export async function handleWord(element: WordSignature, correct: boolean, game: string) {
 
   let method = 'PUT'
-  if (!element.properties ) {
+  if (!element.properties) {
     method = 'POST'
     element.properties = {
       difficulty: 'easy',
@@ -358,15 +358,15 @@ export async function handleWord(element: WordSignature, correct: boolean, game:
     delete element.properties.wordId
     delete element.properties.id
     if (element.properties.difficulty === 'easy') {
-      if (element.properties.optional){
-      if (element.properties.optional?.streak === undefined)  {element.properties.optional.streak= element.properties.optional.isKnown?3:0;}
+      if (element.properties.optional) {
+        if (element.properties.optional?.streak === undefined) { element.properties.optional.streak = element.properties.optional.isKnown ? 3 : 0; }
         element.properties.optional.streak = element.properties.optional?.streak + 1
         element.properties.optional.isKnown = element.properties.optional?.streak > 2
       }
     }
     else
-    if (element.properties.optional){
-      if (element.properties.optional?.streak === undefined) element.properties.optional.streak= 0
+      if (element.properties.optional) {
+        if (element.properties.optional?.streak === undefined) element.properties.optional.streak = 0
         element.properties.optional.streak = element.properties.optional.streak + 1
         if (element.properties.optional.streak > 4) {
           element.properties.difficulty = 'easy'
@@ -436,17 +436,6 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
   const long = JSON.parse(stats.optional.long)
   if (game === 'sprint') {
 
-
-
-    long.unshift({
-      new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
-      date: stats.optional.date,
-      learned: stats.learnedWords
-    })
-    stats.optional.long = JSON.stringify(long)
-
-
-
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.sprint.percentage) = (stats.optional?.sprint?.percentage * stats.optional.sprint.answers + gathered.correctAnswers) / (stats.optional.sprint.answers + gathered.answers);
       (stats.optional.sprint.answers) += gathered.answers;
@@ -457,18 +446,6 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
 
     }
     else {
-
-
-
-      long.unshift({
-        new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
-        date: stats.optional.date,
-        learned: stats.learnedWords
-      })
-      stats.optional.long = JSON.stringify(long)
-
-
-
       stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
@@ -477,19 +454,8 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.optional.date = new Date()
     }
   }
-  
+
   else {
-
-
-
-    long.unshift({
-      new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
-      date: stats.optional.date,
-      learned: stats.learnedWords
-    })
-    stats.optional.long = JSON.stringify(long)
-
-
 
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.audiochallenge.percentage) = (stats.optional?.audiochallenge?.percentage * stats.optional.audiochallenge.answers + gathered.correctAnswers) / (stats.optional.audiochallenge.answers + gathered.answers);
@@ -499,18 +465,6 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.learnedWords += gathered.learned
     }
     else {
-
-
-
-      long.unshift({
-        new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
-        date: stats.optional.date,
-        learned: stats.learnedWords
-      })
-      stats.optional.long = JSON.stringify(long)
-
-
-
       stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
