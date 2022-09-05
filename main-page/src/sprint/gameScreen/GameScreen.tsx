@@ -126,6 +126,7 @@ function filterItems(){
    if(filtered.length>0) return filtered
    else {setnoWords(true)
     props.endfunc()
+    return props.items
   }
   }
 

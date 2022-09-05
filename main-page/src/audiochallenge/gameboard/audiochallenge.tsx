@@ -97,7 +97,9 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
     else {
       const filtered=items.filter(element=>!element.properties?.optional?.isKnown)
      if(filtered.length>0) return filtered
-     else {setnoWords(true)}
+     else {
+       setnoWords(true)
+      return items}
       }
     }
 

@@ -344,6 +344,7 @@ export async function handleWord(element: WordSignature, correct: boolean, game:
         streak: correct ? 1 : 0
       }
     }
+    element.isNew=false
   }
   else if (!correct) {
     element.properties = {
@@ -446,6 +447,13 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
 
     }
     else {
+      long.unshift({
+        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+        date:stats.optional.date,
+        learned:stats.learnedWords
+      })
+      stats.optional.long=JSON.stringify(long)
+
       stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
@@ -465,6 +473,13 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.learnedWords += gathered.learned
     }
     else {
+      long.unshift({
+        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+        date:stats.optional.date,
+        learned:stats.learnedWords
+      })
+      stats.optional.long=JSON.stringify(long)
+
       stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
