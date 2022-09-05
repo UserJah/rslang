@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import classes from './TotalWordsGraph.module.css'
 
 ChartJS.register(
   CategoryScale,
@@ -46,5 +47,12 @@ export const data1 = {
 }
 
 export function TotalWordsGraph({ data }) {
-  return <Line options={options} data={data} />
+  return (
+    <Line
+      className={classes.line}
+    
+      options={options}
+      data={data}
+    />
+  )
 }

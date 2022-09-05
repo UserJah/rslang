@@ -1,0 +1,16 @@
+.line {
+  padding: 10px;
+  background-color: #e5ece6;
+  margin-top: 1rem;
+  margin-bottom: 3.5rem;
+  border-radius: 10px;
+  opacity: 0.9;
+  box-shadow: 0 0 20px gray;
+  transition: transform 500ms ease-in-out;
+}
+
+@media screen and (max-width: 570px) {
+  .line {
+    margin-top: 2rem;
+  }
+}
