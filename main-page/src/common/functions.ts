@@ -1,6 +1,6 @@
 
 import { WordSignature, Word, UserWords, Statistics, GatheredStats } from '../api/types'
-
+import { defaultstats } from './stats';
 export function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -216,7 +216,7 @@ export async function setUserWords(wordId: string, word: Partial<WordSignature>,
 export async function getKnownWords(page = 29, group = 0): Promise<Word[]> {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
-  console.log(user)
+
   const token = user.token
   const id = user.userId
   const filter = { 'userWord.optional.isKnown': true }
@@ -230,8 +230,7 @@ ${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
     },
   })
   const resp = await rawResp.json()
-  console.log(resp)
-  console.log(resp[0].paginatedResults)
+
   return resp[0].paginatedResults
 }
 
@@ -271,7 +270,6 @@ export async function prepareAudioChallenge(
     });
   } else if (isUser) {
     const familiar = await getUserWords();
-    console.log(familiar)
     preResult = shuffle(arr.flat()).slice(0, 20);
     preResult.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id);
@@ -313,9 +311,7 @@ export async function prepareAudioChallenge(
       }
       element.variant = shuffle(element.variant);
     });
-    console.log(preResult);
   }
-  console.log(preResult);
   return preResult;
 }
 
@@ -436,7 +432,7 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
   delete stats.id
   const timestamp = new Date(stats?.optional?.date)
   const now = new Date()
-
+const long=JSON.parse(stats.optional.long)
   if (game === 'sprint') {
     // long.unshift({
     //   new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
@@ -451,8 +447,16 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       (stats.optional.sprint.newWords) += gathered.new
       stats.optional.sprint.biggestStreak = stats.optional.sprint.biggestStreak > gathered.bigStreak ? stats.optional.sprint.biggestStreak : gathered.bigStreak
       stats.learnedWords += gathered.learned
+
+
     }
     else {
+      long.unshift({
+        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+        date:stats.optional.date,
+        learned:stats.learnedWords
+      })
+      stats.optional.long=JSON.stringify(long)
       stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
@@ -477,6 +481,12 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
       stats.learnedWords += gathered.learned
     }
     else {
+      long.unshift({
+        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
+        date:stats.optional.date,
+        learned:stats.learnedWords
+      })
+      stats.optional.long=JSON.stringify(long)
       stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
@@ -486,6 +496,7 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
     }
   }
   setUserStats(stats)
+
 }
 
 export function learned(before: boolean, after: boolean | undefined) {
@@ -513,7 +524,7 @@ export async function setUserWordsTextBook(wordId: string, word: UserWords, meth
 export async function test1(page = 0, group = 0) {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
-  console.log(user)
+
   const token = user.token
   const id = user.userId
   const filter = { "$or": [{ "userWord.difficulty": 'hard', "userWord.optional.isKnown": "true" }] }
@@ -527,7 +538,6 @@ export async function test1(page = 0, group = 0) {
     },
   })
   const resp = await rawResp.json()
-  console.log(resp)
   return resp[0].paginatedResults
 }
 export async function test3() {

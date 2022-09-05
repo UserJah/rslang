@@ -38,7 +38,6 @@ useEffect(()=>{
     if(resp){
       isLoad(true)
       setUserStats(resp)
-      console.log(resp)
     }
   }
 loadstats()

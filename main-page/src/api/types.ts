@@ -75,8 +75,14 @@ export type Statistics = {
       percentage: number,
       newWords:number
     },
-date:Date
+date:Date,
+long:string
   }
+}
+type Longstats={
+  date:Date,
+  new:number,
+  learned:number
 }
 export type UserWords = {
   difficulty: 'string'
