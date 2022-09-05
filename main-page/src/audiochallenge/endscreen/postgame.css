@@ -1,32 +1,32 @@
-.postgame{
-  display:flex;
-  flex-direction:column;
+.postgame {
+  display: flex;
+  flex-direction: column;
 
-  gap:10px;
-  width:500px;
-  margin:0 auto;
-  border-radius:20px;
-  border:1px solid grey;
-  padding:20px;
+  gap: 10px;
+  width: 500px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid grey;
+  padding: 20px;
   background-color: rgb(193, 208, 223);
 }
-.postgame>div>button{
-  width:40px;
-  height:40px;
+.postgame > div > button {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 }
-.postgame>div>button:hover{
-  cursor:pointer;
+.postgame > div > button:hover {
+  cursor: pointer;
   background-color: orange;
 }
-.postgame>div>div{
-  width:150px;
+.postgame > div > div {
+  width: 150px;
 }
 
-.postgame>div{
+.postgame > div {
   align-items: center;
-  display:flex;
-  flex-direction:row;
-  column-gap:10px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
   justify-content: space-between;
 }

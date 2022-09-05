@@ -1,6 +1,6 @@
-import { ILoginModalProps } from './../LoginModal/LoginModalProps';
+import { ILoginModalProps } from './../LoginModal/LoginModalProps'
 
 export interface IRegisterModalProps extends ILoginModalProps {
-  login: string,
+  login: string
   create: () => void
 }

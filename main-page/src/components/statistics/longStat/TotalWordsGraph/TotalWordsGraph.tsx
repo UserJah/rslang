@@ -47,12 +47,5 @@ export const data1 = {
 }
 
 export function TotalWordsGraph({ data }) {
-  return (
-    <Line
-      className={classes.line}
-    
-      options={options}
-      data={data}
-    />
-  )
+  return <Line className={classes.line} options={options} data={data} />
 }

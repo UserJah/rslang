@@ -53,7 +53,7 @@ const Statistic = () => {
     )
 
     if (local) {
-      (async () => {
+      ;(async () => {
         const id = local.userId as string
         const token = local.token as string
 

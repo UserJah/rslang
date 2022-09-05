@@ -10,27 +10,26 @@ export interface IUserInfo {
   token?: string
   refreshToken?: string
   userId?: string
-  name?: string,
+  name?: string
   experience?: Date
   message?: string
 }
 
 export interface IToken {
-  message: string;
-  token: string;
-  refreshToken: string;
-  userId: string;
-  name: string;
+  message: string
+  token: string
+  refreshToken: string
+  userId: string
+  name: string
 }
-
 
 export interface IStatistics {
   id?: string
   learnedWords: number
   optional?: {
-    audiochallenge?: IGame,
-    sprint?: IGame,
-    date: Date,
+    audiochallenge?: IGame
+    sprint?: IGame
+    date: Date
     long: ILongStat[] | string
   }
 }
@@ -43,7 +42,7 @@ export interface IGame {
 }
 
 export interface ILongStat {
-  date: Date,
+  date: Date
   new: number
   learned: number
 }
@@ -56,4 +55,4 @@ export interface IGraphData {
     borderColor: string
     backgroundColor: string
   }[]
-} 
+}

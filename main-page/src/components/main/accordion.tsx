@@ -111,8 +111,8 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography sx={{ textAlign: 'justify' }}>
-            В учебнике ты можешь отметить
-            сложные слова, чтобы обратить на них внимание в будущем. <br />
+            В учебнике ты можешь отметить сложные слова, чтобы обратить на них
+            внимание в будущем. <br />
             Раздел статистики поможет оставаться в тонусе и следить за процессом
             обучения.
           </Typography>

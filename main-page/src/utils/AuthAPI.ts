@@ -1,4 +1,4 @@
-import { ISignin, IStatistics } from './../constants/Auth.interfaces';
+import { ISignin, IStatistics } from './../constants/Auth.interfaces'
 import AuthPathConstants from '../constants/AuthPath.constants'
 
 class AuthAPI {
@@ -7,44 +7,52 @@ class AuthAPI {
     signin: AuthPathConstants.SIGIN,
     users: AuthPathConstants.USERS,
     tokens: AuthPathConstants.TOKENS,
-    statistics: AuthPathConstants.STATISTICS
+    statistics: AuthPathConstants.STATISTICS,
   }
 
-
-  public getStat = async (id: string, token: string): Promise<Response | undefined> => {
+  public getStat = async (
+    id: string,
+    token: string
+  ): Promise<Response | undefined> => {
     try {
-      const response = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.statistics}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`,
-        },
-
-      })
+      const response = await fetch(
+        `${this.paths.base}${this.paths.users}/${id}${this.paths.statistics}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
       return response
-
     } catch (error) {
       console.log('getStat api', error)
     }
   }
 
-  public updateStat = async (id: string, token: string, optional: IStatistics): Promise<Response | undefined> => {
+  public updateStat = async (
+    id: string,
+    token: string,
+    optional: IStatistics
+  ): Promise<Response | undefined> => {
     try {
-      const response = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.statistics}`, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(optional),
-
-      })
+      const response = await fetch(
+        `${this.paths.base}${this.paths.users}/${id}${this.paths.statistics}`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(optional),
+        }
+      )
 
       return response
-
     } catch (error) {
       console.log('updateStat api', error)
     }
@@ -62,22 +70,26 @@ class AuthAPI {
       })
 
       return response
-
     } catch (error) {
       console.log('loginUser api', error)
     }
   }
 
-  public getNewToken = async (id: string, refToken: string): Promise<Response | undefined> => {
-
+  public getNewToken = async (
+    id: string,
+    refToken: string
+  ): Promise<Response | undefined> => {
     try {
-      const response = await fetch(`${this.paths.base}${this.paths.users}/${id}${this.paths.tokens}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${refToken}`,
-        },
-      })
+      const response = await fetch(
+        `${this.paths.base}${this.paths.users}/${id}${this.paths.tokens}`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refToken}`,
+          },
+        }
+      )
 
       return response
     } catch (error) {
@@ -96,13 +108,11 @@ class AuthAPI {
         body: JSON.stringify(user),
       })
 
-      return response;
-
+      return response
     } catch (error) {
       console.log('createUser api', error)
     }
   }
-
 }
 
 export default new AuthAPI()

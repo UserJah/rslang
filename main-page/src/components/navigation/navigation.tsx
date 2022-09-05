@@ -8,7 +8,6 @@ import './navigation.css'
 const Navigation = () => {
   return (
     <div className="navbar">
-
       <TemporalyDrawer />
       <Link to={'/'}>
         <img src={img} alt="rs-logo" className="rs-logo" />

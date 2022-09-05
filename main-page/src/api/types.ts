@@ -17,16 +17,16 @@ export type Word = {
   isKnown?: boolean
   difficulty?: string
   isNew?: boolean
-  properties?:{
-    difficulty: string,
-    optional?:{
-      isKnown:boolean,
-      streak?:number,
-      lastaudio?:boolean,
-      lastsprint?:boolean
+  properties?: {
+    difficulty: string
+    optional?: {
+      isKnown: boolean
+      streak?: number
+      lastaudio?: boolean
+      lastsprint?: boolean
     }
-  },
-  _id:string
+  }
+  _id: string
 }
 export enum Path {
   base = 'https://qwerzxvxzvzxvxzv.herokuapp.com/',
@@ -43,62 +43,63 @@ export type WordSignature = {
   isNew?: boolean
   isKnown?: boolean
   currentStreak?: number
-  properties?:{
-    wordId?:string,
-    difficulty: string,
-    optional?:{
-      isKnown:boolean,
-      streak?:number,
-      lastaudio?:boolean,
-      lastsprint?:boolean
-    },
-    id?:string
+  properties?: {
+    wordId?: string
+    difficulty: string
+    optional?: {
+      isKnown: boolean
+      streak?: number
+      lastaudio?: boolean
+      lastsprint?: boolean
+    }
+    id?: string
   }
   difficulty?: string
-  variant?:string[],
-  wordTranslate?: string,
-  id?:string,
-  image?: string,
+  variant?: string[]
+  wordTranslate?: string
+  id?: string
+  image?: string
 }
 export type Statistics = {
-  id?:string,
+  id?: string
   learnedWords: number
   optional: {
-    audiochallenge:{ biggestStreak: number
-    answers: number
-    percentage: number,
-    newWords:number
-  },
-    sprint:{
+    audiochallenge: {
       biggestStreak: number
       answers: number
-      percentage: number,
-      newWords:number
-    },
-date:Date,
-long:string
+      percentage: number
+      newWords: number
+    }
+    sprint: {
+      biggestStreak: number
+      answers: number
+      percentage: number
+      newWords: number
+    }
+    date: Date
+    long: string
   }
 }
-type Longstats={
-  date:Date,
-  new:number,
-  learned:number
+type Longstats = {
+  date: Date
+  new: number
+  learned: number
 }
 export type UserWords = {
   difficulty: 'string'
-  optional?:{
-    isKnown:boolean,
-    streak?:number,
-    lastaudio?:boolean,
-    lastsprint?:boolean
+  optional?: {
+    isKnown: boolean
+    streak?: number
+    lastaudio?: boolean
+    lastsprint?: boolean
   }
   id: string
   wordId: string
 }
-export type GatheredStats={
-  new:number,
-  answers:number,
-  correctAnswers:number,
-  learned:number,
-  bigStreak:number
+export type GatheredStats = {
+  new: number
+  answers: number
+  correctAnswers: number
+  learned: number
+  bigStreak: number
 }

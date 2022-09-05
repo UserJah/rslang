@@ -25,14 +25,14 @@ export function Timer(props: {
     setTime(Number(props.seconds))
     setOver(false)
   }, [props.reset, props.seconds])
-function timing(time:number,over:boolean){
-  if (over || props.reset) return null
-  else if (time<10) return `0${time}`
-  else return time
-}
+  function timing(time: number, over: boolean) {
+    if (over || props.reset) return null
+    else if (time < 10) return `0${time}`
+    else return time
+  }
   return (
     <div>
-      <p className='timer'>{timing(time,over)}</p>
+      <p className="timer">{timing(time, over)}</p>
     </div>
   )
 }

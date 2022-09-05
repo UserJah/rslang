@@ -1,19 +1,19 @@
-.dotcontainer{
-  display:flex;
-  flex-direction:row;
-  gap:15px;
+.dotcontainer {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
   margin-bottom: 60px;
 }
-.dot{
-  width:15px;
-  height:15px;
-  display:inline-block;
+.dot {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
   border-radius: 50%;
   background-color: rgb(204, 221, 197);
 }
-div>.reddot{
+div > .reddot {
   background-color: rgb(255, 79, 60);
 }
-div>.greendot{
+div > .greendot {
   background-color: rgb(88, 181, 51);
 }

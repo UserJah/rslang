@@ -15,4 +15,4 @@ const enum AuthConstants {
   REFRESH_TOKEN_LIFE = 12600000, //3.5h
 }
 
-export default AuthConstants;
+export default AuthConstants

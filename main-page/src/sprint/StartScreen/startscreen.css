@@ -5,8 +5,7 @@
   font-size: 30px;
   margin: 10px 100px;
   transition: 0.3s;
-  border:none;
-
+  border: none;
 }
 .chose_level:hover {
   cursor: pointer;

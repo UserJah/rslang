@@ -1,10 +1,15 @@
-
-import { WordSignature, Word, UserWords, Statistics, GatheredStats } from '../api/types'
-import { defaultstats } from './stats';
+import {
+  WordSignature,
+  Word,
+  UserWords,
+  Statistics,
+  GatheredStats,
+} from '../api/types'
+import { defaultstats } from './stats'
 export function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-      ;[array[i], array[j]] = [array[j], array[i]]
+    ;[array[i], array[j]] = [array[j], array[i]]
   }
   return array
 }
@@ -45,45 +50,38 @@ export async function prepare(
   if (isUser && fromPage) {
     const known = await getKnownWords(page, group)
     const familiar = await getUserWords()
-    a.forEach(element => shuffle(element))
+    a.forEach((element) => shuffle(element))
     const filtered = a
       .flat()
       .filter((elem) => !known.some((element) => element._id === elem.id))
     filtered.forEach((element) => {
       const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-
         element.properties = elem
-      }
-      else {
+      } else {
         element.isNew = true
       }
     })
     arr1 = filtered
-  }
-  else if (isUser) {
+  } else if (isUser) {
     const familiar = await getUserWords()
     const filtered = a.flat()
     filtered.forEach((element) => {
-      const elem = familiar.find((q) => q.wordId === element.id);
+      const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
         element.properties = elem
-      }
-      else {
+      } else {
         element.isNew = true
       }
     })
     arr1 = shuffle(filtered)
-  }
-  else if (fromPage) {
-    a.forEach(element => shuffle(element))
+  } else if (fromPage) {
+    a.forEach((element) => shuffle(element))
     arr1 = a.flat()
   } else {
     arr1 = shuffle(a.flat())
   }
   arr1.map(async (elem) => {
-
-
     const isTrue = coinToss(0.5)
     trick.push({
       correct: isTrue,
@@ -94,9 +92,8 @@ export async function prepare(
       correctTranslate: elem.wordTranslate,
       properties: elem.properties,
       isNew: elem.isNew,
-      id: elem.id
+      id: elem.id,
     })
-
   })
   return trick
 }
@@ -142,7 +139,6 @@ export async function getaudio(path: string) {
   const body = resp.arrayBuffer()
   return body
 }
-
 
 export async function getUserWord(id: string) {
   const NonStringedUser = localStorage.getItem('userInfo') as string
@@ -195,7 +191,11 @@ export async function getstats() {
   }
 }
 
-export async function setUserWords(wordId: string, word: Partial<WordSignature>, method = 'POST') {
+export async function setUserWords(
+  wordId: string,
+  word: Partial<WordSignature>,
+  method = 'POST'
+) {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
@@ -239,80 +239,78 @@ export async function prepareAudioChallenge(
   group = 0,
   fromPage = false
 ) {
-  const arr = await test(page, group);
+  const arr = await test(page, group)
   const isUser = await isUserHere()
-  let preResult;
+  let preResult
   if (isUser && fromPage) {
-    arr.forEach((element) => shuffle(element));
-    const known = await getKnownWords(page, group);
-    const familiar = await getUserWords();
+    arr.forEach((element) => shuffle(element))
+    const known = await getKnownWords(page, group)
+    const familiar = await getUserWords()
     const filtered = arr
       .flat()
-      .filter((elem) => !known.some((element) => element._id === elem.id));
+      .filter((elem) => !known.some((element) => element._id === elem.id))
     filtered.forEach((element) => {
-      const elem = familiar.find((q) => q.wordId === element.id);
+      const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-        element.properties = elem;
-        element.isNew = false;
-      }
-      else {
+        element.properties = elem
+        element.isNew = false
+      } else {
         element.isNew = true
       }
-    });
-    preResult = filtered.slice(0, 20);
-    const falseWords = shuffle(await createFalseWords(preResult));
+    })
+    preResult = filtered.slice(0, 20)
+    const falseWords = shuffle(await createFalseWords(preResult))
     preResult.forEach((element, index) => {
-      element.variant = [element.wordTranslate];
+      element.variant = [element.wordTranslate]
       for (let i = 0; i < 4; i += 1) {
-        element.variant.push(falseWords[index * 4 + i].wordTranslate);
+        element.variant.push(falseWords[index * 4 + i].wordTranslate)
       }
-      element.variant = shuffle(element.variant);
-    });
+      element.variant = shuffle(element.variant)
+    })
   } else if (isUser) {
-    const familiar = await getUserWords();
-    preResult = shuffle(arr.flat()).slice(0, 20);
+    const familiar = await getUserWords()
+    preResult = shuffle(arr.flat()).slice(0, 20)
     preResult.forEach((element) => {
-      const elem = familiar.find((q) => q.wordId === element.id);
+      const elem = familiar.find((q) => q.wordId === element.id)
       if (elem) {
-        element.properties = elem;
-        element.isNew = false;
-      }
-      else {
+        element.properties = elem
+        element.isNew = false
+      } else {
         element.isNew = true
       }
-    });
-    const falseWords = shuffle(await createFalseWords(preResult));
+    })
+    const falseWords = shuffle(await createFalseWords(preResult))
     preResult.forEach((element, index) => {
-      element.variant = [element.wordTranslate];
+      element.variant = [element.wordTranslate]
       for (let i = 0; i < 4; i += 1) {
-        element.variant.push(falseWords[index * 4 + i].wordTranslate);
+        element.variant.push(falseWords[index * 4 + i].wordTranslate)
       }
-      element.variant = shuffle(element.variant);
-    });
+      element.variant = shuffle(element.variant)
+    })
   } else if (fromPage) {
-    arr.forEach((element) => shuffle(element));
-    preResult = arr.flat().slice(0, 20);
-    const falseWords = shuffle(await createFalseWords(preResult));
+    arr.forEach((element) => shuffle(element))
+    preResult = arr.flat().slice(0, 20)
+    const falseWords = shuffle(await createFalseWords(preResult))
     preResult.forEach((element, index) => {
-      element.variant = [element.wordTranslate];
+      element.variant = [element.wordTranslate]
       for (let i = 0; i < 4; i += 1) {
-        element.variant.push(falseWords[index * 4 + i].wordTranslate);
+        element.variant.push(falseWords[index * 4 + i].wordTranslate)
       }
-      element.variant = shuffle(element.variant);
-    });
+      element.variant = shuffle(element.variant)
+    })
   } else {
-    preResult = shuffle(arr.flat()).slice(0, 20);
-    const falseWords = shuffle(await createFalseWords(preResult));
+    preResult = shuffle(arr.flat()).slice(0, 20)
+    const falseWords = shuffle(await createFalseWords(preResult))
 
     preResult.forEach((element, index) => {
-      element.variant = [element.wordTranslate];
+      element.variant = [element.wordTranslate]
       for (let i = 0; i < 4; i += 1) {
-        element.variant.push(falseWords[index * 4 + i].wordTranslate);
+        element.variant.push(falseWords[index * 4 + i].wordTranslate)
       }
-      element.variant = shuffle(element.variant);
-    });
+      element.variant = shuffle(element.variant)
+    })
   }
-  return preResult;
+  return preResult
 }
 
 async function createFalseWords(arr: Word[]) {
@@ -330,11 +328,17 @@ async function createFalseWords(arr: Word[]) {
       return body
     })
   )
-  return resp.flat().filter((elem) => !arr.some((element) => element.id === elem.id))
+  return resp
+    .flat()
+    .filter((elem) => !arr.some((element) => element.id === elem.id))
 }
 
-export async function handleWord(element: WordSignature, correct: boolean, game: string) {
-element.isNew=false
+export async function handleWord(
+  element: WordSignature,
+  correct: boolean,
+  game: string
+) {
+  element.isNew = false
   let method = 'PUT'
   if (!element.properties) {
     method = 'POST'
@@ -342,48 +346,53 @@ element.isNew=false
       difficulty: 'easy',
       optional: {
         isKnown: false,
-        streak: correct ? 1 : 0
-      }
+        streak: correct ? 1 : 0,
+      },
     }
-
-  }
-  else if (!correct) {
+  } else if (!correct) {
     delete element.properties.wordId
     delete element.properties.id
-    if ( element.properties.optional){
-    element.properties.optional.isKnown=false
-    element.properties.optional.streak=0}
-  }
-  else {
+    if (element.properties.optional) {
+      element.properties.optional.isKnown = false
+      element.properties.optional.streak = 0
+    }
+  } else {
     delete element.properties.wordId
     delete element.properties.id
     if (element.properties.difficulty === 'easy') {
       if (element.properties.optional) {
-        if (element.properties.optional?.streak === undefined) { element.properties.optional.streak = element.properties.optional.isKnown ? 3 : 0; }
-        element.properties.optional.streak = element.properties.optional?.streak + 1
-        element.properties.optional.isKnown = element.properties.optional?.streak > 2
+        if (element.properties.optional?.streak === undefined) {
+          element.properties.optional.streak = element.properties.optional
+            .isKnown
+            ? 3
+            : 0
+        }
+        element.properties.optional.streak =
+          element.properties.optional?.streak + 1
+        element.properties.optional.isKnown =
+          element.properties.optional?.streak > 2
+      }
+    } else if (element.properties.optional) {
+      if (element.properties.optional?.streak === undefined)
+        element.properties.optional.streak = 0
+      element.properties.optional.streak =
+        element.properties.optional.streak + 1
+      if (element.properties.optional.streak > 4) {
+        element.properties.difficulty = 'easy'
+        element.properties.optional.isKnown = true
       }
     }
-    else
-      if (element.properties.optional) {
-        if (element.properties.optional?.streak === undefined) element.properties.optional.streak = 0
-        element.properties.optional.streak = element.properties.optional.streak + 1
-        if (element.properties.optional.streak > 4) {
-          element.properties.difficulty = 'easy'
-          element.properties.optional.isKnown = true
-        }
-      }
   }
   if (element.properties.optional) {
-    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct;
-    else element.properties.optional.lastsprint = correct;
+    if (game === 'audiochallenge')
+      element.properties.optional.lastaudio = correct
+    else element.properties.optional.lastsprint = correct
   }
   const isUser = await isUserHere()
   if (isUser) {
     try {
       setUserWords(element.id || '', element.properties, method)
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -403,8 +412,7 @@ async function isUserHere() {
     })
     if (!resp.ok) throw new Error('qwertr')
     else return true
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err)
     return false
   }
@@ -423,73 +431,96 @@ export async function setUserStats(stats: Statistics) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(stats),
-      keepalive: true
-
+      keepalive: true,
     })
   }
 }
-export function handleStats(stats: Statistics, gathered: GatheredStats, game: string) {
+export function handleStats(
+  stats: Statistics,
+  gathered: GatheredStats,
+  game: string
+) {
   delete stats.id
   const timestamp = new Date(stats?.optional?.date)
   const now = new Date()
   const long = JSON.parse(stats.optional.long)
   if (game === 'sprint') {
-
-    if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
-      (stats.optional.sprint.percentage) = (stats.optional?.sprint?.percentage * stats.optional.sprint.answers + gathered.correctAnswers) / (stats.optional.sprint.answers + gathered.answers);
-      (stats.optional.sprint.answers) += gathered.answers;
-      (stats.optional.sprint.newWords) += gathered.new
-      stats.optional.sprint.biggestStreak = stats.optional.sprint.biggestStreak > gathered.bigStreak ? stats.optional.sprint.biggestStreak : gathered.bigStreak
+    if (
+      timestamp.getFullYear() === now.getFullYear() &&
+      timestamp.getMonth() === now.getMonth() &&
+      timestamp.getDate() === now.getDate()
+    ) {
+      stats.optional.sprint.percentage =
+        (stats.optional?.sprint?.percentage * stats.optional.sprint.answers +
+          gathered.correctAnswers) /
+        (stats.optional.sprint.answers + gathered.answers)
+      stats.optional.sprint.answers += gathered.answers
+      stats.optional.sprint.newWords += gathered.new
+      stats.optional.sprint.biggestStreak =
+        stats.optional.sprint.biggestStreak > gathered.bigStreak
+          ? stats.optional.sprint.biggestStreak
+          : gathered.bigStreak
       stats.learnedWords += gathered.learned
-      long[0]={
-        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-        date:stats.optional.date,
-        learned:stats.learnedWords
+      long[0] = {
+        new:
+          stats.optional.sprint.newWords +
+          stats.optional.audiochallenge.newWords,
+        date: stats.optional.date,
+        learned: stats.learnedWords,
       }
-      stats.optional.long=JSON.stringify(long)
-
-    }
-    else {
+      stats.optional.long = JSON.stringify(long)
+    } else {
       long.unshift({
-        new:gathered.new,
-        date:now,
-        learned:gathered.learned
+        new: gathered.new,
+        date: now,
+        learned: gathered.learned,
       })
-      stats.optional.long=JSON.stringify(long)
-      stats.optional.audiochallenge=defaultstats.optional.audiochallenge
-      stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
+      stats.optional.long = JSON.stringify(long)
+      stats.optional.audiochallenge = defaultstats.optional.audiochallenge
+      stats.optional.sprint.percentage =
+        gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
       stats.optional.sprint.newWords = gathered.new
       stats.learnedWords = gathered.learned
       stats.optional.date = new Date()
     }
-  }
-
-  else {
-
-    if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
-      (stats.optional.audiochallenge.percentage) = (stats.optional?.audiochallenge?.percentage * stats.optional.audiochallenge.answers + gathered.correctAnswers) / (stats.optional.audiochallenge.answers + gathered.answers);
-      (stats.optional.audiochallenge.answers) += gathered.answers
+  } else {
+    if (
+      timestamp.getFullYear() === now.getFullYear() &&
+      timestamp.getMonth() === now.getMonth() &&
+      timestamp.getDate() === now.getDate()
+    ) {
+      stats.optional.audiochallenge.percentage =
+        (stats.optional?.audiochallenge?.percentage *
+          stats.optional.audiochallenge.answers +
+          gathered.correctAnswers) /
+        (stats.optional.audiochallenge.answers + gathered.answers)
+      stats.optional.audiochallenge.answers += gathered.answers
       stats.optional.audiochallenge.newWords += gathered.new
-      stats.optional.audiochallenge.biggestStreak = stats.optional.audiochallenge.biggestStreak > gathered.bigStreak ? stats.optional.audiochallenge.biggestStreak : gathered.bigStreak
+      stats.optional.audiochallenge.biggestStreak =
+        stats.optional.audiochallenge.biggestStreak > gathered.bigStreak
+          ? stats.optional.audiochallenge.biggestStreak
+          : gathered.bigStreak
       stats.learnedWords += gathered.learned
-      long[0]={
-        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-        date:stats.optional.date,
-        learned:stats.learnedWords
+      long[0] = {
+        new:
+          stats.optional.sprint.newWords +
+          stats.optional.audiochallenge.newWords,
+        date: stats.optional.date,
+        learned: stats.learnedWords,
       }
-      stats.optional.long=JSON.stringify(long)
-    }
-    else {
+      stats.optional.long = JSON.stringify(long)
+    } else {
       long.unshift({
-        new:gathered.new,
-        date:now,
-        learned:gathered.learned
+        new: gathered.new,
+        date: now,
+        learned: gathered.learned,
       })
-      stats.optional.long=JSON.stringify(long)
-      stats.optional.sprint=defaultstats.optional.sprint
-      stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
+      stats.optional.long = JSON.stringify(long)
+      stats.optional.sprint = defaultstats.optional.sprint
+      stats.optional.audiochallenge.percentage =
+        gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
       stats.optional.audiochallenge.newWords = gathered.new
@@ -498,7 +529,6 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
     }
   }
   setUserStats(stats)
-
 }
 
 export function learned(before: boolean, after: boolean | undefined) {
@@ -506,7 +536,11 @@ export function learned(before: boolean, after: boolean | undefined) {
   else return 0
 }
 
-export async function setUserWordsTextBook(wordId: string, word: UserWords, method = 'POST') {
+export async function setUserWordsTextBook(
+  wordId: string,
+  word: UserWords,
+  method = 'POST'
+) {
   const NonStringedUser = localStorage.getItem('userInfo') as string
   const user = JSON.parse(NonStringedUser)
   const token = user.token
@@ -529,7 +563,11 @@ export async function test1(page = 0, group = 0) {
 
   const token = user.token
   const id = user.userId
-  const filter = { "$or": [{ "userWord.difficulty": 'hard', "userWord.optional.isKnown": "true" }] }
+  const filter = {
+    $or: [
+      { 'userWord.difficulty': 'hard', 'userWord.optional.isKnown': 'true' },
+    ],
+  }
   const baseurl = `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/aggregatedWords?group=${group}
 &wordsPerPage=${(page + 1) * 20}&filter=${JSON.stringify(filter)}`
   const rawResp = await fetch(baseurl, {
@@ -546,13 +584,16 @@ export async function test3() {
   const user = localStorage.getItem('userInfo') as string
   const info = JSON.parse(user)
   const id = info.userId
-  const raw = await fetch(`https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/tokens`, {
-    headers: {
-      'Authorization': `Bearer ${info.refreshToken}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-  })
+  const raw = await fetch(
+    `https://qwerzxvxzvzxvxzv.herokuapp.com/users/${id}/tokens`,
+    {
+      headers: {
+        Authorization: `Bearer ${info.refreshToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
   const resp = await raw.json()
   info.token = resp.token
   info.refreshToken = resp.refreshToken

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import AuthConstants from "../../constants/Auth.constants"
-import { ISignin, IUserInfo } from './../../constants/Auth.interfaces';
-import LocalStorageService from "./../../utils/LocalStorageService"
-import { defaultstats } from '../../common/stats';
-import api from './../../utils/AuthAPI';
+import React, { useState } from 'react'
+import AuthConstants from '../../constants/Auth.constants'
+import { ISignin, IUserInfo } from './../../constants/Auth.interfaces'
+import LocalStorageService from './../../utils/LocalStorageService'
+import { defaultstats } from '../../common/stats'
+import api from './../../utils/AuthAPI'
 
 const initialDataAuth: ISignin = {
   email: '',
@@ -12,7 +12,6 @@ const initialDataAuth: ISignin = {
 }
 
 const useAuthContext = () => {
-
   const [userState, setUserState] = useState<IUserInfo>({ isAuth: false })
   const [dataAuth, setDataAuth] = useState<ISignin>(initialDataAuth)
   const [err, setErr] = useState<string>('')
@@ -107,16 +106,20 @@ const useAuthContext = () => {
           setOpenLogin(true)
 
           api.loginUser({ email, password, login }).then(async (resp) => {
-
             if (resp && resp.ok) {
-              const { userId, token } = await resp.json();
+              const { userId, token } = await resp.json()
 
-              api.getStat(userId as string, token as string).then(async (resp) => {
-
-                if (resp && resp.status === 404) {
-                  api.updateStat(userId as string, token as string, defaultstats)
-                }
-              })
+              api
+                .getStat(userId as string, token as string)
+                .then(async (resp) => {
+                  if (resp && resp.status === 404) {
+                    api.updateStat(
+                      userId as string,
+                      token as string,
+                      defaultstats
+                    )
+                  }
+                })
             }
           })
         }, AuthConstants.POP_UP_DELAY)
@@ -125,7 +128,6 @@ const useAuthContext = () => {
   }
 
   const logInUser = () => {
-
     const { email, password, login } = dataAuth
 
     if (!validateEmail(email)) {
@@ -186,7 +188,10 @@ const useAuthContext = () => {
     )
     setErr(AuthConstants.ERROR_TOKEN_MISS)
     setAuth(false)
-    LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, { ...userInfo, isAuth: false })
+    LocalStorageService.setItem(AuthConstants.USER_KEY_STORAGE, {
+      ...userInfo,
+      isAuth: false,
+    })
     handleOpenLogin()
   }
 
@@ -196,9 +201,28 @@ const useAuthContext = () => {
     }
   }
 
-  return { dataAuth, userState, err, isGreeting, isParting, open, isAuth, openLogin, handleOpen, handleClose, unAuthorization, handlerSubmit, handleDataFields, createUser, setDBUSer, handleOpenLogin, handleCloseLogin, logInUser, preloader, notifyAuthFalse }
+  return {
+    dataAuth,
+    userState,
+    err,
+    isGreeting,
+    isParting,
+    open,
+    isAuth,
+    openLogin,
+    handleOpen,
+    handleClose,
+    unAuthorization,
+    handlerSubmit,
+    handleDataFields,
+    createUser,
+    setDBUSer,
+    handleOpenLogin,
+    handleCloseLogin,
+    logInUser,
+    preloader,
+    notifyAuthFalse,
+  }
 }
 
-
-
-export default useAuthContext;
+export default useAuthContext

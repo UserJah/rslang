@@ -41,7 +41,7 @@ const Main = () => {
             backgroundRepeat: 'no-repeat',
           }}
         >
-          <Link className='link' to="1">
+          <Link className="link" to="1">
             <Button
               variant="contained"
               color="warning"
@@ -53,7 +53,7 @@ const Main = () => {
           </Link>
         </Container>
       </div>
-      <YoutubeEmbed embedId={'SnHTTOM9OPY'}/>
+      <YoutubeEmbed embedId={'SnHTTOM9OPY'} />
       <Team />
     </>
   )

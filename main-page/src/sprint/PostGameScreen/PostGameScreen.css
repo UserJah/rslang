@@ -1,66 +1,66 @@
 .postGameScreen {
   width: 550px;
   margin: 0 auto;
-padding:30px;
+  padding: 30px;
   background-color: rgba(238, 236, 209, 0.5);
   border-radius: 20px;
   margin: 0 auto;
   list-style: none;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items:center;
+  align-items: center;
 }
 .postGameElement {
-  height:60px;
+  height: 60px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
 }
-.postGameScreen>ul{
-  padding:20px;
-  padding-top:0;
-  width:100%
+.postGameScreen > ul {
+  padding: 20px;
+  padding-top: 0;
+  width: 100%;
 }
 .postGameWord {
   min-width: 120px;
   font-size: 25px;
 }
-.postgame_audio{
+.postgame_audio {
   text-align: center;
-  width:50px;
-  height:50px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   transition-duration: 0.3s;
-  border:none;
+  border: none;
   background-color: inherit;
 }
 .postgame_audio:hover,
-.again{
+.again {
   cursor: pointer;
-transform: scale(1.05);
+  transform: scale(1.05);
 }
-.postgame_audio:hover>*{
+.postgame_audio:hover > * {
   transition-duration: 0.3s;
-  color:green;
+  color: green;
 }
-.again{
-  width:180px;
-  height:60px;
-  border-radius:10px;
-  font-size:24px;
+.again {
+  width: 180px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 24px;
   transition-duration: 0.3s;
-  background-color:rgb(243, 113, 26);
-  color:white;
-  border:none;
+  background-color: rgb(243, 113, 26);
+  color: white;
+  border: none;
   font-weight: 700;
 }
-.postGameWord_eng{
-  font-weight:700;
+.postGameWord_eng {
+  font-weight: 700;
 }
-.postGameScreen>h2{
+.postGameScreen > h2 {
   font-size: 45px;
-  margin:10px 0;
+  margin: 10px 0;
 }
