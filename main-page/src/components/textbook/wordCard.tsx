@@ -42,7 +42,7 @@ const WordCard = ({ props, color, group, change }) => {
   }
   const handleSetHardWord = async () => {
     (await getUserWord(props._id) ?
-    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio !== undefined ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint !== undefined ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
     setUserWordsTextBook(props._id, {difficulty: 'hard', optional : {isKnown : false, streak: 0, lastaudio: false, lastsprint: false}}))
     setUserDifficultyWord((userDifficultyWord: boolean) => userDifficultyWord ? false : true)
@@ -57,7 +57,7 @@ const WordCard = ({ props, color, group, change }) => {
 
   const handleSetLearnedWorld = async () => {
     (await getUserWord(props._id) ?
-    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
+    setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: props.userWord.optional.streak ? props.userWord.optional.streak : 0, lastaudio: props.userWord.optional.lastaudio !== undefined ? props.userWord.optional.lastaudio : undefined, lastsprint: props.userWord.optional.lastsprint !== undefined ? props.userWord.optional.lastsprint : undefined}}, 'PUT')
     : 
     setUserWordsTextBook(props._id, {difficulty: 'easy', optional : {isKnown : true, streak: 0, lastaudio: false, lastsprint: false}}))
     setUserLearnedWord((userLearnedWord: boolean) => userLearnedWord ? false : true)
