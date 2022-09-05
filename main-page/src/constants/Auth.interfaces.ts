@@ -12,7 +12,6 @@ export interface IUserInfo {
   userId?: string
   name?: string,
   experience?: Date
-
   message?: string
 }
 
