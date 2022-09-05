@@ -14,6 +14,7 @@ import {
   IStatistics,
   IUserInfo,
 } from '../../../constants/Auth.interfaces'
+import { TotalWordsGraph } from './../../statistics/longStat/TotalWordsGraph/TotalWordsGraph'
 
 const Statistic = () => {
   const [stat, setStat] = useState<IStatistics | null>(null)
@@ -127,6 +128,7 @@ const Statistic = () => {
               </StatCard>
             </div>
           </div>
+          <TotalWordsGraph />
         </div>
       ) : (
         <Typography className={classes.fail} variant="h4" component="h2">
