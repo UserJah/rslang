@@ -31,7 +31,7 @@ export interface IStatistics {
     audiochallenge?: IGame,
     sprint?: IGame,
     date: Date,
-    long: ILongStat | string
+    long: ILongStat[] | string
   }
 }
 
@@ -47,3 +47,13 @@ export interface ILongStat {
   new: number
   learned: number
 }
+
+export interface IGraphData {
+  labels: string[] | null
+  datasets: {
+    label: string
+    data: number[]
+    borderColor: string
+    backgroundColor: string
+  }[]
+} 

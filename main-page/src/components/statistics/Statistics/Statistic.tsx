@@ -13,8 +13,34 @@ import {
   IGame,
   IStatistics,
   IUserInfo,
+  ILongStat,
+  IGraphData,
 } from '../../../constants/Auth.interfaces'
 import { TotalWordsGraph } from './../../statistics/longStat/TotalWordsGraph/TotalWordsGraph'
+
+const dataNewWords: IGraphData = {
+  labels: null,
+  datasets: [
+    {
+      label: 'новых слов за весь период обучения',
+      data: [],
+      borderColor: 'brown',
+      backgroundColor: '#ffffff',
+    },
+  ],
+}
+
+const dataLeanedWords: IGraphData = {
+  labels: null,
+  datasets: [
+    {
+      label: 'изученных за весь период обучения',
+      data: [],
+      borderColor: 'brown',
+      backgroundColor: '#ffffff',
+    },
+  ],
+}
 
 const Statistic = () => {
   const [stat, setStat] = useState<IStatistics | null>(null)
@@ -35,6 +61,33 @@ const Statistic = () => {
         if (response && response.status === 200) {
           const result: IStatistics = await response.json()
           delete result.id
+
+          if (
+            result &&
+            result.optional &&
+            result.optional.long &&
+            typeof result.optional.long === 'string'
+          ) {
+            const archiveStatDB: ILongStat[] = JSON.parse(result.optional.long)
+
+            if (archiveStatDB) {
+              dataNewWords.labels = archiveStatDB
+                .map((item) => new Date(item.date).toLocaleDateString())
+                .reverse()
+
+              dataNewWords.datasets[0].data = archiveStatDB
+                .map((item) => +item.new)
+                .reverse()
+
+              dataLeanedWords.labels = archiveStatDB
+                .map((item) => new Date(item.date).toLocaleDateString())
+                .reverse()
+
+              dataLeanedWords.datasets[0].data = archiveStatDB
+                .map((item) => +item.learned)
+                .reverse()
+            }
+          }
 
           const percentageSprint = result.optional?.sprint?.percentage
           const percentageAudioChallenge =
@@ -128,7 +181,9 @@ const Statistic = () => {
               </StatCard>
             </div>
           </div>
-          <TotalWordsGraph />
+
+          <TotalWordsGraph data={dataNewWords} />
+          <TotalWordsGraph data={dataLeanedWords} />
         </div>
       ) : (
         <Typography className={classes.fail} variant="h4" component="h2">

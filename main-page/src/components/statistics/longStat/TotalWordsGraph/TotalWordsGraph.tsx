@@ -33,18 +33,18 @@ export const options = {
 
 const labels = [1, 2, 3, 4, 5, 6, 7]
 
-export const data = {
+export const data1 = {
   labels,
   datasets: [
     {
       label: 'за весь период обучения',
       data: [10, 25, 38, 14, 75, 36, 87, 87],
-      borderColor: '#94b49f',
-      backgroundColor: '#94b49f',
+      borderColor: '#fffff',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
   ],
 }
 
-export function TotalWordsGraph() {
+export function TotalWordsGraph({ data }) {
   return <Line options={options} data={data} />
 }

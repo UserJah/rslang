@@ -432,14 +432,19 @@ export function handleStats(stats: Statistics, gathered: GatheredStats, game: st
   delete stats.id
   const timestamp = new Date(stats?.optional?.date)
   const now = new Date()
-const long=JSON.parse(stats.optional.long)
+  const long = JSON.parse(stats.optional.long)
   if (game === 'sprint') {
-    // long.unshift({
-    //   new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-    //   date:stats.optional.date,
-    //   learned:stats.learnedWords
-    // })
-    // stats.optional.long=JSON.stringify(long)
+
+
+
+    long.unshift({
+      new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
+      date: stats.optional.date,
+      learned: stats.learnedWords
+    })
+    stats.optional.long = JSON.stringify(long)
+
+
 
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.sprint.percentage) = (stats.optional?.sprint?.percentage * stats.optional.sprint.answers + gathered.correctAnswers) / (stats.optional.sprint.answers + gathered.answers);
@@ -451,12 +456,18 @@ const long=JSON.parse(stats.optional.long)
 
     }
     else {
+
+
+
       long.unshift({
-        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-        date:stats.optional.date,
-        learned:stats.learnedWords
+        new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
+        date: stats.optional.date,
+        learned: stats.learnedWords
       })
-      stats.optional.long=JSON.stringify(long)
+      stats.optional.long = JSON.stringify(long)
+
+
+
       stats.optional.sprint.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.sprint.answers = gathered.answers
       stats.optional.sprint.biggestStreak = gathered.bigStreak
@@ -465,14 +476,20 @@ const long=JSON.parse(stats.optional.long)
       stats.optional.date = new Date()
     }
   }
-  //TODO
+  
   else {
-    // long.unshift({
-    //   new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-    //   date:stats.optional.date,
-    //   learned:stats.learnedWords
-    // })
-    // stats.optional.long=JSON.stringify(long)
+
+
+
+    long.unshift({
+      new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
+      date: stats.optional.date,
+      learned: stats.learnedWords
+    })
+    stats.optional.long = JSON.stringify(long)
+
+
+
     if (timestamp.getFullYear() === now.getFullYear() && timestamp.getMonth() === now.getMonth() && timestamp.getDate() === now.getDate()) {
       (stats.optional.audiochallenge.percentage) = (stats.optional?.audiochallenge?.percentage * stats.optional.audiochallenge.answers + gathered.correctAnswers) / (stats.optional.audiochallenge.answers + gathered.answers);
       (stats.optional.audiochallenge.answers) += gathered.answers
@@ -481,12 +498,18 @@ const long=JSON.parse(stats.optional.long)
       stats.learnedWords += gathered.learned
     }
     else {
+
+
+
       long.unshift({
-        new:stats.optional.sprint.newWords+stats.optional.audiochallenge.newWords,
-        date:stats.optional.date,
-        learned:stats.learnedWords
+        new: stats.optional.sprint.newWords + stats.optional.audiochallenge.newWords,
+        date: stats.optional.date,
+        learned: stats.learnedWords
       })
-      stats.optional.long=JSON.stringify(long)
+      stats.optional.long = JSON.stringify(long)
+
+
+
       stats.optional.audiochallenge.percentage = gathered.correctAnswers / gathered.answers
       stats.optional.audiochallenge.answers = gathered.answers
       stats.optional.audiochallenge.biggestStreak = gathered.bigStreak
