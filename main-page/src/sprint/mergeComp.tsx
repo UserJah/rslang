@@ -22,7 +22,6 @@ export function Game(props: { group: number; page: number,fromPage:boolean }) {
         props.page,
         props.group,props.fromPage
       )) as WordSignature[]
-console.log(response)
 
       setIsLoaded(true)
       setItems(response)
@@ -36,7 +35,7 @@ console.log(response)
     return (
 
       <div className='gameboard'>
-         
+
         <Timer seconds="60" endFunc={updateEnd} reset={end} />
         <Card items={items} end={end} func={playAgain} reset={end} fromPage={props.fromPage || false} endfunc={updateEnd}/>
       </div>

@@ -1,6 +1,5 @@
 
 import { WordSignature, Word, UserWords, Statistics, GatheredStats } from '../api/types'
-import { defaultstats } from './stats';
 export function shuffle<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
@@ -88,7 +87,7 @@ export async function prepare(
     trick.push({
       correct: isTrue,
       word: elem.word,
-      translate: createTranslation(arr1, elem, isTrue),
+      translate:createTranslation(a.flat(), elem, isTrue),
       audio: elem.audio,
       phrase: elem.audioExample,
       correctTranslate: elem.wordTranslate,
@@ -336,7 +335,7 @@ async function createFalseWords(arr: Word[]) {
 export async function handleWord(element: WordSignature, correct: boolean, game: string) {
 
   let method = 'PUT'
-  if (!element.properties) {
+  if (!element.properties ) {
     method = 'POST'
     element.properties = {
       difficulty: 'easy',
@@ -359,13 +358,15 @@ export async function handleWord(element: WordSignature, correct: boolean, game:
     delete element.properties.wordId
     delete element.properties.id
     if (element.properties.difficulty === 'easy') {
-      if (element.properties.optional?.streak !== undefined) {
+      if (element.properties.optional){
+      if (element.properties.optional?.streak === undefined)  {element.properties.optional.streak= element.properties.optional.isKnown?3:0;}
         element.properties.optional.streak = element.properties.optional?.streak + 1
         element.properties.optional.isKnown = element.properties.optional?.streak > 2
       }
     }
     else
-      if (element.properties.optional?.streak !== undefined) {
+    if (element.properties.optional){
+      if (element.properties.optional?.streak === undefined) element.properties.optional.streak= 0
         element.properties.optional.streak = element.properties.optional.streak + 1
         if (element.properties.optional.streak > 4) {
           element.properties.difficulty = 'easy'

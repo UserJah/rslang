@@ -32,6 +32,7 @@ export function Card(props: {
   const [statsData,setStatsData]=useState({new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0})
 const [load,isLoad]=useState(false)
 const [userStats,setUserStats]=useState<Statistics|Record<string,never>>({})
+const [noWords,setnoWords]=useState(false)
 useEffect(()=>{
   async function loadstats(){
     const resp=await getstats()
@@ -118,10 +119,31 @@ if (load){
     )
 
   }
+function filterItems(){
+  if (!props.fromPage) return props.items
+  else {
+    const filtered=props.items.filter(element=>!element.properties?.optional?.isKnown)
+   if(filtered.length>0) return filtered
+   else {setnoWords(true)
+    props.endfunc()
+  }
+  }
 
+}
 
+if(noWords) return (
 
-  if (!props.end) {
+  <div>
+      <Link to='/' className='exit_link'>
+<ClearIcon onClick={()=>{
+              if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
+              sx={{fontSize:40,color:'white'}}/>
+  </Link>
+    Вы отгадали все слова.
+    Выйдите из игры для выбора другого уровня сложности или страницы учебника
+  </div>
+)
+  else if (!props.end) {
     return (
       <div>
         <div className="gameBoard">
@@ -139,7 +161,7 @@ if (load){
           <div className='stick' dangerouslySetInnerHTML={{ __html: stick }} />
 
           <Morebuttons
-            elems={props.fromPage? props.items.filter(element=>!element.properties?.optional?.isKnown):props.items}
+            elems={filterItems()}
             updatefunc={updateGameState}
             known={guessed}
             endfunc={props.endfunc}

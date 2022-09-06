@@ -10,8 +10,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
   const [changed, setChanged] = useState(false)
-  console.log(changed);
-  console.log(items);
+
   const change = () => {
     setChanged(changed => !changed)
   }
