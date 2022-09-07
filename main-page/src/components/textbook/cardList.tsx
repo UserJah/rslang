@@ -9,12 +9,12 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState([])
-  const [changed, setChanged] = useState(false)
+  const [changed, setChanged] = useState(0)
 
   const change = () => {
-    setChanged(changed => !changed)
+    setChanged(changed => changed+=1)
   }
-
+  console.log(changed);
   useEffect(() => {
     if (group === 7) {
       const NonStringedUser = localStorage.getItem('userInfo') as string

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CardList from './cardList'
 import { Button, Pagination, Typography } from '@mui/material'
 import { Container } from '@mui/system'
