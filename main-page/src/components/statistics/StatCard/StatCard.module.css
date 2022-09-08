@@ -1,0 +1,19 @@
+@media screen and (max-width: 570px) {
+  .box {
+    margin: 0;
+    width: 320px;
+    height: 320px;
+    font-size: 1rem;
+    color: red;
+  }
+}
+
+@media screen and (max-width: 321px) {
+  .box {
+    margin: 0;
+    width: 320px;
+    height: 320px;
+    font-size: 1rem;
+    color: red;
+  }
+}

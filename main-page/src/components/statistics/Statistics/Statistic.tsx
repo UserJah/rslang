@@ -19,25 +19,25 @@ import {
 import { TotalWordsGraph } from './../../statistics/longStat/TotalWordsGraph/TotalWordsGraph'
 
 const dataNewWords: IGraphData = {
-  labels: null,
+  labels: ['0'],
   datasets: [
     {
-      label: 'новых слов за весь период обучения',
+      label: 'новых за весь период обучения',
       data: [],
-      borderColor: 'brown',
-      backgroundColor: '#ffffff',
+      borderColor: 'blue',
+      backgroundColor: 'blue',
     },
   ],
 }
 
 const dataLeanedWords: IGraphData = {
-  labels: null,
+  labels: ['0'],
   datasets: [
     {
       label: 'изученных за весь период обучения',
       data: [],
       borderColor: 'brown',
-      backgroundColor: '#ffffff',
+      backgroundColor: 'brown',
     },
   ],
 }
@@ -48,7 +48,6 @@ const Statistic = () => {
   const [averages, setAverages] = useState<Record<string, number> | null>(null)
 
   useEffect(() => {
-
     const local: IUserInfo | null = localStorageService.getItem(
       AuthConstants.USER_KEY_STORAGE
     )
@@ -63,6 +62,8 @@ const Statistic = () => {
           const result: IStatistics = await response.json()
           delete result.id
 
+          console.log(result)
+
           if (
             result &&
             result.optional &&
@@ -70,6 +71,8 @@ const Statistic = () => {
             typeof result.optional.long === 'string'
           ) {
             const archiveStatDB: ILongStat[] = JSON.parse(result.optional.long)
+
+            console.log(archiveStatDB)
 
             if (archiveStatDB) {
               dataNewWords.labels = archiveStatDB
@@ -141,7 +144,7 @@ const Statistic = () => {
       {showStat && stat && averages ? (
         <div className={classes.content}>
           <div className={classes.btns}>
-            <Typography variant="h2" component="h2">
+            <Typography className={classes.title} variant="h2" component="h2">
               статистика
             </Typography>
             <Link to="/" style={{ textDecoration: 'none' }}>
@@ -149,7 +152,14 @@ const Statistic = () => {
             </Link>
           </div>
 
-          <div className={classes.container}>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
             <div>
               <StatCard width={300} height={300}>
                 <WordsStat
@@ -182,9 +192,18 @@ const Statistic = () => {
               </StatCard>
             </div>
           </div>
-
-          <TotalWordsGraph data={dataNewWords} />
-          <TotalWordsGraph data={dataLeanedWords} />
+          <div
+            style={{
+              width: '90vw',
+              margin: '0 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <TotalWordsGraph data={dataNewWords} />
+            <TotalWordsGraph data={dataLeanedWords} />
+          </div>
         </div>
       ) : (
         <Typography className={classes.fail} variant="h4" component="h2">

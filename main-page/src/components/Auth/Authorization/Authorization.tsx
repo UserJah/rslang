@@ -42,8 +42,6 @@ const Authorization = () => {
   useEffect(setDBUSer, [err])
 
   useEffect(() => {
-    console.log('render')
-
     async function setNewToken() {
       const user = localStorage.getItem('userInfo') as string
       if (!user) return
