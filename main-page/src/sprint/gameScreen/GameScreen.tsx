@@ -16,14 +16,14 @@ import { getstats, handleStats, handleWord,learned } from '../../common/function
 import './gameScreen.css'
 
 
-
 export function Card(props: {
   items: WordSignature[]
   end: boolean
   func: () => void
   reset:boolean
   fromPage:boolean
-  endfunc:()=>void
+  endfunc:()=>void,
+  noWords:boolean
 }) {
 
   const [guessed, setGuessed] = useState<WordSignature[]>([])
@@ -32,7 +32,6 @@ export function Card(props: {
   const [statsData,setStatsData]=useState({new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0})
 const [load,isLoad]=useState(false)
 const [userStats,setUserStats]=useState<Statistics|Record<string,never>>({})
-const [noWords,setnoWords]=useState(false)
 useEffect(()=>{
   async function loadstats(){
     const resp=await getstats()
@@ -72,7 +71,8 @@ if (load){
     const a=elem.properties?.optional?.isKnown as boolean
     const b=elem.isNew
     let strk=streak
-
+console.log(statsData)
+console.log(a)
     if (elem.correct === correct) {
       strk+=1
       setStreak((streak)=>{return (streak + 1)})
@@ -119,32 +119,21 @@ if (load){
     )
 
   }
-function filterItems(){
-  if (!props.fromPage) return props.items
-  else {
-    const filtered=props.items.filter(element=>!element.properties?.optional?.isKnown)
-   if(filtered.length>0) return filtered
-   else {setnoWords(true)
-    props.endfunc()
-    return props.items
-  }
-  }
 
-}
 
-if(noWords) return (
+  if(props.noWords || props.items.length===0) return (
 
-  <div>
-      <Link to='/' className='exit_link'>
-<ClearIcon onClick={()=>{
-              if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
-              sx={{fontSize:40,color:'white'}}/>
-  </Link>
-    Вы отгадали все слова.
-    Выйдите из игры для выбора другого уровня сложности или страницы учебника
-  </div>
-)
-  else if (!props.end) {
+    <div>
+        <Link to='/' className='exit_link'>
+  <ClearIcon onClick={()=>{
+                if (load) handleStats(userStats as Statistics,statsData,'sprint')}}
+                sx={{fontSize:40,color:'white'}}/>
+    </Link>
+      Вы отгадали все слова.
+      Выйдите из игры для выбора другого уровня сложности или страницы учебника
+    </div>
+  )
+else if (!props.end) {
     return (
       <div>
         <div className="gameBoard">
@@ -162,7 +151,7 @@ if(noWords) return (
           <div className='stick' dangerouslySetInnerHTML={{ __html: stick }} />
 
           <Morebuttons
-            elems={filterItems()}
+            elems={props.items}
             updatefunc={updateGameState}
             known={guessed}
             endfunc={props.endfunc}

@@ -333,7 +333,8 @@ async function createFalseWords(arr: Word[]) {
 }
 
 export async function handleWord(element: WordSignature, correct: boolean, game: string) {
-
+console.log(element)
+element.isNew=false
   let method = 'PUT'
   if (!element.properties) {
     method = 'POST'
@@ -344,16 +345,14 @@ export async function handleWord(element: WordSignature, correct: boolean, game:
         streak: correct ? 1 : 0
       }
     }
-    element.isNew=false
+
   }
   else if (!correct) {
-    element.properties = {
-      difficulty: 'easy',
-      optional: {
-        isKnown: false,
-        streak: 0
-      }
-    }
+    delete element.properties.wordId
+    delete element.properties.id
+    if ( element.properties.optional){
+    element.properties.optional.isKnown=false
+    element.properties.optional.streak=0}
   }
   else {
     delete element.properties.wordId
@@ -376,10 +375,10 @@ export async function handleWord(element: WordSignature, correct: boolean, game:
       }
   }
   if (element.properties.optional) {
-    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct
-    else element.properties.optional.lastsprint = correct
+    if (game === 'audiochallenge') element.properties.optional.lastaudio = correct;
+    else element.properties.optional.lastsprint = correct;
   }
-
+  console.log(element)
   const isUser = await isUserHere()
   if (isUser) {
     try {
