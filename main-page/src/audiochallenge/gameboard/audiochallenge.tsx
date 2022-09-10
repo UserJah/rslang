@@ -103,6 +103,7 @@ export function AudioChallenge(props?: { page?: number; group?: number, fromPage
 
     else {
       isFinish(true)
+      setStatsData(()=>{return {new:0, answers:0,correctAnswers:0,learned:0,bigStreak:0}})
       if(loadstats){
         handleStats(userStats as Statistics,statsData,'audiochallenge')
             }
