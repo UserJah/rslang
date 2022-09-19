@@ -24,7 +24,7 @@ export function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min)
 }
 export async function test(page: number, group: number) {
-  const q:any[] = []
+  const q: any[] = []
   for (let i = page; i > -1; i += -1) {
     const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/words?page=${i}&group=${group}`
     q.push(fetch(url))
@@ -316,13 +316,13 @@ export async function prepareAudioChallenge(
 async function createFalseWords(arr: Word[]) {
   let numbers = Array(10).fill(0)
   numbers = numbers.map(() => [getRandomInt(0, 29), getRandomInt(0, 5)])
-  const q:any[] = []
+  const q: any[] = []
   for (let i = 0; i < numbers.length; i += 1) {
     const url = `https://qwerzxvxzvzxvxzv.herokuapp.com/words?page=${numbers[i][0]}&group=${numbers[i][1]}`
     q.push(fetch(url))
   }
   const resp = await Promise.all(
-    q.map(async (elem:Promise<Response>) => {
+    q.map(async (elem: Promise<Response>) => {
       const resp1 = await elem
       const body = await resp1.json()
       return body

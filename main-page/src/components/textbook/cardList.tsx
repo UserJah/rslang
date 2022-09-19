@@ -5,7 +5,19 @@ import AuthPathConstants from '../../constants/AuthPath.constants'
 import { Word } from '../../api/types'
 import img from '../../assets/img/completed.png'
 
-const CardList = ({ page, group, color, updateAllLearned, allLearned }:{page:number,group:number,color:string,updateAllLearned:any, allLearned:any}) => {
+const CardList = ({
+  page,
+  group,
+  color,
+  updateAllLearned,
+  allLearned,
+}: {
+  page: number
+  group: number
+  color: string
+  updateAllLearned: any
+  allLearned: any
+}) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [items, setItems] = useState<any[]>([])
@@ -37,7 +49,6 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }:{page:num
         .then((res) => res.json())
         .then(
           (result) => {
-
             setIsLoaded(true)
             setItems(result[0].paginatedResults as any[])
           },
@@ -68,7 +79,6 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }:{page:num
           .then((res) => res.json())
           .then(
             (result) => {
-
               setIsLoaded(true)
               setItems(result[0].paginatedResults as any[])
             },
