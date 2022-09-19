@@ -89,3 +89,17 @@ npm start
 ✅ <em>Popularity, good documentation, extensive community, accessibility</em><br/>
 
 ---
+
+### Screenshots 🎆 🎇 🌅
+
+[![Main Page](https://i.postimg.cc/Vv06TCw4/Screenshot-2022-09-18-at-13-41-24.png)](https://postimg.cc/BPs4PtX1)
+
+[![Text Book](https://i.postimg.cc/W1Z2vvQp/Screenshot-2022-09-18-at-13-42-27.png)](https://postimg.cc/FY9ty2rw)
+
+[![Audiochallenge](https://i.postimg.cc/6pK9tSwd/Screenshot-2022-09-18-at-13-42-49.png)](https://postimg.cc/8jy8bZ75)
+
+[![Sprint](https://i.postimg.cc/FFbWwnWt/Screenshot-2022-09-18-at-13-43-02.png)](https://postimg.cc/Z0Rxdjzj)
+
+[![short statistics](https://i.postimg.cc/pVBCs5rR/Screenshot-2022-09-18-at-13-45-20.png)](https://postimg.cc/9zryMMyn)
+
+[![Long statistics](https://i.postimg.cc/J4VyHpMh/Screenshot-2022-09-19-at-09-10-03.png)](https://postimg.cc/z37D9SLm)
