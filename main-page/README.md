@@ -19,9 +19,9 @@ npm start
 
 ### Team
 
-🐧 [UserJah](https://github.com/UserJah)<br/>
-🦜 [jardozzz](https://github.com/jardozzz)<br/>
-🦉 [PartyZzzan77](https://github.com/PartyZzzan77)
+🐧 [UserJah](https://github.com/UserJah) <em>Team Lead</em><br/>
+🦜 [jardozzz](https://github.com/jardozzz) <em>Teammate</em><br/>
+🦉 [PartyZzzan77](https://github.com/PartyZzzan77) <em>Teammate</em>
 
 ---
 
