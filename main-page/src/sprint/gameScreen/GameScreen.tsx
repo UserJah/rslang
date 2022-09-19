@@ -125,7 +125,7 @@ export function Card(props: {
   }
 
   const stars = function (strk: number, mult: number) {
-    const arr :any[]= []
+    const arr: any[] = []
     for (let index = 0; index < 3; index++) {
       if (index < strk % mult)
         arr.push(
