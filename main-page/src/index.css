@@ -1,0 +1,9 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link_active {
+  text-decoration: none;
+  color: brown;
+}

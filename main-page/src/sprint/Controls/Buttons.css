@@ -1,0 +1,42 @@
+.control_container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.word {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 5px auto;
+  margin-bottom: 0;
+  border: none;
+  background-color: inherit;
+}
+.wordtext {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+.word:hover {
+  transform: scale(1.25);
+  transition-duration: 0.4s;
+}
+.audioButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: red;
+}
+.Buttoncontainer {
+  margin-top: 20px;
+  text-align: center;
+}
+.english_word {
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+.right,
+.left {
+  font-size: 25px;
+}

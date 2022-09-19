@@ -1,0 +1,30 @@
+.btns {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.container {
+  padding: 0 2rem;
+  width: inherit;
+  display: flex;
+  flex-wrap: wrap;
+}
+.content {
+  width: 100%;
+  margin: 0 auto;
+}
+.fail {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 10%;
+}
+
+@media screen and (max-width: 570px) {
+  .btns > h2 {
+    font-size: 2.5rem;
+  }
+}

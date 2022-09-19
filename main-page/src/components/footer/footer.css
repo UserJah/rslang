@@ -1,0 +1,34 @@
+#root {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #94b49f;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: auto;
+  background-color: #94b49f;
+}
+
+.githubs {
+  display: flex;
+  flex-direction: column;
+}
+
+.rs-logo img {
+  margin-top: 25.6px;
+}
+
+.github {
+  display: flex;
+  gap: 10px;
+}
+
+.github a {
+  text-decoration: none;
+  color: black;
+}

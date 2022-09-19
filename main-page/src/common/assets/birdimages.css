@@ -1,0 +1,29 @@
+#Layer_1,
+#Layer_2,
+#svg2,
+#svg3 {
+  vertical-align: bottom;
+}
+.ptero {
+  position: relative;
+}
+.svgcontainer {
+  margin-left: 15%;
+  display: inline-block;
+}
+.svgcontainer > * {
+  position: relative;
+  top: 10px;
+}
+.pidgeon {
+  margin-left: 10px;
+  position: relative;
+}
+.turkey,
+.penguin {
+  margin-left: 15px;
+  position: relative;
+}
+.turkey {
+  top: 5px;
+}

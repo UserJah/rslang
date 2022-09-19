@@ -1,0 +1,6 @@
+.logOut {
+  cursor: pointer;
+}
+.logOut:hover {
+  transform: scale(1.2);
+}

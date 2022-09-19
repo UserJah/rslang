@@ -1,0 +1,31 @@
+.gameBoard {
+  width: 550px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: rgba(238, 236, 209, 0.5);
+  border-radius: 20px;
+}
+.gameBoard > * {
+  opacity: 1;
+}
+.starscontainer {
+  display: flex;
+  justify-content: center;
+}
+.Score {
+  float: right;
+  font-size: 30px;
+}
+.info {
+  margin: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.stick {
+  display: inline-block;
+  margin: 0 20%;
+  text-align: center;
+  margin-bottom: 10px;
+}
