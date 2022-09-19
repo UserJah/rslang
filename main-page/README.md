@@ -92,14 +92,20 @@ npm start
 
 ### Screenshots 🎆 🎇 🌅
 
-[![Main Page](https://i.postimg.cc/Vv06TCw4/Screenshot-2022-09-18-at-13-41-24.png)](https://postimg.cc/BPs4PtX1)
+[![main-page.png](https://i.postimg.cc/mkdnc852/Screenshot-2022-09-18-at-13-41-24.png)](https://postimg.cc/0KwnFdvL)
 
-[![Text Book](https://i.postimg.cc/W1Z2vvQp/Screenshot-2022-09-18-at-13-42-27.png)](https://postimg.cc/FY9ty2rw)
+[![text-book.png](https://i.postimg.cc/yYb5spRL/Screenshot-2022-09-18-at-13-42-27.png)](https://postimg.cc/Wh0S7nXZ)
 
-[![Audiochallenge](https://i.postimg.cc/6pK9tSwd/Screenshot-2022-09-18-at-13-42-49.png)](https://postimg.cc/8jy8bZ75)
+[![audiochallenge-game.png](https://i.postimg.cc/L4vw088K/Screenshot-2022-09-18-at-13-42-49.png)](https://postimg.cc/8sJZ7Dvt)
 
-[![Sprint](https://i.postimg.cc/FFbWwnWt/Screenshot-2022-09-18-at-13-43-02.png)](https://postimg.cc/Z0Rxdjzj)
+[![sprint-game.png](https://i.postimg.cc/1zmV5Bwj/sprint-game.png)](https://postimg.cc/mPngmQdY)
 
-[![short statistics](https://i.postimg.cc/pVBCs5rR/Screenshot-2022-09-18-at-13-45-20.png)](https://postimg.cc/9zryMMyn)
+[![short-statistic.png](https://i.postimg.cc/HxgRFJMH/Screenshot-2022-09-18-at-13-45-20.png)](https://postimg.cc/67MMvpz1)
 
-[![Long statistics](https://i.postimg.cc/J4VyHpMh/Screenshot-2022-09-19-at-09-10-03.png)](https://postimg.cc/z37D9SLm)
+[![long-statistic.png](https://i.postimg.cc/fyWFT65r/Screenshot-2022-09-19-at-09-10-03.png)](https://postimg.cc/HcK36vqw)
+
+---
+
+### Activity ⚽️
+
+[![Screenshot-2022-09-18-at-11-47-39.png](https://i.postimg.cc/SK8HZLJD/Screenshot-2022-09-18-at-11-47-39.png)](https://postimg.cc/d7sW3yRy)
