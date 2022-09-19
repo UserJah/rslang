@@ -38,7 +38,7 @@ npm start
 
 ---
 
-🚦 [React-router-dom](https://www.npmjs.com/package/react-router-dom) <em>Great router, there are many methods and application cases</em>Great router, there are many methods and application cases<br/>
+🚦 [React-router-dom](https://www.npmjs.com/package/react-router-dom) <em>Great router, there are many methods and application cases</em><br/>
 
 ✅ <em>Great for SPA applications, good documentation</em><br/>
 🤔 <em>There are difficulties in deploy</em><br/>
@@ -66,7 +66,7 @@ npm start
 
 ---
 
-🦆 [Typescript](https://www.typescriptlang.org/) <em>Great solution for stricter typing </em>/><br/>
+🦆 [Typescript](https://www.typescriptlang.org/) <em>Great solution for stricter typing </em><br/>
 
 ✅ <em>Strict typing, compilation during development, good documentation</em><br/>
 🤔 <em>A little more code in development</em><br/>
