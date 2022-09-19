@@ -5,10 +5,22 @@ import AuthPathConstants from '../../constants/AuthPath.constants'
 import { Word } from '../../api/types'
 import img from '../../assets/img/completed.png'
 
-const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
+const CardList = ({
+  page,
+  group,
+  color,
+  updateAllLearned,
+  allLearned,
+}: {
+  page: number
+  group: number
+  color: string
+  updateAllLearned: any
+  allLearned: any
+}) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState<any[]>([])
   const [changed, setChanged] = useState(0)
 
   const change = () => {
@@ -38,7 +50,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
         .then(
           (result) => {
             setIsLoaded(true)
-            setItems(Object.entries(...result)[0][1])
+            setItems(result[0].paginatedResults as any[])
           },
           (error) => {
             setIsLoaded(true)
@@ -68,7 +80,7 @@ const CardList = ({ page, group, color, updateAllLearned, allLearned }) => {
           .then(
             (result) => {
               setIsLoaded(true)
-              setItems(Object.entries(...result)[0][1])
+              setItems(result[0].paginatedResults as any[])
             },
             (error) => {
               setIsLoaded(true)

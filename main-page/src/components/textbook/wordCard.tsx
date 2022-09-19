@@ -12,7 +12,17 @@ import {
 } from '@mui/icons-material'
 import { getUserWord, setUserWordsTextBook } from '../../common/functions'
 
-const WordCard = ({ props, color, group, change }) => {
+const WordCard = ({
+  props,
+  color,
+  group,
+  change,
+}: {
+  props: any
+  color: any
+  group: number
+  change: any
+}) => {
   const [clicked, setClicked] = useState(false)
   const [userDifficultyWord, setUserDifficultyWord] = useState(false)
   const [userLearnedWord, setUserLearnedWord] = useState(false)

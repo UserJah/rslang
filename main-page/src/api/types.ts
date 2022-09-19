@@ -86,15 +86,15 @@ type Longstats = {
   learned: number
 }
 export type UserWords = {
-  difficulty: 'string'
+  difficulty: string
   optional?: {
     isKnown: boolean
     streak?: number
     lastaudio?: boolean
     lastsprint?: boolean
   }
-  id: string
-  wordId: string
+  id?: string
+  wordId?: string
 }
 export type GatheredStats = {
   new: number

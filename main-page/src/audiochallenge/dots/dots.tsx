@@ -15,7 +15,8 @@ export function Dots(props: {
       props.guessed.forEach((elem, index) => {
         if (elem.guessedCorrect === true) {
           document
-            .getElementsByClassName('dot')[index].classList.add('greendot')
+            .getElementsByClassName('dot')
+            [index].classList.add('greendot')
         }
         if (elem.guessedCorrect === false) {
           document.getElementsByClassName('dot')[index].classList.add('reddot')
